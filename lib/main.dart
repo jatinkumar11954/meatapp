@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:meatapp/screens/animate.dart';
-import 'package:meatapp/screens/login.dart';
-import 'short.dart';
+
+
 
 void main() => runApp(MyApp());
 
@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
         ),
         home:Home(), 
         routes: <String, WidgetBuilder>{
-          'Login': (BuildContext context) => new Login(),
+      
            'LoginA': (BuildContext context) => new LoginA(),
 
           //   'Main':(BuildContext context)=> new Main(),
@@ -43,10 +43,7 @@ class _HomeState extends State<Home> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                RaisedButton(
-                    onPressed: () =>
-                        Navigator.pushReplacementNamed(context, "Login"),
-                    child: Text("Login")),
+             
                 RaisedButton(
                     onPressed: () =>
                         Navigator.pushNamed(context, "LoginA"),
