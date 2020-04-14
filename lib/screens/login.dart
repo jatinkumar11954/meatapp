@@ -61,6 +61,7 @@ class _LoginState extends State<Login> {
           child: Column(children: <Widget>[
             Center(
               child: Material(
+                    color: Colors.white,
                 child: Text(
                   "Login",
                   style:
@@ -75,6 +76,7 @@ class _LoginState extends State<Login> {
                   left: Short.w * 0.07,
                   right: Short.w * 0.07),
               child: Material(
+                    color: Colors.white,
                 child: TextFormField(
                   decoration: InputDecoration(
                     labelStyle:
@@ -98,6 +100,7 @@ class _LoginState extends State<Login> {
                   left: Short.w * 0.07,
                   right: Short.w * 0.07),
               child: Material(
+                    color: Colors.white,
                 child: TextFormField(
                   obscureText: showPwd,
                   decoration: InputDecoration(
@@ -120,33 +123,123 @@ class _LoginState extends State<Login> {
                 ),
               ),
             ),
-    
-               Padding(
-                 padding:  EdgeInsets.only(top:Short.h * 0.045),
-                 child: RaisedButton(
-                   padding:EdgeInsets.only(
-                   top: Short.h * 0.015,
-                   bottom: Short.h * 0.015,
-                   left: Short.w * 0.30,
-                   right: Short.w * 0.30), 
-                     color: Colors.green,
-                     onPressed: () {
-                       print("login button is clicked");
-                     },
-                     shape:RoundedRectangleBorder(
-  borderRadius: new BorderRadius.circular(50.0),
-),
-                     child:
-                         Text("LOGIN", style: TextStyle(color: Colors.white,fontSize:Short.h*0.04))),
-               ),
-                Divider(color:Colors.blue),
-               Row(children: <Widget>[
-                 Divider(color:Colors.blue,
-                   thickness:Short.h*0.02,
+
+            Padding(
+              padding: EdgeInsets.only(top: Short.h * 0.045),
+              child: RaisedButton(
+                  padding: EdgeInsets.only(
+                      top: Short.h * 0.015,
+                      bottom: Short.h * 0.015,
+                      left: Short.w * 0.30,
+                      right: Short.w * 0.30),
+                  color: Colors.green,
+                  onPressed: () {
+                    print("login button is clicked");
+                  },
+                  shape: RoundedRectangleBorder(
+                    borderRadius: new BorderRadius.circular(50.0),
                   ),
-                   Material(child: Text("or"))
-                   
-               ],)
+                  child: Text("LOGIN",
+                      style: TextStyle(
+                          color: Colors.white, fontSize: Short.h * 0.04))),
+            ),
+            Row(children: <Widget>[
+              Expanded(
+                child: new Container(
+                    margin: const EdgeInsets.only(left: 10.0, right: 20.0),
+                    child: Divider(
+                      color: Colors.grey,
+                      height: 36,
+                    )),
+              ),
+              Material(
+                    color: Colors.white,child: Text("or",
+                    style: TextStyle(
+                        color: Colors.grey, fontSize: Short.h * 0.02),)),
+              Expanded(
+                child: new Container(
+                    margin: const EdgeInsets.only(left: 20.0, right: 10.0),
+                    child: Divider(
+                      color: Colors.grey,
+                      height: 36,
+                    )),
+              ),
+            ]),
+            Center(
+                child: Padding(
+              padding:
+                  EdgeInsets.only(top: Short.h * 0.02, bottom: Short.h * 0.02),
+              child: FlatButton(
+                onPressed: () {
+                  print("Login via otp");
+                },
+                child: Text(
+                  "Login via OTP",
+                  style:
+                      TextStyle(color: Colors.green, fontSize: Short.h * 0.025),
+                ),
+              ),
+            )),
+            Divider(color: Colors.grey[300], thickness: Short.h * 0.01),
+            Center(
+                child: Padding(
+              padding:
+                  EdgeInsets.only(top: Short.h * 0.02, bottom: Short.h * 0.02),
+              child: FlatButton(
+                onPressed: () {
+                  print("Forgot Password");
+                },
+                child: Text(
+                  "Forgot Password",
+                  style:
+                      TextStyle(color: Colors.green, fontSize: Short.h * 0.025),
+                ),
+              ),
+            )),
+            Row(children: <Widget>[
+              Expanded(
+                child: new Container(
+                    margin: const EdgeInsets.only(left: 10.0, right: 20.0),
+                    child: Divider(
+                      color: Colors.grey,
+                      height: 36,
+                    )),
+              ),
+              Material(
+                    color: Colors.white,child: Text("or",
+                    style: TextStyle(
+                        color: Colors.grey, fontSize: Short.h * 0.02),)),
+              Expanded(
+                child: new Container(
+                    margin: const EdgeInsets.only(left: 20.0, right: 10.0),
+                    child: Divider(
+                      color: Colors.grey,
+                      height: 36,
+                    )),
+              ),
+            ]),
+            Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Material(
+                    color: Colors.white,
+                      child: Text(
+                    "Don't have an account ? ",
+                    style: TextStyle(
+                        color: Colors.grey, fontSize: Short.h * 0.025),
+                  )),
+                  FlatButton(
+                    onPressed: () {
+                      print("Forgot Password");
+                    },
+                    child: Text(
+                      "Sign Up",
+                      style: TextStyle(
+                          color: Colors.green, fontSize: Short.h * 0.025),
+                    ),
+                  ),
+                ]),
           ]),
         ),
       ),
