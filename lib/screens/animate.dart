@@ -37,16 +37,20 @@ class _LoginAState extends State<LoginA> {
 
   bool _child = true;
 
-  
+  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  UniqueKey k1 =UniqueKey();
+    UniqueKey k2 =UniqueKey();
+
+
+
+
   @override
   Widget build(BuildContext context) {
-      final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
     Short().init(context);
     double _h = Short.h * 0.83;
     void _animate() {
       // CircularProgressIndicator()
       setState(() {
-       
         print("animate");
         _child = false;
       });
@@ -64,24 +68,27 @@ class _LoginAState extends State<LoginA> {
       Align(
         alignment: Alignment.bottomCenter,
         child: AnimatedSwitcher(
-            duration: const Duration(milliseconds: 0),
-//             transitionBuilder: (Widget child, Animation<double> animation) {
-//              final  offsetAnimation =
-//     Tween<Offset>(begin: Offset(0.0, 1.0), end: Offset(0.0, 0.0)).animate(animation);
-// return SlideTransition(
-//         position: offsetAnimation,
+            duration: const Duration(milliseconds: 950),
+            transitionBuilder: (Widget child, Animation<double> animation) {
+              final offsetAnimation =
+                  Tween<Offset>(begin: Offset(0.0, 1.0), end: Offset(0.0, 0.0))
+                      .animate(animation);
+                     
+              return SlideTransition(
+                position: offsetAnimation,
+                child: child,
+              );
+            },
+// transitionBuilder: (Widget child, Animation<double> animation) {
+// return ScaleTransition(
+//         scale: animation,
 //         child: child,
-// );},
-transitionBuilder: (Widget child, Animation<double> animation) {
-return ScaleTransition(
-        scale: animation,
-        child: child,
-       );
-   },
+//        );
+//    },
             child: _child
                 ? Container(
-                  key:UniqueKey(),
-                    height: Short.h * 0.7,
+                    key: k1,
+                    height: Short.h * 0.8,
                     width: Short.w,
                     child: Padding(
                         padding: EdgeInsets.only(
@@ -186,7 +193,7 @@ return ScaleTransition(
                         )),
                   )
                 : Container(
-                  key:UniqueKey(),
+                    key: k2,
                     height: _h,
                     width: Short.w,
 
@@ -209,67 +216,73 @@ return ScaleTransition(
                         ),
                       ),
                       // SizedBox(height:Short.h*0.1),
-                      // Padding(
-                      //   padding: EdgeInsets.only(
-                      //       top: Short.h * 0.05,
-                      //       left: Short.w * 0.07,
-                      //       right: Short.w * 0.07),
-                      //   child: Material(
-                      //     color: Colors.white,
-                      //     child: TextFormField(
-                      //       decoration: InputDecoration(
-                      //         labelStyle: TextStyle(
-                      //             color: Colors.grey, fontSize: Short.h * 0.02),
-                      //         labelText: 'Email/Phone',
-                      //         hintText: "Enter your email /Phone",
-                      //         hintStyle: TextStyle(
-                      //             color: Colors.grey, fontSize: Short.h * 0.02),
-                      //         border: OutlineInputBorder(
-                      //             borderRadius:
-                      //                 BorderRadius.circular(Short.h * 2.5)),
-                      //       ),
-                      //       controller: email,
-                      //       keyboardType: TextInputType.emailAddress,
-                      //       // validator: emailValidator,
-                      //     ),
-                      //   ),
-                      // ),
-                      Padding(
-                        padding: EdgeInsets.only(
-                            top: Short.h * 0.04,
-                            left: Short.w * 0.07,
-                            right: Short.w * 0.07),
-                        child: 
-                        Material(
-                          color: Colors.white,
-                          child: 
-                          Form(
-                            key:_formKey,
-                                                      child: TextFormField(
-                              obscureText: showPwd,
-                              decoration: InputDecoration(
-                                labelStyle: TextStyle(
-                                    color: Colors.grey, fontSize: Short.h * 0.02),
-                                labelText: 'Password',
-                                hintText: "Enter your Password",
-                                hintStyle: TextStyle(
-                                    color: Colors.grey, fontSize: Short.h * 0.02),
-                                suffixIcon: IconButton(
-                                  icon: _icon,
-                                  onPressed: _toggle,
+
+                      Form(
+                        key: _formKey,
+                        child: Column(
+                          children: <Widget>[
+                            Padding(
+                              padding: EdgeInsets.only(
+                                  top: Short.h * 0.05,
+                                  left: Short.w * 0.07,
+                                  right: Short.w * 0.07),
+                              child: Material(
+                                color: Colors.white,
+                                child: TextFormField(
+                                  decoration: InputDecoration(
+                                    labelStyle: TextStyle(
+                                        color: Colors.grey,
+                                        fontSize: Short.h * 0.02),
+                                    labelText: 'Email/Phone',
+                                    hintText: "Enter your email /Phone",
+                                    hintStyle: TextStyle(
+                                        color: Colors.grey,
+                                        fontSize: Short.h * 0.02),
+                                    border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(
+                                            Short.h * 2.5)),
+                                  ),
+                                  controller: email,
+                                  keyboardType: TextInputType.emailAddress,
+                                  // validator: emailValidator,
                                 ),
-                                border: OutlineInputBorder(
-                                    borderRadius:
-                                        BorderRadius.circular(Short.h * 2.5)),
                               ),
-                              controller: pwd,
-                              keyboardType: TextInputType.visiblePassword,
-                              validator: pwdValidator,
                             ),
-                          ),
+                            Padding(
+                              padding: EdgeInsets.only(
+                                  top: Short.h * 0.04,
+                                  left: Short.w * 0.07,
+                                  right: Short.w * 0.07),
+                              child: Material(
+                                color: Colors.white,
+                                child: TextFormField(
+                                  obscureText: showPwd,
+                                  decoration: InputDecoration(
+                                    labelStyle: TextStyle(
+                                        color: Colors.grey,
+                                        fontSize: Short.h * 0.02),
+                                    labelText: 'Password',
+                                    hintText: "Enter your Password",
+                                    hintStyle: TextStyle(
+                                        color: Colors.grey,
+                                        fontSize: Short.h * 0.02),
+                                    suffixIcon: IconButton(
+                                      icon: _icon,
+                                      onPressed: _toggle,
+                                    ),
+                                    border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(
+                                            Short.h * 2.5)),
+                                  ),
+                                  controller: pwd,
+                                  keyboardType: TextInputType.visiblePassword,
+                                  validator: pwdValidator,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-
                       Padding(
                         padding: EdgeInsets.only(top: Short.h * 0.045),
                         child: RaisedButton(
@@ -406,14 +419,11 @@ return ScaleTransition(
     ]);
   }
 }
-String pwdValidator(String value) 
-  {
-    if(value.length<3)
-    {
-      return "please fill this field with atleast 3 characters";
-    }
-    else
-    {
-      return null;
-    }
+
+String pwdValidator(String value) {
+  if (value.length < 3) {
+    return "please fill this field with atleast 3 characters";
+  } else {
+    return null;
   }
+}
