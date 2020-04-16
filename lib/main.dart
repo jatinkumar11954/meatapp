@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:meatapp/screens/FirestScreen.dart';
 import 'package:meatapp/screens/animate.dart';
 import 'package:meatapp/screens/login.dart';
 
@@ -23,7 +24,7 @@ class MyApp extends StatelessWidget {
                       'Login': (BuildContext context) => new Login(),
 
 
-          //   'Main':(BuildContext context)=> new Main(),
+            'Main':(BuildContext context)=> new FirstScreen(),
           //  'Dewsc': (BuildContext context) => new Desc(),
         });
   }
@@ -54,11 +55,11 @@ class _HomeState extends State<Home> {
                 RaisedButton(
                     onPressed: () =>
                         Navigator.pushNamed(context, "LoginA"),
-                    child: Text("Main")),
+                    child: Text("AnimatedLogin")),
                 RaisedButton(
                     onPressed: () =>
-                        Navigator.pushReplacementNamed(context, "Desc"),
-                    child: Text("Desc")),
+                        Navigator.pushReplacementNamed(context, "Main"),
+                    child: Text("FirstScreen")),
               ],
             ),
           ),
