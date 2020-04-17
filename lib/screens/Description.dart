@@ -15,11 +15,11 @@ class _DescriptionState extends State<Description> {
     Short().init(context);
     final appbar = AppBar(
       backgroundColor: Colors.green,
-      actions: <Widget>[
-        IconButton(
-            icon: Icon(Icons.arrow_back_ios),
-            onPressed: () => Navigator.pop(context))
-      ],
+      // actions: <Widget>[
+      //   IconButton(
+      //       icon: Icon(Icons.arrow_back_ios),
+      //       onPressed: () => Navigator.pop(context))
+      // ],
       // Color.fromRGBO(191, 32, 37, 1.0),
       title: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -48,37 +48,86 @@ class _DescriptionState extends State<Description> {
             },
             child: ListView(
               children: <Widget>[
-                Hero(
-                  tag: i,
-                  child: Image.network(
-                    Short.img[i],
-                    width: w,
-                    height: h * 0.44,
+                Center(
+                  child: Hero(
+                    tag: i,
+                    child: Image.network(
+                      Short.img[i],
+                      fit: BoxFit.fill,
+                      width: w * 0.98,
+                      height: h * 0.4,
+                    ),
                   ),
                 ),
-                ListTile(
-                  title: Text(Short.catgry[i]),
-                  subtitle: Text("29-30 Pieces"),
+                Padding(
+                  padding: EdgeInsets.only(bottom: 5, top: 25, left: 17),
+                  child: ListTile(
+                      title: Text(Short.catgry[i],
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: h * 0.03,
+                              fontWeight: FontWeight.w500)),
+                      subtitle: Text(
+                        "29-30 Pieces",
+                        style: TextStyle(
+                            color: Colors.grey,
+                            fontSize: h * 0.02,
+                            fontWeight: FontWeight.w400),
+                      )),
                 ),
-                Divider(thickness: 20),
-                Card(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30)),
-                    child: Text("Weight: 400-500")),
-                Row(
-                  children: <Widget>[
-                    Text("339",
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: h * 0.025,
-                          decoration: TextDecoration.lineThrough,
+                Divider(thickness: 4),
+                Padding(
+                  padding: EdgeInsets.only(
+                      bottom: 10, top: 25, left: 25, right: w * 0.55),
+                  child: Container(
+                      height: 40,
+                      decoration: BoxDecoration(
+                          color: Colors.grey[300],
+                          borderRadius: BorderRadius.all(Radius.circular(10))),
+                      child: Center(
+                          child: Text("Weight: 400-500",
+                              style: TextStyle(
+                                  color: Colors.black54,
+                                  fontSize: h * 0.02,
+                                  fontWeight: FontWeight.w400)))),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(top: 20, left: 40, bottom: 30),
+                  child: Row(
+                    children: <Widget>[
+                      Text("339 ",
+                          style: TextStyle(
+                            color: Colors.black54,
+                            fontSize: h * 0.03,
+                            decoration: TextDecoration.lineThrough,
+                          )),
+                      Text("  500",
+                          style: TextStyle(
+                            color: Colors.green,
+                            fontSize: h * 0.035,
+                          )),
+                    ],
+                  ),
+                ),
+                Divider(thickness: 4),
+                SizedBox(height:30),
+                Center(
+                  child: SizedBox(
+                    width: w * 0.95,
+                    child: RaisedButton(
+                        color: Colors.green,
+                        onPressed: () => print("login button clicked"),
+                        child: Row(
+                          children: <Widget>[
+                            Icon(Icons.arrow_forward, color: Colors.white),
+                            Text("LOGIN/SIGN UP TO CHECKOUT",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: h * 0.028,
+                                )),
+                          ],
                         )),
-                    Text("500",
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: h * 0.025,
-                        )),
-                  ],
+                  ),
                 )
               ],
             )));
