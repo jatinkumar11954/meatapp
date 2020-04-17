@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:meatapp/screens/Description.dart';
 import 'package:meatapp/screens/FirestScreen.dart';
 import 'package:meatapp/screens/animate.dart';
 import 'package:meatapp/screens/login.dart';
@@ -25,6 +26,7 @@ class MyApp extends StatelessWidget {
 
 
             'Main':(BuildContext context)=> new FirstScreen(),
+             'Desc':(BuildContext context)=> new Description(),
           //  'Dewsc': (BuildContext context) => new Desc(),
         });
   }
