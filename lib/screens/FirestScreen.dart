@@ -70,6 +70,7 @@ class _FirstScreenState extends State<FirstScreen> {
                           widthFactor: 1.5,
                           alignment: Alignment.center,
                           child: SizedBox(
+                            width:w*0.6,
                               child: Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -79,7 +80,7 @@ class _FirstScreenState extends State<FirstScreen> {
                                 text: TextSpan(
                                     text: 'Get',
                                     style: TextStyle(
-                                        color: Colors.black, fontSize: 20),
+                                        color: Colors.black, fontSize: 18),
                                     children: <TextSpan>[
                                       TextSpan(
                                         text: ' ₹ 50 OFF  ',
@@ -91,7 +92,7 @@ class _FirstScreenState extends State<FirstScreen> {
                                       TextSpan(
                                         text: 'on your',
                                         style: TextStyle(
-                                            color: Colors.black, fontSize: 20),
+                                            color: Colors.black, fontSize: 18),
                                       )
                                     ]),
                               ),
@@ -99,7 +100,7 @@ class _FirstScreenState extends State<FirstScreen> {
                               Text(
                                 "1st App Order above 249 ",
                                 style: TextStyle(
-                                    color: Colors.black, fontSize: 20),
+                                    color: Colors.black, fontSize: 18),
                               ),
                               // Text("data"),
                               Text("UseCode App50",
