@@ -46,7 +46,7 @@ class _FirstScreenState extends State<FirstScreen> {
 
     return Scaffold(
         appBar: appbar,
-        // drawer: Draw(context),
+        drawer: Draw(context),
         body: WillPopScope(
           onWillPop: () {
             Navigator.pop(context);
