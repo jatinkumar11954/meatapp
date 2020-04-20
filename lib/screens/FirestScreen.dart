@@ -16,6 +16,9 @@ class _FirstScreenState extends State<FirstScreen> {
     final appbar = AppBar(
       backgroundColor: Colors.green,
       // Color.fromRGBO(191, 32, 37, 1.0),
+      // actions: <Widget>[Row(
+      //    children: <Widget>[IconButton(icon: Icon(Icons.arrow_back), onPressed:()=>Navigator.pop(context)),Draw(context)]
+      // )],
       title: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -43,10 +46,9 @@ class _FirstScreenState extends State<FirstScreen> {
 
     return Scaffold(
         appBar: appbar,
-        drawer: Draw(context),
+        // drawer: Draw(context),
         body: WillPopScope(
           onWillPop: () {
-            // Navigator.pushNamed(context,''),
             Navigator.pop(context);
           },
           child: Container(
