@@ -33,9 +33,9 @@ class _DescriptionState extends State<Description> {
           widthFactor: 2.3,
           alignment: Alignment.center,
           child: IconButton(
-              icon: new Icon(Icons.settings),
+              icon: new Icon(Icons.view_headline),
               onPressed: () {
-                print("adf");
+                print("drawer loremLabore duis Lorem id veniam id eu eiusmod dolor dolor eu culpa irure.");
                 _scaffoldKey.currentState.openDrawer();
               }),
         ),

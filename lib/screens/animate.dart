@@ -36,7 +36,7 @@ class _LoginAState extends State<LoginA> {
   }
 
   bool _child = true;
-
+hai
   static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   UniqueKey k1 = UniqueKey();
   UniqueKey k2 = UniqueKey();
@@ -191,7 +191,7 @@ class _LoginAState extends State<LoginA> {
                   )
                 : Container(
                     key: k2,
-                    height: _h,
+                    height:Short.h*0.82,
                     width: Short.w,
 
                     // Define how long the animation should take.
@@ -220,7 +220,7 @@ class _LoginAState extends State<LoginA> {
                           children: <Widget>[
                             Padding(
                               padding: EdgeInsets.only(
-                                  top: Short.h * 0.05,
+                                  top: 25,
                                   left: Short.w * 0.07,
                                   right: Short.w * 0.07),
                               child: Material(
@@ -247,7 +247,7 @@ class _LoginAState extends State<LoginA> {
                             ),
                             Padding(
                               padding: EdgeInsets.only(
-                                  top: Short.h * 0.04,
+                                  top: 25,
                                   left: Short.w * 0.07,
                                   right: Short.w * 0.07),
                               child: Material(
@@ -284,8 +284,8 @@ class _LoginAState extends State<LoginA> {
                         padding: EdgeInsets.only(top: Short.h * 0.045),
                         child: RaisedButton(
                             padding: EdgeInsets.only(
-                                top: Short.h * 0.015,
-                                bottom: Short.h * 0.015,
+                                top: Short.h * 0.01,
+                                bottom: Short.h * 0.01,
                                 left: Short.w * 0.30,
                                 right: Short.w * 0.30),
                             color: Colors.green,
@@ -330,7 +330,7 @@ class _LoginAState extends State<LoginA> {
                       Center(
                           child: Padding(
                         padding: EdgeInsets.only(
-                            top: Short.h * 0.02, bottom: Short.h * 0.02),
+                            top: Short.h * 0.018, bottom: Short.h * 0.018),
                         child: FlatButton(
                           onPressed: () {
                             print("Login via otp");
@@ -347,7 +347,7 @@ class _LoginAState extends State<LoginA> {
                       Center(
                           child: Padding(
                         padding: EdgeInsets.only(
-                            top: Short.h * 0.02, bottom: Short.h * 0.02),
+                            top: Short.h * 0.01),
                         child: FlatButton(
                           onPressed: () {
                             print("Forgot Password");
