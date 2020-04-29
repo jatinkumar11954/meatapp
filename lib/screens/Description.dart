@@ -22,7 +22,6 @@ class _DescriptionState extends State<Description> {
       backgroundColor: Colors.green,
       titleSpacing: 0,
 
-  
       title: Stack(children: <Widget>[
         Align(
             alignment: Alignment.centerLeft,
@@ -35,7 +34,8 @@ class _DescriptionState extends State<Description> {
           child: IconButton(
               icon: new Icon(Icons.view_headline),
               onPressed: () {
-                print("drawer loremLabore duis Lorem id veniam id eu eiusmod dolor dolor eu culpa irure.");
+                print(
+                    "drawer loremLabore duis Lorem id veniam id eu eiusmod dolor dolor eu culpa irure.");
                 _scaffoldKey.currentState.openDrawer();
               }),
         ),

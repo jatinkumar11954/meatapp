@@ -84,7 +84,7 @@ Widget Carousel(BuildContext context) {
   );
 }
 UniqueKey k1 = UniqueKey();
-Widget LoginBftrAnim(BuildContext context,Function ch) {
+Widget LoginBftrAnim(BuildContext context,Function ch,Function loginFalse) {
 
   return  Container(
                     key: k1,
@@ -177,9 +177,7 @@ Widget LoginBftrAnim(BuildContext context,Function ch) {
                                               fontSize: Short.h * 0.025),
                                         )),
                                     FlatButton(
-                                      onPressed: () {
-                                        print("Forgot Password");
-                                      },
+                                      onPressed: loginFalse,
                                       child: Text(
                                         "Sign Up",
                                         style: TextStyle(
