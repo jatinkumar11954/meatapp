@@ -1,12 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:meatapp/adjust/short.dart';
+import 'package:meatapp/adjust/widget.dart';
 
 class LoginA extends StatefulWidget {
   @override
   _LoginAState createState() => _LoginAState();
+ 
 }
 
 class _LoginAState extends State<LoginA> {
+    void _animate() {
+      // CircularProgressIndicator()
+      setState(() {
+        print("animate");
+        _child = false;
+      });
+    }
   TextEditingController email;
   TextEditingController pwd;
   bool showPwd = true;
@@ -36,22 +45,15 @@ class _LoginAState extends State<LoginA> {
   }
 
   bool _child = true;
-hai jatin
   static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   UniqueKey k1 = UniqueKey();
   UniqueKey k2 = UniqueKey();
-
+   
   @override
   Widget build(BuildContext context) {
     Short().init(context);
     double _h = Short.h * 0.83;
-    void _animate() {
-      // CircularProgressIndicator()
-      setState(() {
-        print("animate");
-        _child = false;
-      });
-    }
+
 
     final style = TextStyle(color: Colors.green, fontSize: Short.h * 0.046);
     return Stack(children: <Widget>[
@@ -83,112 +85,7 @@ hai jatin
 //        );
 //    },
             child: _child
-                ? Container(
-                    key: k1,
-                    height: Short.h * 0.8,
-                    width: Short.w,
-                    child: Padding(
-                        padding: EdgeInsets.only(
-                            bottom: Short.h * 0.14,
-                            top: Short.h * 0.18,
-                            left: Short.w * 0.03,
-                            right: Short.w * 0.03),
-                        child: Card(
-                          elevation: 15.0,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Center(
-                                  child: FlatButton(
-                                onPressed: _animate,
-                                child: Text(
-                                  "Login via Email / Phone",
-                                  style: TextStyle(
-                                      color: Colors.green,
-                                      fontSize: Short.h * 0.025),
-                                ),
-                              )),
-                              Row(children: <Widget>[
-                                Expanded(
-                                  child: new Container(
-                                      margin: const EdgeInsets.only(
-                                          left: 10.0, right: 20.0),
-                                      child: Divider(
-                                        color: Colors.grey,
-                                        height: 36,
-                                      )),
-                                ),
-                                Material(
-                                    color: Colors.white,
-                                    child: Text(
-                                      "or",
-                                      style: TextStyle(
-                                          color: Colors.grey,
-                                          fontSize: Short.h * 0.02),
-                                    )),
-                                Expanded(
-                                  child: new Container(
-                                      margin: const EdgeInsets.only(
-                                          left: 20.0, right: 10.0),
-                                      child: Divider(
-                                        color: Colors.grey,
-                                        height: 36,
-                                      )),
-                                ),
-                              ]),
-                              Center(
-                                  child: Padding(
-                                padding: EdgeInsets.only(
-                                    top: Short.h * 0.02,
-                                    bottom: Short.h * 0.02),
-                                child: FlatButton(
-                                  onPressed: () {
-                                    print("Login via otp");
-                                  },
-                                  child: Text(
-                                    "Login via OTP",
-                                    style: TextStyle(
-                                        color: Colors.green,
-                                        fontSize: Short.h * 0.025),
-                                  ),
-                                ),
-                              )),
-                              Padding(
-                                padding: EdgeInsets.only(
-                                    top: Short.h * 0.02,
-                                    bottom: Short.h * 0.05),
-                                child: Divider(
-                                    color: Colors.grey[300],
-                                    thickness: Short.h * 0.01),
-                              ),
-                              Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: <Widget>[
-                                    Material(
-                                        color: Colors.white,
-                                        child: Text(
-                                          "Don't have an account ? ",
-                                          style: TextStyle(
-                                              color: Colors.grey,
-                                              fontSize: Short.h * 0.025),
-                                        )),
-                                    FlatButton(
-                                      onPressed: () {
-                                        print("Forgot Password");
-                                      },
-                                      child: Text(
-                                        "Sign Up",
-                                        style: TextStyle(
-                                            color: Colors.green,
-                                            fontSize: Short.h * 0.025),
-                                      ),
-                                    ),
-                                  ]),
-                            ],
-                          ),
-                        )),
-                  )
+                ?LoginBftrAnim(context,_animate)
                 : Container(
                     key: k2,
                     height:Short.h*0.82,
