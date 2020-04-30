@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
 
             'Main':(BuildContext context)=> new FirstScreen(),
              'Desc':(BuildContext context)=> new Description(),
-           'SignUP': (BuildContext context) => new SignUp(),
+           'SignUp': (BuildContext context) => new SignUp(),
         });
   }
 }

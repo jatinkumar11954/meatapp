@@ -83,7 +83,19 @@ Widget Carousel(BuildContext context) {
     }).toList(),
   );
 }
+class widget extends StatefulWidget {
+  @override
+  _widgetState createState() => _widgetState();
+}
 
+class _widgetState extends State<widget> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      
+    );
+  }
+}
 UniqueKey k1 = UniqueKey();
 Widget LoginBftrAnim(BuildContext context, Function ch, Function loginFalse) {
   return Container(
@@ -168,7 +180,7 @@ Widget LoginBftrAnim(BuildContext context, Function ch, Function loginFalse) {
                               color: Colors.grey, fontSize: Short.h * 0.025),
                         )),
                     FlatButton(
-                      onPressed: loginFalse,
+                      onPressed:() =>Navigator.pushNamed(context,'SignUp'),
                       child: Text(
                         "Sign Up",
                         style: TextStyle(
@@ -182,7 +194,7 @@ Widget LoginBftrAnim(BuildContext context, Function ch, Function loginFalse) {
   );
 }
 
-Widget SignUp(
+Widget SigUp(
     BuildContext context, Function loginTrue, Function _toggle, UniqueKey k3,GlobalKey _form) {
   TextEditingController email;
   TextEditingController pwd;

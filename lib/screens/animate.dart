@@ -355,7 +355,7 @@ class _LoginAState extends State<LoginA> {
                                   ]),
                             ]),
                           )
-                        : SignUp(context, loginTrue, _toggle, k3,_form))),
+                        : SigUp(context, loginTrue, _toggle, k3,_form))),
       ),
     ]);
   }
