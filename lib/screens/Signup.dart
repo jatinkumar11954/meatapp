@@ -1,6 +1,7 @@
 import 'package:meatapp/adjust/short.dart';
 import 'package:meatapp/screens/animate.dart';
 import 'package:flutter/material.dart';
+import 'package:meatapp/screens/animate.dart'as ani;
 class SignUp extends StatefulWidget {
   @override
   _SignUpState createState() => _SignUpState();
@@ -19,8 +20,11 @@ void loginTrue(){
   });
 
 }
-  TextEditingController email;
-  TextEditingController pwd;
+  TextEditingController fullName;
+  TextEditingController phoneNumber;
+  TextEditingController signUPemail;
+  TextEditingController signUppwd;
+  TextEditingController address;
     bool showPwd = true;
   Icon _icon = Icon(
     Icons.visibility,
@@ -29,8 +33,11 @@ void loginTrue(){
   UniqueKey k3 = UniqueKey();
    void initState() {
     // TODO: implement initState
-    email = new TextEditingController();
-    pwd = new TextEditingController();
+  fullName = new TextEditingController();
+    phoneNumber = new TextEditingController();
+    signUPemail = new TextEditingController();
+    signUppwd= new TextEditingController();
+    address = new TextEditingController();
     super.initState();
   }
     void _toggle() {
@@ -47,7 +54,10 @@ void loginTrue(){
   }
   @override
   Widget build(BuildContext context) {
-    return Container(key: k3,
+    return Container
+
+    (
+      key: k3,
                     height:Short.h*0.82,
                     width: Short.w,
 
@@ -95,7 +105,7 @@ void loginTrue(){
                                         borderRadius: BorderRadius.circular(
                                             Short.h * 2.5)),
                                   ),
-                                  controller: email,
+                                  controller: signUPemail,
                                   keyboardType: TextInputType.emailAddress,
                                   // validator: emailValidator,
                                 ),
@@ -127,7 +137,7 @@ void loginTrue(){
                                         borderRadius: BorderRadius.circular(
                                             Short.h * 2.5)),
                                   ),
-                                  controller: pwd,
+                                  controller: signUppwd,
                                   keyboardType: TextInputType.visiblePassword,
                                   validator: pwdValidator,
                                 ),

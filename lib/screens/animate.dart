@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:meatapp/adjust/short.dart';
 import 'package:meatapp/adjust/widget.dart';
-import 'package:meatapp/screens/Signup.dart';
+// import 'package:meatapp/screens/Signup.dart';
 
 class LoginA extends StatefulWidget {
   @override
@@ -19,6 +19,8 @@ class _LoginAState extends State<LoginA> {
 
   TextEditingController email;
   TextEditingController pwd;
+
+
   bool showPwd = true;
   bool login = true;
 
@@ -30,6 +32,8 @@ class _LoginAState extends State<LoginA> {
     // TODO: implement initState
     email = new TextEditingController();
     pwd = new TextEditingController();
+  
+   
     super.initState();
   }
 
@@ -48,7 +52,7 @@ class _LoginAState extends State<LoginA> {
 
   void loginFalse() {
     setState(() {
-      _child=false;
+      _child = false;
       login = false;
     });
   }
@@ -67,6 +71,7 @@ class _LoginAState extends State<LoginA> {
       GlobalKey<FormState>(debugLabel: "key2");
   UniqueKey k1 = UniqueKey();
   UniqueKey k2 = UniqueKey();
+  UniqueKey k3 = UniqueKey();
 
   @override
   Widget build(BuildContext context) {
@@ -103,7 +108,7 @@ class _LoginAState extends State<LoginA> {
 //        );
 //    },
             child: _child
-                ? LoginBftrAnim(context, _animate,loginFalse)
+                ? LoginBftrAnim(context, _animate, loginFalse)
                 : AnimatedSwitcher(
                     duration: const Duration(milliseconds: 950),
                     transitionBuilder:
@@ -350,7 +355,7 @@ class _LoginAState extends State<LoginA> {
                                   ]),
                             ]),
                           )
-                        : SignUp(loginTrue: login))),
+                        : SignUp(context, loginTrue, _toggle, k3,_form))),
       ),
     ]);
   }

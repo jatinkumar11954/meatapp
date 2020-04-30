@@ -3,7 +3,7 @@ import 'package:meatapp/screens/Description.dart';
 import 'package:meatapp/screens/FirestScreen.dart';
 import 'package:meatapp/screens/animate.dart';
 import 'package:meatapp/screens/login.dart';
-
+import 'screens/Signup.dart';
 
 
 void main() => runApp(MyApp());
@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
 
             'Main':(BuildContext context)=> new FirstScreen(),
              'Desc':(BuildContext context)=> new Description(),
-          //  'Dewsc': (BuildContext context) => new Desc(),
+           'SignUP': (BuildContext context) => new SignUp(),
         });
   }
 }
