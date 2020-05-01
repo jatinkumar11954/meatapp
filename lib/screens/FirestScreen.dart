@@ -10,15 +10,14 @@ class FirstScreen extends StatefulWidget {
 
 class _FirstScreenState extends State<FirstScreen> {
   bool isVisible = true;
+    List<String> _dropList = ['English', "Telugu", "Hindi"];
+  String _selected = "Select Location";
   @override
   Widget build(BuildContext context) {
     Short().init(context);
     final appbar = AppBar(
       backgroundColor: Colors.green,
       // Color.fromRGBO(191, 32, 37, 1.0),
-      // actions: <Widget>[Row(
-      //    children: <Widget>[IconButton(icon: Icon(Icons.arrow_back), onPressed:()=>Navigator.pop(context)),Draw(context)]
-      // )],
       title: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -49,92 +48,45 @@ class _FirstScreenState extends State<FirstScreen> {
         drawer: Draw(context),
         body: WillPopScope(
           onWillPop: () {
+            // Navigator.pushNamed(context,''),
             Navigator.pop(context);
           },
           child: Container(
-              child: CustomScrollView(//custom scroll
+              child: CustomScrollView(
             slivers: <Widget>[
               SliverList(
                   delegate: SliverChildListDelegate([
-                Visibility(
-                  child: Stack(
-                    children: <Widget>[
-                      Align(
-                        alignment: Alignment.topLeft,
-                        child: IconButton(
-                            icon: Icon(Icons.cancel, color: Colors.green),
-                            onPressed: visible),
-                      ),
-                      Align(
-                          heightFactor: 1.5,
-                          widthFactor: 1.5,
-                          alignment: Alignment.center,
-                          child: SizedBox(
-                            width:w*0.6,
-                              child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              // RichText(text: null),
-                              RichText(
-                                text: TextSpan(
-                                    text: 'Get',
-                                    style: TextStyle(
-                                        color: Colors.black, fontSize: 18),
-                                    children: <TextSpan>[
-                                      TextSpan(
-                                        text: ' ₹ 50 OFF  ',
-                                        style: TextStyle(
-                                            color: Colors.green,
-                                            fontSize: h * 0.025,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      TextSpan(
-                                        text: 'on your',
-                                        style: TextStyle(
-                                            color: Colors.black, fontSize: 18),
-                                      )
-                                    ]),
-                              ),
-
-                              Text(
-                                "1st App Order above 249 ",
-                                style: TextStyle(
-                                    color: Colors.black, fontSize: 18),
-                              ),
-                              // Text("data"),
-                              Text("UseCode App50",
-                                  style: TextStyle(
-                                      color: Colors.green,
-                                      fontSize: h * 0.025,
-                                      fontWeight: FontWeight.bold))
-                            ],
-                          )
-                              // Image.asset("img/location.png")
-                              )),
-                      Align(
-                          alignment: Alignment.topRight,
-                          child: Padding(
-                            padding: EdgeInsets.only(top: 30.0, right: 10),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(40),
-                              child: RaisedButton(
-                                color: Colors.green,
+               Padding(
+                 padding: EdgeInsets.only(left:18.0,top:4,bottom: 5),
+                 child: Row(children: <Widget>[
+                   Icon(Icons.location_on,color: Colors.green,size: 35,),
+                   DropdownButton<String>(
+                      iconEnabledColor: Colors.grey,
+                      underline: Container(),
+                      items: _dropList
+                          .map((drop) => DropdownMenuItem<String>(
                                 child: Text(
-                                  "GetApp",
+                                  drop,
                                   style: TextStyle(
-                                      color: Colors.white, fontSize: 16),
+                                    color: Colors.black,
+                                  ),
                                 ),
-                                onPressed: () {
-                                  print("Get App button CLicked");
-                                },
-                              ),
-                            ),
-                          ))
-                    ],
-                  ),
-                  visible: isVisible,
-                ),
+                                value: drop,
+                              ))
+                          .toList(),
+                      onChanged: (String value) {
+                        setState(() => _selected = value);
+                      },
+                      hint: Text(
+                        _selected,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 18,fontWeight: FontWeight.w500
+                        ),
+                      ),
+                    ),
+                 ],),
+               ),
                 Carousel(context),
                 SizedBox(height: h * 0.05),
                 Center(

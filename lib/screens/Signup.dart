@@ -18,8 +18,8 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
   Icon _icon = Icon(
     Icons.visibility,
   );
-  final GlobalKey<FormState> _form = GlobalKey<FormState>(debugLabel: "key2");
-  UniqueKey k3 = UniqueKey();
+  GlobalKey<FormState> _form = GlobalKey<FormState>(debugLabel: "key2");
+  
   AnimationController _controller;
   Animation<Offset> animation;
   void initState() {
@@ -62,7 +62,7 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     var child = SingleChildScrollView(
       child: Container(
-        key: k3,
+     
         height: Short.h * 0.82,
         width: Short.w,
 

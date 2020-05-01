@@ -9,13 +9,7 @@ class LoginA extends StatefulWidget {
 }
 
 class _LoginAState extends State<LoginA> {
-  void _animate() {
-    // CircularProgressIndicator()
-    setState(() {
-      print("animate");
-      _child = false;
-    });
-  }
+
 
   TextEditingController email;
   TextEditingController pwd;
@@ -54,15 +48,19 @@ class _LoginAState extends State<LoginA> {
       login = false;
     });
   }
-
+bool ind=true;
   bool _child = true;
-  static final GlobalKey<FormState> _formKey =
+ GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(debugLabel: "key1");
-
+UniqueKey k1 = UniqueKey();
   UniqueKey k2 = UniqueKey();
 
   @override
   Widget build(BuildContext context) {
+   ind=ModalRoute.of(context).settings.arguments;
+   if(ind==false){
+     loginFalse();
+   }
     Short().init(context);
     double _h = Short.h * 0.83;
 
@@ -96,7 +94,7 @@ class _LoginAState extends State<LoginA> {
 //        );
 //    },
               child: _child
-                  ? LoginBftrAnim(context, _animate, loginFalse)
+                  ? LoginBftrAnim(context, loginFalse,k1)
                   : Container(
                       key: k2,
                       height: Short.h * 0.82,

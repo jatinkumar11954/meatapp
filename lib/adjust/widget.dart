@@ -96,8 +96,8 @@ class _widgetState extends State<widget> {
     );
   }
 }
-UniqueKey k1 = UniqueKey();
-Widget LoginBftrAnim(BuildContext context, Function ch, Function loginFalse) {
+
+Widget LoginBftrAnim(BuildContext context, Function loginFalse,UniqueKey k1) {
   return Container(
     key: k1,
     height: Short.h * 0.8,
@@ -115,7 +115,7 @@ Widget LoginBftrAnim(BuildContext context, Function ch, Function loginFalse) {
             children: <Widget>[
               Center(
                   child: FlatButton(
-                onPressed: ch,
+                onPressed: loginFalse,
                 child: Text(
                   "Login via Email / Phone",
                   style:
