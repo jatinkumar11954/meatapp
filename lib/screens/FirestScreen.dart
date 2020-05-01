@@ -52,7 +52,7 @@ class _FirstScreenState extends State<FirstScreen> {
             Navigator.pop(context);
           },
           child: Container(
-              child: CustomScrollView(
+              child: CustomScrollView(//custom scroll
             slivers: <Widget>[
               SliverList(
                   delegate: SliverChildListDelegate([
