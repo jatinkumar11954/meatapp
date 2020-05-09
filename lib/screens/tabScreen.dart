@@ -12,7 +12,7 @@ class _TabState extends State<Tab> {
   Widget build(BuildContext context) {
     final GlobalKey<ScaffoldState> _scaffoldKey =
         new GlobalKey<ScaffoldState>();
-    final i = ModalRoute.of(context).settings.arguments;
+    final index = ModalRoute.of(context).settings.arguments;
     Short().init(context);
 
     var w = Short.w;
@@ -43,7 +43,7 @@ class _TabState extends State<Tab> {
             top: 10,
             child: SizedBox(
               width: w * 0.83,
-              child: Text(Short.catgry[i]),
+              child: Text(Short.catgry[index]),
             )),
       ]),
 
@@ -58,6 +58,7 @@ class _TabState extends State<Tab> {
     var h = Short.h - appbar.preferredSize.height;
 
     return DefaultTabController(
+      initialIndex: index,
       length: 4,
       child: new Scaffold(
         appBar: appbar,
