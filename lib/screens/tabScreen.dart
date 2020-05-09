@@ -1,0 +1,117 @@
+import 'package:flutter/material.dart';
+import 'package:meatapp/adjust/short.dart';
+import 'package:meatapp/adjust/widget.dart';
+
+class Tab extends StatefulWidget {
+  @override
+  _TabState createState() => _TabState();
+}
+
+class _TabState extends State<Tab> {
+  @override
+  Widget build(BuildContext context) {
+    final GlobalKey<ScaffoldState> _scaffoldKey =
+        new GlobalKey<ScaffoldState>();
+    final i = ModalRoute.of(context).settings.arguments;
+    Short().init(context);
+
+    var w = Short.w;
+    final appbar = AppBar(
+      automaticallyImplyLeading: false,
+      backgroundColor: Colors.green,
+      titleSpacing: 0,
+
+      title: Stack(children: <Widget>[
+        Align(
+            alignment: Alignment.centerLeft,
+            child: IconButton(
+                icon: Icon(Icons.arrow_back_ios),
+                onPressed: () => Navigator.pop(context))),
+        Align(
+          widthFactor: 2.3,
+          alignment: Alignment.center,
+          child: IconButton(
+              icon: new Icon(Icons.view_headline),
+              onPressed: () {
+                print(
+                    "drawer loremLabore duis Lorem id veniam id eu eiusmod dolor dolor eu culpa irure.");
+                _scaffoldKey.currentState.openDrawer();
+              }),
+        ),
+        Positioned(
+            left: 80,
+            top: 10,
+            child: SizedBox(
+              width: w * 0.83,
+              child: Text(Short.catgry[i]),
+            )),
+      ]),
+
+      // Image.asset(
+      //   'images/logo.png',
+      //   fit: BoxFit.fill,
+      //   height: Short.h * 4.5,
+      // ),
+    );
+    print(Short.h.toString());
+    print(Short.w.toString());
+    var h = Short.h - appbar.preferredSize.height;
+
+    return DefaultTabController(
+      length: 4,
+      child: new Scaffold(
+        appBar: appbar,
+        drawer: Draw(context),
+        body: TabBarView(
+          children: [
+            new Container(
+              color: Colors.yellow,
+            ),
+            ListView.builder(
+              itemCount: Short.catgry.length,
+              itemBuilder: (ctx, i) {
+                return Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      height: 202,
+                      width: w*0.7,
+                      child: GridTile(
+                          child: Image.network(
+                              "http://carigarifurniture.com/product_images/h/img_6539__14221_thumb.jpg",
+                              fit: BoxFit.contain,),
+                          footer: GridTileBar(
+                              backgroundColor: Colors.amber,
+                              title: Text(Short.chicken[i]))),
+                    ),
+                  ),
+                );
+              },
+            ),
+            // new Container(color: Colors.orange,),
+            new Container(
+              color: Colors.lightGreen,
+            ),
+            new Container(
+              color: Colors.red,
+            ),
+          ],
+        ),
+        bottomNavigationBar: new TabBar(
+          tabs: [
+            new Icon(Icons.home),
+            new Icon(Icons.rss_feed),
+            new Icon(Icons.perm_identity),
+            new Icon(Icons.settings),
+          ],
+          labelColor: Colors.yellow,
+          unselectedLabelColor: Colors.blue,
+          indicatorSize: TabBarIndicatorSize.label,
+          indicatorPadding: EdgeInsets.all(5.0),
+          indicatorColor: Colors.red,
+        ),
+        backgroundColor: Colors.white,
+      ),
+    );
+  }
+}

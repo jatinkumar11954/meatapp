@@ -154,6 +154,7 @@ Widget LoginBftrAnim(BuildContext context, Function loginFalse,UniqueKey k1) {
                 child: FlatButton(
                   onPressed: () {
                     print("Login via otp");
+                    Navigator.pushNamed(context, "LoginOtp");
                   },
                   child: Text(
                     "Login via OTP",

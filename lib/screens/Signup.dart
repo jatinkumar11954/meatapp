@@ -31,7 +31,7 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
     address = new TextEditingController();
     super.initState();
     _controller = AnimationController(
-      duration: const Duration(milliseconds: 500),
+      duration: const Duration(milliseconds:900),
       vsync: this,
     );
     animation = Tween<Offset>(begin: Offset(0.0, 1.0), end: Offset(0.0, 0.0))
@@ -60,206 +60,213 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    var child = SingleChildScrollView(
-      child: Container(
+    var child = Container(
      
-        height: Short.h * 0.82,
-        width: Short.w,
+      height: Short.h * 0.82,
+      width: Short.w,
 
-        // Define how long the animation should take.
-        // margin: EdgeInsets.only(top: Short.h * 0.18),
-        decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(80), topRight: Radius.circular(80))),
-        child: Column(
-          children: <Widget>[
-            Center(
-              child: Material(
-                color: Colors.white,
-                child: Text(
-                  "SignUp",
-                  style:
-                      TextStyle(color: Colors.green, fontSize: Short.h * 0.046),
+      margin: EdgeInsets.only(top: Short.h * 0.18),
+      decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(80), topRight: Radius.circular(80))),
+      child: Column(
+        children: <Widget>[
+          Center(
+            child: Material(
+              color: Colors.white,
+              child: Text(
+                "SignUp",
+                style:
+                    TextStyle(color: Colors.green, fontSize: Short.h * 0.046),
+              ),
+            ),
+          ),
+          // SizedBox(height:Short.h*0.1),
+
+          Form(
+            key: _form,
+            child: Column(
+              children: <Widget>[
+                Padding(
+                  padding: EdgeInsets.only(
+                      top: 25, left: Short.w * 0.07, right: Short.w * 0.07),
+                  child: Material(
+                    color: Colors.white,
+                    child: TextFormField(
+                      decoration: InputDecoration(
+                        labelStyle: TextStyle(
+                            color: Colors.grey, fontSize: Short.h * 0.02),
+                        labelText: 'Full Name',
+                        hintText: "Enter your Full Name",
+                        hintStyle: TextStyle(
+                            color: Colors.grey, fontSize: Short.h * 0.02),
+                        border: OutlineInputBorder(
+                            borderRadius:
+                                BorderRadius.circular(Short.h * 2.5)),
+                      ),
+                      controller: signUPemail,
+                      keyboardType: TextInputType.text,
+                      // validator: emailValidator,
+                    ),
+                  ),
                 ),
-              ),
+                Padding(
+                  padding: EdgeInsets.only(
+                      top: 25, left: Short.w * 0.07, right: Short.w * 0.07),
+                  child: Material(
+                    color: Colors.white,
+                    child: TextFormField(
+                      obscureText: showPwd,
+                      decoration: InputDecoration(
+                        labelStyle: TextStyle(
+                            color: Colors.grey, fontSize: Short.h * 0.02),
+                        labelText: 'Email',
+                        hintText: "Enter your Email Address",
+                        hintStyle: TextStyle(
+                            color: Colors.grey, fontSize: Short.h * 0.02),
+                      
+                        border: OutlineInputBorder(
+                            borderRadius:
+                                BorderRadius.circular(Short.h * 2.5)),
+                      ),
+                      controller:signUPemail,
+                      keyboardType: TextInputType.emailAddress,
+                      validator: pwdValidator,
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(
+                      top: 25, left: Short.w * 0.07, right: Short.w * 0.07),
+                  child: Material(
+                    color: Colors.white,
+                    child: TextFormField(
+                      obscureText: showPwd,
+                      decoration: InputDecoration(
+                        labelStyle: TextStyle(
+                            color: Colors.grey, fontSize: Short.h * 0.02),
+                      labelText: 'Mobile Number',
+                        hintText: "Enter your Mobile Number",
+                        hintStyle: TextStyle(
+                            color: Colors.grey, fontSize: Short.h * 0.02),
+                      
+                        border: OutlineInputBorder(
+                            borderRadius:
+                                BorderRadius.circular(Short.h * 2.5)),
+                      ),
+                      controller: phoneNumber,
+                      keyboardType: TextInputType.number,
+                      validator: pwdValidator,
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(
+                      top: 25, left: Short.w * 0.07, right: Short.w * 0.07),
+                  child: Material(
+                    color: Colors.white,
+                    child: TextFormField(
+                      obscureText: showPwd,
+                      decoration: InputDecoration(
+                        labelStyle: TextStyle(
+                            color: Colors.grey, fontSize: Short.h * 0.02),
+                        labelText: 'Address',
+                        hintText: "Enter your Address",
+                        hintStyle: TextStyle(
+                            color: Colors.grey, fontSize: Short.h * 0.02),
+                      
+                        border: OutlineInputBorder(
+                            borderRadius:
+                                BorderRadius.circular(Short.h * 2.5)),
+                      ),
+                      controller: address,
+                      keyboardType: TextInputType.multiline,
+                      validator: pwdValidator,
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(
+                      top: 25, left: Short.w * 0.07, right: Short.w * 0.07),
+                  child: Material(
+                    color: Colors.white,
+                    child: TextFormField(
+                      obscureText: showPwd,
+                      decoration: InputDecoration(
+                        labelStyle: TextStyle(
+                            color: Colors.grey, fontSize: Short.h * 0.02),
+                        labelText: 'Password',
+                        hintText: "Enter your Password",
+                        hintStyle: TextStyle(
+                            color: Colors.grey, fontSize: Short.h * 0.02),
+                        suffixIcon: IconButton(
+                          icon: _icon,
+                          onPressed: _toggle,
+                        ),
+                        border: OutlineInputBorder(
+                            borderRadius:
+                                BorderRadius.circular(Short.h * 2.5)),
+                      ),
+                      controller: signUppwd,
+                      keyboardType: TextInputType.visiblePassword,
+                      validator: pwdValidator,
+                    ),
+                  ),
+                ),
+              ],
             ),
-            // SizedBox(height:Short.h*0.1),
-
-            Form(
-              key: _form,
-              child: Column(
-                children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.only(
-                        top: 25, left: Short.w * 0.07, right: Short.w * 0.07),
-                    child: Material(
-                      color: Colors.white,
-                      child: TextFormField(
-                        decoration: InputDecoration(
-                          labelStyle: TextStyle(
-                              color: Colors.grey, fontSize: Short.h * 0.02),
-                          labelText: 'Full Name',
-                          hintText: "Enter your Full Name",
-                          hintStyle: TextStyle(
-                              color: Colors.grey, fontSize: Short.h * 0.02),
-                          border: OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.circular(Short.h * 2.5)),
+          ),      Padding(
+                          padding: EdgeInsets.only(top: Short.h * 0.045),
+                          child: RaisedButton(
+                              padding: EdgeInsets.only(
+                                  top: Short.h * 0.01,
+                                  bottom: Short.h * 0.01,
+                                  left: Short.w * 0.3,
+                                  right: Short.w * 0.3),
+                              color: Colors.green,
+                              onPressed: () {
+                                print("Verify OTP button is clicked");
+                              },
+                              shape: RoundedRectangleBorder(
+                                borderRadius: new BorderRadius.circular(50.0),
+                              ),
+                              child: Text("SIGN UP",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 22))),
                         ),
-                        controller: signUPemail,
-                        keyboardType: TextInputType.emailAddress,
-                        // validator: emailValidator,
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(
-                        top: 25, left: Short.w * 0.07, right: Short.w * 0.07),
-                    child: Material(
-                      color: Colors.white,
-                      child: TextFormField(
-                        obscureText: showPwd,
-                        decoration: InputDecoration(
-                          labelStyle: TextStyle(
-                              color: Colors.grey, fontSize: Short.h * 0.02),
-                          labelText: 'Mobile Number',
-                          hintText: "Enter your Mobile Number",
-                          hintStyle: TextStyle(
-                              color: Colors.grey, fontSize: Short.h * 0.02),
-                          suffixIcon: IconButton(
-                            icon: _icon,
-                            onPressed: _toggle,
-                          ),
-                          border: OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.circular(Short.h * 2.5)),
-                        ),
-                        controller: fullName,
-                        keyboardType: TextInputType.visiblePassword,
-                        validator: pwdValidator,
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(
-                        top: 25, left: Short.w * 0.07, right: Short.w * 0.07),
-                    child: Material(
-                      color: Colors.white,
-                      child: TextFormField(
-                        obscureText: showPwd,
-                        decoration: InputDecoration(
-                          labelStyle: TextStyle(
-                              color: Colors.grey, fontSize: Short.h * 0.02),
-                          labelText: 'Password',
-                          hintText: "Enter your Password",
-                          hintStyle: TextStyle(
-                              color: Colors.grey, fontSize: Short.h * 0.02),
-                          suffixIcon: IconButton(
-                            icon: _icon,
-                            onPressed: _toggle,
-                          ),
-                          border: OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.circular(Short.h * 2.5)),
-                        ),
-                        controller: phoneNumber,
-                        keyboardType: TextInputType.visiblePassword,
-                        validator: pwdValidator,
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(
-                        top: 25, left: Short.w * 0.07, right: Short.w * 0.07),
-                    child: Material(
-                      color: Colors.white,
-                      child: TextFormField(
-                        obscureText: showPwd,
-                        decoration: InputDecoration(
-                          labelStyle: TextStyle(
-                              color: Colors.grey, fontSize: Short.h * 0.02),
-                          labelText: 'Password',
-                          hintText: "Enter your Password",
-                          hintStyle: TextStyle(
-                              color: Colors.grey, fontSize: Short.h * 0.02),
-                          suffixIcon: IconButton(
-                            icon: _icon,
-                            onPressed: _toggle,
-                          ),
-                          border: OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.circular(Short.h * 2.5)),
-                        ),
-                        controller: signUppwd,
-                        keyboardType: TextInputType.visiblePassword,
-                        validator: pwdValidator,
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(
-                        top: 25, left: Short.w * 0.07, right: Short.w * 0.07),
-                    child: Material(
-                      color: Colors.white,
-                      child: TextFormField(
-                        obscureText: showPwd,
-                        decoration: InputDecoration(
-                          labelStyle: TextStyle(
-                              color: Colors.grey, fontSize: Short.h * 0.02),
-                          labelText: 'Password',
-                          hintText: "Enter your Password",
-                          hintStyle: TextStyle(
-                              color: Colors.grey, fontSize: Short.h * 0.02),
-                          suffixIcon: IconButton(
-                            icon: _icon,
-                            onPressed: _toggle,
-                          ),
-                          border: OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.circular(Short.h * 2.5)),
-                        ),
-                        controller: signUppwd,
-                        keyboardType: TextInputType.visiblePassword,
-                        validator: pwdValidator,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Material(
-                      color: Colors.white,
-                      child: Text(
-                        "Don't have an account ? ",
-                        style: TextStyle(
-                            color: Colors.grey, fontSize: Short.h * 0.025),
-                      )),
-                  FlatButton(
-                    onPressed: () {
-                      Navigator.pushNamed(context, "LoginA", arguments: false);
-                      print("login");
-                    },
+          Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Material(
+                    color: Colors.white,
                     child: Text(
-                      "Login",
+                      "Already have an account ?",
                       style: TextStyle(
-                          color: Colors.green, fontSize: Short.h * 0.025),
-                    ),
+                          color: Colors.grey, fontSize: Short.h * 0.025),
+                    )),
+                FlatButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, "LoginA", arguments: false);
+                    print("login");
+                  },
+                  child: Text(
+                    "Login",
+                    style: TextStyle(
+                        color: Colors.green, fontSize: Short.h * 0.025),
                   ),
-                ]),
-          ],
-        ),
+                ),
+              ]),
+        ],
       ),
     );
     return
          Scaffold(
           body: 
-          // SingleChildScrollView(
-        //     child:
+          SingleChildScrollView(
+            child:
         Stack(
       children: <Widget>[
         Align(
@@ -282,7 +289,7 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
               },
             )),
       ],
-      //   ),
+        ),
       ),
     );
   }

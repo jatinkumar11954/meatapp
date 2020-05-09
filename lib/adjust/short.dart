@@ -15,6 +15,30 @@ class Short {
     2: "SEA FOOD",
     3: "EGGS",
   };
+    static var chicken = {
+    0: "ChickenCurryLeg",
+    1: "ChickenCurry",
+    2: "ChickenLeg",
+    3: "Chicken65",
+  };
+     static var mutton = {
+    0: " MuttonCurryLeg",
+    1: " MuttonCurry",
+    2: " MuttonLeg",
+    3: " Mutton65",
+  };
+     static var egg = {
+    0: " EggCurryLeg",
+    1: " EggCurry",
+    2: " EggLeg",
+    3: " Egg65",
+  };
+     static var sea = {
+    0: " SeaCurryLeg",
+    1: " SeaCurry",
+    2: " SeaLeg",
+    3: " Sea65",
+  };
   void init(BuildContext context) {
     h = (MediaQuery.of(context).size.height);
     w = (MediaQuery.of(context).size.width);

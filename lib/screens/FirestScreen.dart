@@ -113,7 +113,7 @@ class _FirstScreenState extends State<FirstScreen> {
                       child: Center(
                         child: GestureDetector(
                           onTap: () {
-                            Navigator.pushNamed(context, "Desc", arguments: i);
+                            Navigator.pushNamed(context, "tab", arguments: i);
                           },
                           child: Column(
                             children: <Widget>[

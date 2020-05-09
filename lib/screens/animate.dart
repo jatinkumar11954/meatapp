@@ -193,8 +193,8 @@ UniqueKey k1 = UniqueKey();
                               padding: EdgeInsets.only(
                                   top: Short.h * 0.01,
                                   bottom: Short.h * 0.01,
-                                  left: Short.w * 0.30,
-                                  right: Short.w * 0.30),
+                                  left: Short.w * 0.33,
+                                  right: Short.w * 0.33),
                               color: Colors.green,
                               onPressed: () {
                                 print("Login button is clicked");
@@ -202,10 +202,10 @@ UniqueKey k1 = UniqueKey();
                               shape: RoundedRectangleBorder(
                                 borderRadius: new BorderRadius.circular(50.0),
                               ),
-                              child: Text("Login",
+                              child: Text("LOGIN",
                                   style: TextStyle(
                                       color: Colors.white,
-                                      fontSize: Short.h * 0.04))),
+                                      fontSize: 25))),
                         ),
                         Row(children: <Widget>[
                           Expanded(
@@ -241,7 +241,7 @@ UniqueKey k1 = UniqueKey();
                               top: Short.h * 0.018, bottom: Short.h * 0.018),
                           child: FlatButton(
                             onPressed: () {
-                              print("Login via otp");
+                             Navigator.pushNamed(context, "LoginOtp");
                             },
                             child: Text(
                               "Login via OTP",
