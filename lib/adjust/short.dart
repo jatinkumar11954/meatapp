@@ -9,7 +9,14 @@ class Short {
     2: "http://carigarifurniture.com/product_images/w/cbb92cd2_d785_4288_a51a_88766576d6aa_1___10086_thumb.jpg",
     3: "http://carigarifurniture.com/product_images/h/img_6539__14221_thumb.jpg",
   };
-  static var catgry = {
+  static var cat = {
+    0: chicken,
+    1: mutton,
+    2: sea,
+    3: egg
+  };
+  
+    static var catgry = {
     0: "CHICKEN",
     1: "MUTTON",
     2: "SEA FOOD",
@@ -39,6 +46,8 @@ class Short {
     2: " SeaLeg",
     3: " Sea65",
   };
+
+  get s => catgry;
   void init(BuildContext context) {
     h = (MediaQuery.of(context).size.height);
     w = (MediaQuery.of(context).size.width);

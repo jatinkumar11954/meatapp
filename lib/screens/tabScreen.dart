@@ -1,5 +1,8 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:meatapp/adjust/short.dart';
+import 'package:meatapp/adjust/short.dart' as soty;
+
 import 'package:meatapp/adjust/widget.dart';
 
 class Tab extends StatefulWidget {
@@ -64,42 +67,55 @@ class _TabState extends State<Tab> {
         appBar: appbar,
         drawer: Draw(context),
         body: TabBarView(
-          children: [
-            new Container(
-              color: Colors.yellow,
-            ),
-            ListView.builder(
-              itemCount: Short.catgry.length,
-              itemBuilder: (ctx, i) {
-                return Center(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      height: 202,
-                      width: w*0.7,
-                      child: GridTile(
-                          child: Image.network(
-                              "http://carigarifurniture.com/product_images/h/img_6539__14221_thumb.jpg",
-                              fit: BoxFit.contain,),
-                          footer: GridTileBar(
-                              backgroundColor: Colors.amber,
-                              title: Text(Short.chicken[i]))),
+          children: Short.catgry.entries. map((o) {
+
+        // print(soty.o.value);
+            print(Short.cat[o.key][1]);
+            return Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ListView.builder(
+                itemCount: Short.cat[o.key].length,
+                itemBuilder: (ctx, i) {
+print(o.value);
+                  return Center(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        height: 202,
+                        width: w*0.7,
+                        child: GridTile(
+                            child: Image.network(
+                                "http://carigarifurniture.com/product_images/h/img_6539__14221_thumb.jpg",
+                                fit: BoxFit.contain,),
+                            footer: GridTileBar(
+                                backgroundColor: Colors.amber,
+                                title: Text(Short.cat[o.key][i]))),
+                      ),
                     ),
-                  ),
-                );
-              },
-            ),
-            // new Container(color: Colors.orange,),
-            new Container(
-              color: Colors.lightGreen,
-            ),
-            new Container(
-              color: Colors.red,
-            ),
-          ],
-        ),
+                  );
+                },
+              ));
+            
+         
+ 
+          }).toList()),
+        //     new Container(
+        //       color: Colors.yellow,
+        //     ),
+            
+        //     // new Container(color: Colors.orange,),
+        //     new Container(
+        //       color: Colors.lightGreen,
+        //     ),
+        //     new Container(
+        //       color: Colors.red,
+        //     ),
+        //   ],
+        // ),
         bottomNavigationBar: new TabBar(
-          tabs: [
+          tabs: 
+           [
+            
             new Icon(Icons.home),
             new Icon(Icons.rss_feed),
             new Icon(Icons.perm_identity),
