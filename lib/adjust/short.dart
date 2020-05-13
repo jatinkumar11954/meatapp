@@ -13,7 +13,14 @@ class Short {
     0: chicken,
     1: mutton,
     2: sea,
-    3: egg
+    3: egg,4: deal,
+  };
+    static var icon = {
+    0: Icons.home,
+    1: Icons.rss_feed,
+    2: Icons.perm_identity,
+    3: Icons.settings,
+    4: Icons.settings
   };
   
     static var catgry = {
@@ -21,6 +28,7 @@ class Short {
     1: "MUTTON",
     2: "SEA FOOD",
     3: "EGGS",
+    4: "EGGS",
   };
     static var chicken = {
     0: "ChickenCurryLeg",
@@ -41,6 +49,12 @@ class Short {
     3: " Egg65",
   };
      static var sea = {
+    0: " SeaCurryLeg",
+    1: " SeaCurry",
+    2: " SeaLeg",
+    3: " Sea65",
+  };
+  static var deal = {
     0: " SeaCurryLeg",
     1: " SeaCurry",
     2: " SeaLeg",

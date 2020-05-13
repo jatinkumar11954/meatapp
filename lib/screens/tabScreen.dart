@@ -5,12 +5,12 @@ import 'package:meatapp/adjust/short.dart' as soty;
 
 import 'package:meatapp/adjust/widget.dart';
 
-class Tab extends StatefulWidget {
+class TabScreen extends StatefulWidget {
   @override
-  _TabState createState() => _TabState();
+  _TabScreenState createState() => _TabScreenState();
 }
 
-class _TabState extends State<Tab> {
+class _TabScreenState extends State<TabScreen> {
   @override
   Widget build(BuildContext context) {
     final GlobalKey<ScaffoldState> _scaffoldKey =
@@ -46,7 +46,8 @@ class _TabState extends State<Tab> {
             top: 10,
             child: SizedBox(
               width: w * 0.83,
-              child: Text(Short.catgry[index]),
+              child: Text("Fresh Meat"),
+              // Text(Short.catgry[index]),
             )),
       ]),
 
@@ -62,7 +63,7 @@ class _TabState extends State<Tab> {
 
     return DefaultTabController(
       initialIndex: index,
-      length: 4,
+      length: 5,
       child: new Scaffold(
         appBar: appbar,
         drawer: Draw(context),
@@ -80,16 +81,19 @@ print(o.value);
                   return Center(
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: Container(
-                        height: 202,
-                        width: w*0.7,
-                        child: GridTile(
-                            child: Image.network(
-                                "http://carigarifurniture.com/product_images/h/img_6539__14221_thumb.jpg",
-                                fit: BoxFit.contain,),
-                            footer: GridTileBar(
-                                backgroundColor: Colors.amber,
-                                title: Text(Short.cat[o.key][i]))),
+                      child: GestureDetector(
+                                              child: Container(
+                          height: 202,
+                          width: w*0.7,
+                          child: GridTile(
+                              child: Image.network(
+                                  "http://carigarifurniture.com/product_images/h/img_6539__14221_thumb.jpg",
+                                  fit: BoxFit.contain,),
+                              footer: GridTileBar(
+                                  backgroundColor: Colors.amber,
+                                  title: Text(Short.cat[o.key][i]))),
+                        ),
+                        onTap: ()=>Navigator.pushNamed(context,"Desc",arguments:o.key),
                       ),
                     ),
                   );
@@ -114,13 +118,35 @@ print(o.value);
         // ),
         bottomNavigationBar: new TabBar(
           tabs: 
-           [
+          Short.icon.entries. map((p) {
+
+        // print(soty.o.value);
+            print("this is p value${p}");
+            return
+                    Tab(text: "${Short.catgry[p.key]}"
+                    ,icon: Icon(Short.icon[p.key])
+                    );
+          }
+              
             
-            new Icon(Icons.home),
-            new Icon(Icons.rss_feed),
-            new Icon(Icons.perm_identity),
-            new Icon(Icons.settings),
-          ],
+         
+ 
+          ).toList(),
+      //      [
+
+     
+      //  Tab(text: "Add",icon: Icon(Icons.home)),
+      //         Tab(text: "Add",icon: Icon(Icons.rss_feed)),
+
+      //  Tab(text: "Add",icon: Icon(Icons.panorama_fish_eye)),
+
+      //  Tab(text: "Add",icon: Icon(Icons.settings)),
+
+      //       // new Icon(Icons.home),
+      //       // new Icon(Icons.rss_feed),
+      //       // new Icon(Icons.perm_identity),
+      //       // new Icon(Icons.settings),
+      //     ],
           labelColor: Colors.yellow,
           unselectedLabelColor: Colors.blue,
           indicatorSize: TabBarIndicatorSize.label,

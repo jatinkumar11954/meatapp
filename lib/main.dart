@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
           'Second': (BuildContext context) => new SecondScreen(),
           'Desc': (BuildContext context) => new Description(),
           'SignUp': (BuildContext context) => new SignUp(),
-          'tab': (BuildContext context) => new f.Tab(),
+          'tab': (BuildContext context) => new f.TabScreen(),
         });
   }
 }
