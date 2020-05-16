@@ -14,7 +14,7 @@ class _OtpState extends State<Otp> with TickerProviderStateMixin{
     var onTapRecognizer;
 
   TextEditingController textEditingController = TextEditingController();
-    // ..text = "123456";
+                        //  ..text = "123456";
 
   StreamController<ErrorAnimationType> errorController;
 
@@ -59,6 +59,9 @@ class _OtpState extends State<Otp> with TickerProviderStateMixin{
 
   @override
   Widget build(BuildContext context) {
+    int i=ModalRoute.of(context).settings.arguments;
+
+    textEditingController.text="$i";
     var child = Container(
      
       height: Short.h * 0.82,
@@ -172,6 +175,8 @@ class _OtpState extends State<Otp> with TickerProviderStateMixin{
                               color: Colors.green,
                               onPressed: () {
                                 print("Verify OTP button is clicked");
+                                 Navigator.pushReplacementNamed(
+                                                  context, "Main");
                               },
                               shape: RoundedRectangleBorder(
                                 borderRadius: new BorderRadius.circular(50.0),

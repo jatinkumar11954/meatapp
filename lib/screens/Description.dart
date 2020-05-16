@@ -139,7 +139,7 @@ class _DescriptionState extends State<Description> {
                         Text("LOGIN/SIGN UP TO CHECKOUT",
                             style: TextStyle(
                               color: Colors.white,
-                              fontSize: h * 0.028,
+                              fontSize: h * 0.02,
                             )),
                       ],
                     )),

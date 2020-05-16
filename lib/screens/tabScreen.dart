@@ -65,48 +65,59 @@ class _TabScreenState extends State<TabScreen> {
       initialIndex: index,
       length: 5,
       child: new Scaffold(
+        key: _scaffoldKey,
         appBar: appbar,
         drawer: Draw(context),
         body: TabBarView(
-          children: Short.catgry.entries. map((o) {
-
-        // print(soty.o.value);
-            print(Short.cat[o.key][1]);
-            return Padding(
+            children: Short.catgry.entries.map((o) {
+          // print(soty.o.value);
+          print(Short.cat[o.key][1]);
+          return Padding(
               padding: const EdgeInsets.all(8.0),
               child: ListView.builder(
                 itemCount: Short.cat[o.key].length,
                 itemBuilder: (ctx, i) {
-print(o.value);
+                  print(o.value);
                   return Center(
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: GestureDetector(
-                                              child: Container(
+                        child: Container(
                           height: 202,
-                          width: w*0.7,
+                          width: w * 0.7,
+                          decoration: BoxDecoration(boxShadow: [
+                            BoxShadow(
+                              color: Colors.black12,
+                              blurRadius: 5.0, // soften the shadow
+                              spreadRadius: 1.0, //extend the shadow
+                              offset: Offset(
+                                5.0, // Move to right 10  horizontally
+                                5.0, // Move to bottom 10 Vertically
+                              ),
+                            ),
+                          ]),
                           child: GridTile(
                               child: Image.network(
-                                  "http://carigarifurniture.com/product_images/h/img_6539__14221_thumb.jpg",
-                                  fit: BoxFit.contain,),
+                                "http://carigarifurniture.com/product_images/h/img_6539__14221_thumb.jpg",
+                                fit: BoxFit.contain,
+                              ),
                               footer: GridTileBar(
-                                  backgroundColor: Colors.amber,
-                                  title: Text(Short.cat[o.key][i]))),
+                                  backgroundColor: Colors.white,
+                                  title: Text(Short.cat[o.key][i],
+                                      style: TextStyle(color: Colors.black)))),
                         ),
-                        onTap: ()=>Navigator.pushNamed(context,"Desc",arguments:o.key),
+                        onTap: () => Navigator.pushNamed(context, "Desc",
+                            arguments: o.key),
                       ),
                     ),
                   );
                 },
               ));
-            
-         
- 
-          }).toList()),
+        }).toList()),
         //     new Container(
         //       color: Colors.yellow,
         //     ),
-            
+
         //     // new Container(color: Colors.orange,),
         //     new Container(
         //       color: Colors.lightGreen,
@@ -117,43 +128,36 @@ print(o.value);
         //   ],
         // ),
         bottomNavigationBar: new TabBar(
-          tabs: 
-          Short.icon.entries. map((p) {
-
-        // print(soty.o.value);
+          tabs: Short.icon.entries.map((p) {
+            // print(soty.o.value);
             print("this is p value${p}");
-            return
-                    Tab(text: "${Short.catgry[p.key]}"
-                    ,icon: Icon(Short.icon[p.key])
-                    );
-          }
-              
-            
-         
- 
-          ).toList(),
-      //      [
+            return Container(
+              color:Colors.white,
+              child: Tab(
+                  text: "${Short.catgry[p.key]}", icon: Icon(Short.icon[p.key])),
+            );
+          }).toList(),
+          //      [
 
-     
-      //  Tab(text: "Add",icon: Icon(Icons.home)),
-      //         Tab(text: "Add",icon: Icon(Icons.rss_feed)),
+          //  Tab(text: "Add",icon: Icon(Icons.home)),
+          //         Tab(text: "Add",icon: Icon(Icons.rss_feed)),
 
-      //  Tab(text: "Add",icon: Icon(Icons.panorama_fish_eye)),
+          //  Tab(text: "Add",icon: Icon(Icons.panorama_fish_eye)),
 
-      //  Tab(text: "Add",icon: Icon(Icons.settings)),
+          //  Tab(text: "Add",icon: Icon(Icons.settings)),
 
-      //       // new Icon(Icons.home),
-      //       // new Icon(Icons.rss_feed),
-      //       // new Icon(Icons.perm_identity),
-      //       // new Icon(Icons.settings),
-      //     ],
-          labelColor: Colors.yellow,
-          unselectedLabelColor: Colors.blue,
-          indicatorSize: TabBarIndicatorSize.label,
-          indicatorPadding: EdgeInsets.all(5.0),
-          indicatorColor: Colors.red,
+          //       // new Icon(Icons.home),
+          //       // new Icon(Icons.rss_feed),
+          //       // new Icon(Icons.perm_identity),
+          //       // new Icon(Icons.settings),
+          //     ],
+          labelColor: Colors.black,
+          unselectedLabelColor: Colors.green,
+          indicatorSize: TabBarIndicatorSize.tab,
+          indicatorColor: Colors.grey,
+          indicatorWeight:1 ,
         ),
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.white
       ),
     );
   }

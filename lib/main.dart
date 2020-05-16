@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
           // fontFamily: ,
           primarySwatch: Colors.blue,
         ),
-        home: Home(),
+        home: LoginA(),
         routes: <String, WidgetBuilder>{
           'LoginA': (BuildContext context) => new LoginA(),
           'Login': (BuildContext context) => new Login(),
@@ -57,10 +57,10 @@ class _HomeState extends State<Home> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             RaisedButton(
-                onPressed: () => Navigator.pushNamed(context, "Login"),
+                onPressed: () =>Navigator.pushReplacementNamed(context, "Login"),
                 child: Text("Login")),
             RaisedButton(
-                onPressed: () => Navigator.pushNamed(context, "LoginA"),
+                onPressed: () =>Navigator.pushReplacementNamed(context, "LoginA"),
                 child: Text("AnimatedLogin")),
             RaisedButton(
                 onPressed: () =>

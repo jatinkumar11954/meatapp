@@ -2,38 +2,96 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:meatapp/adjust/short.dart';
-import 'package:meatapp/screens/animate.dart';
 
 Widget Draw(BuildContext context) {
   return Drawer(
     // Add a ListView to the drawer. This ensures the user can scroll
     // through the options in the drawer if there isn't enough vertical
     // space to fit everything.
-    child: ListView(
-      // Important: Remove any padding from the ListView.
-      padding: EdgeInsets.zero,
-      children: <Widget>[
-        DrawerHeader(
-          child: Text('Drawer Header'),
-          decoration: BoxDecoration(
-            color: Colors.blue,
+    child: SafeArea(
+          child: ListView(
+        // Important: Remove any padding from the ListView.
+        padding: EdgeInsets.zero,
+        children: <Widget>[
+          // DrawerHeader(
+          //   padding: EdgeInsets.fromLTRB(0, 0,0,0,),
+          //   margin: EdgeInsets.all(0),
+          //   child: Text('Login'),
+          //   decoration: BoxDecoration(
+          //     color: Colors.green,
+          //   ),
+          // ),
+           Container(
+             color:Colors.green,
+             child: ListTile(
+               leading: new Icon(
+                Icons.exit_to_app,
+                color: Colors.white,
+              ),
+              trailing:new IconButton(
+               icon:Icon(Icons.arrow_back),
+                color: Colors.white,
+                onPressed: ()=>Navigator.pop(context),
+              ) ,
+              title: Text('Login',style:TextStyle(color:Colors.white)),
+              onTap: () {
+                // Update the state of the app.
+                // ...
+                
+              },
           ),
-        ),
-        ListTile(
-          title: Text('Item 1'),
-          onTap: () {
-            // Update the state of the app.
-            // ...
-          },
-        ),
-        ListTile(
-          title: Text('Item 2'),
-          onTap: () {
-            // Update the state of the app.
-            // ...
-          },
-        ),
-      ],
+           ),
+          ListTile(
+             leading: new Icon(
+              Icons.home,
+              color: Colors.green,
+            ),
+            title: Text('Home',style:TextStyle(color:Colors.grey)),
+            onTap: () {
+              // Update the state of the app.
+              // ...
+              
+            },
+          ),
+             ListTile(
+             leading: new Icon(
+              Icons.location_on,
+              color: Colors.green,
+            ),
+            title: Text('Store Locator',style:TextStyle(color:Colors.grey)),
+            onTap: () {
+              // Update the state of the app.
+              // ...
+              
+            },
+          ),
+             ListTile(
+             leading: new Icon(
+              Icons.phone_in_talk,
+              color: Colors.green,
+            ),
+            title: Text('Contact Us',style:TextStyle(color:Colors.grey)),
+            onTap: () {
+              // Update the state of the app.
+              // ...
+              
+            },
+          ),
+             ListTile(
+             leading: new Icon(
+              Icons.info,
+              color: Colors.green,
+            ),
+            title: Text('Why FreshMeat?',style:TextStyle(color:Colors.grey)),
+            onTap: () {
+              // Update the state of the app.
+              // ...
+              
+            },
+          ),
+        
+        ],
+      ),
     ),
   );
 }
@@ -101,6 +159,8 @@ Widget LoginBftrAnim(BuildContext context, Function loginFalse,UniqueKey k1) {
   return Container(
     key: k1,
     height: Short.h * 0.8,
+          margin: EdgeInsets.only(top: Short.h * 0.18),
+
     width: Short.w,
     child: Padding(
         padding: EdgeInsets.only(
@@ -154,7 +214,7 @@ Widget LoginBftrAnim(BuildContext context, Function loginFalse,UniqueKey k1) {
                 child: FlatButton(
                   onPressed: () {
                     print("Login via otp");
-                    Navigator.pushNamed(context, "LoginOtp");
+                   Navigator.pushReplacementNamed(context, "LoginOtp");
                   },
                   child: Text(
                     "Login via OTP",
@@ -178,14 +238,14 @@ Widget LoginBftrAnim(BuildContext context, Function loginFalse,UniqueKey k1) {
                         child: Text(
                           "Don't have an account ? ",
                           style: TextStyle(
-                              color: Colors.grey, fontSize: Short.h * 0.025),
+                              color: Colors.grey, fontSize: Short.h * 0.021),
                         )),
                     FlatButton(
                       onPressed:() =>Navigator.pushNamed(context,'SignUp'),
                       child: Text(
                         "Sign Up",
                         style: TextStyle(
-                            color: Colors.green, fontSize: Short.h * 0.025),
+                            color: Colors.green, fontSize: Short.h * 0.021),
                       ),
                     ),
                   ]),

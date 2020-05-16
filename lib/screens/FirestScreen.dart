@@ -10,7 +10,7 @@ class FirstScreen extends StatefulWidget {
 
 class _FirstScreenState extends State<FirstScreen> {
   bool isVisible = true;
-    List<String> _dropList = ['English', "Telugu", "Hindi"];
+    List<String> _dropList = ['Mallapur', "Gachibawli", "Sec-Bad"];
   String _selected = "Select Location";
   @override
   Widget build(BuildContext context) {
