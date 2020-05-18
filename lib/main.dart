@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:meatapp/screens/Description.dart';
 import 'package:meatapp/screens/FirestScreen.dart';
 import 'package:meatapp/screens/Otp.dart';
-import 'package:meatapp/screens/SecondScreen.dart';
 import 'package:meatapp/screens/animate.dart';
 import 'package:meatapp/screens/login.dart';
 import 'package:meatapp/screens/loginOtp.dart';
@@ -32,7 +31,6 @@ class MyApp extends StatelessWidget {
           'LoginOtp': (BuildContext context) => new LoginOtp(),
           'Otp': (BuildContext context) => new Otp(),
           'Main': (BuildContext context) => new FirstScreen(),
-          'Second': (BuildContext context) => new SecondScreen(),
           'Desc': (BuildContext context) => new Description(),
           'SignUp': (BuildContext context) => new SignUp(),
           'tab': (BuildContext context) => new f.TabScreen(),
