@@ -48,7 +48,6 @@ class _FirstScreenState extends State<FirstScreen> {
         drawer: Draw(context),
         body: WillPopScope(
           onWillPop: () {
-            // Navigator.pushNamed(context,''),
             Navigator.pop(context);
           },
           child: Container(

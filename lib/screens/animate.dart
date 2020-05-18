@@ -5,7 +5,6 @@ import 'package:flutter/material.dart' as snack;
 
 import 'package:meatapp/adjust/short.dart';
 import 'package:meatapp/adjust/widget.dart';
-// import 'package:meatapp/screens/Signup.dart';
 import 'package:http/http.dart' as hp;
 
 class LoginA extends StatefulWidget {
@@ -82,7 +81,6 @@ class _LoginAState extends State<LoginA> {
       loginFalse();
     }
     Short().init(context);
-    double _h = Short.h * 0.83;
 
     // final style = TextStyle(color: Colors.green, fontSize: Short.h * 0.046);
     return Scaffold(

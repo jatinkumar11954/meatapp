@@ -14,7 +14,8 @@ class Short {
     0: chicken,
     1: mutton,
     2: sea,
-    3: egg,4: deal,
+    3: egg,
+    4: deal,
   };
     static var icon = {
     0: Icons.home,
@@ -81,14 +82,12 @@ class Short {
   }
 
   String validateMobile(String value) {
-// Indian Mobile number are of 10 digit only
     if (value.length != 10)
       return 'Mobile Number must be of 10 digit';
     else
       return null;
   }
     String validatePwd(String value) {
-// Indian Mobile number are of 10 digit only
     if (value.length <= 6)
       return 'Length must be greater than 6';
     else

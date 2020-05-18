@@ -151,6 +151,8 @@ class _OtpState extends State<Otp> with TickerProviderStateMixin{
                               },
                               onChanged: (value) {
                                 print(value);
+                                                  //cd /var/www/html/apis/freshMeat
+
                                 setState(() {
                                   currentText = value;
                                 });

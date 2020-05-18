@@ -117,7 +117,6 @@ hp.Response response;
                     right: Short.w * 0.28),
                 color: Colors.green,
                 onPressed: () async {
-                  //cd /var/www/html/apis/freshMeat
 
                   print("Send OTP button is clicked");
                   Map<String, String> data = {"phoneno": phoneNumber.text};

@@ -136,7 +136,7 @@ class _DescriptionState extends State<Description> {
                     child: Row(
                       children: <Widget>[
                         Icon(Icons.arrow_forward, color: Colors.white),
-                        Text("LOGIN/SIGN UP TO CHECKOUT",
+                        Text(" LOGIN/SIGN UP TO CHECKOUT",
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: h * 0.02,

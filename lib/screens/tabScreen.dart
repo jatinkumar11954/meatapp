@@ -36,8 +36,7 @@ class _TabScreenState extends State<TabScreen> {
           child: IconButton(
               icon: new Icon(Icons.view_headline),
               onPressed: () {
-                print(
-                    "drawer loremLabore duis Lorem id veniam id eu eiusmod dolor dolor eu culpa irure.");
+                print("  drawer");
                 _scaffoldKey.currentState.openDrawer();
               }),
         ),
