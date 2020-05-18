@@ -84,7 +84,7 @@ class _LoginAState extends State<LoginA> {
     Short().init(context);
     double _h = Short.h * 0.83;
 
-    final style = TextStyle(color: Colors.green, fontSize: Short.h * 0.046);
+    // final style = TextStyle(color: Colors.green, fontSize: Short.h * 0.046);
     return Scaffold(
         key: _scaffoldkey,
         body: SingleChildScrollView(
