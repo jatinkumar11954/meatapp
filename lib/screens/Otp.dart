@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:meatapp/adjust/short.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
+
 class Otp extends StatefulWidget {
   @override
   _OtpState createState() => _OtpState();
@@ -59,9 +60,8 @@ class _OtpState extends State<Otp> with TickerProviderStateMixin{
 
   @override
   Widget build(BuildContext context) {
-    int i=ModalRoute.of(context).settings.arguments;
-
-    textEditingController.text="$i";
+    Map  i=ModalRoute.of(context).settings.arguments;
+    textEditingController.text="${i[0]}";//0 is for otp
     var child = Container(
      
       height: Short.h * 0.82,
@@ -107,7 +107,8 @@ class _OtpState extends State<Otp> with TickerProviderStateMixin{
              padding: const EdgeInsets.all(8.0),
              child: Center(
                child:Text(
-                              "+91-7702231889",
+                              "+91-${i[1]}",//1 is for phone number
+                              
                               style: TextStyle(
                                   color: Colors.green,
                                   fontSize: 25,

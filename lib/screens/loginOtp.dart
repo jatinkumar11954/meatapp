@@ -149,7 +149,7 @@ hp.Response response;
                           isLoading = false;
                         });
                           Navigator.pushReplacementNamed(context, "Otp",
-                          arguments: res['msg']);
+                          arguments: {res['msg'],phoneNumber.text});
                       } 
                     } else {
                          callSnackBar("Check your internet Connectivity");
