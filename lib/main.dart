@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:meatapp/screens/Description.dart';
 import 'package:meatapp/screens/FirestScreen.dart';
-import 'package:meatapp/screens/Otp.dart';
-import 'package:meatapp/screens/animate.dart';
-import 'package:meatapp/screens/login.dart';
-import 'package:meatapp/screens/loginOtp.dart';
-import 'screens/Signup.dart';
+import 'package:meatapp/screens/entry/Otp.dart';
+import 'package:meatapp/screens/entry/Login.dart';
+import 'package:meatapp/screens/entry/loginOtp.dart';
+import 'screens/entry/Signup.dart';
 import 'screens/tabScreen.dart'as f;
 
 void main() => runApp(MyApp());
@@ -25,9 +24,8 @@ class MyApp extends StatelessWidget {
           // fontFamily: ,
           primarySwatch: Colors.blue,
         ),
-        home: LoginA(),
+        home: Login(),
         routes: <String, WidgetBuilder>{
-          'LoginA': (BuildContext context) => new LoginA(),
           'Login': (BuildContext context) => new Login(),
           'LoginOtp': (BuildContext context) => new LoginOtp(),
           'Otp': (BuildContext context) => new Otp(),
@@ -59,7 +57,7 @@ class MyApp extends StatelessWidget {
 //                 onPressed: () =>Navigator.pushReplacementNamed(context, "Login"),
 //                 child: Text("Login")),
 //             RaisedButton(
-//                 onPressed: () =>Navigator.pushReplacementNamed(context, "LoginA"),
+//                 onPressed: () =>Navigator.pushReplacementNamed(context, "Login"),
 //                 child: Text("AnimatedLogin")),
 //             RaisedButton(
 //                 onPressed: () =>

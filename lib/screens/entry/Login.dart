@@ -7,12 +7,12 @@ import 'package:meatapp/adjust/short.dart';
 import 'package:meatapp/adjust/widget.dart';
 import 'package:http/http.dart' as hp;
 
-class LoginA extends StatefulWidget {
+class Login extends StatefulWidget {
   @override
-  _LoginAState createState() => _LoginAState();
+  _LoginState createState() => _LoginState();
 }
 
-class _LoginAState extends State<LoginA> {
+class _LoginState extends State<Login> {
   static const headers = {'Content-Type': 'application/json'};
 
   hp.Response response;
@@ -248,21 +248,12 @@ class _LoginAState extends State<LoginA> {
                                                  });
                                         print("before post" + data.toString());
                                         try {
+                                          callSnackBar("Checking the entered details");
                                           response = await hp.post(
                                               "${Short.baseUrl}/login",
                                               body: json.encode(data),
                                               headers: headers);
-                                            } on Exception catch (exception) {
-                                          print("exeception from api");
-
-                                          callSnackBar(
-                                              "Please fill the details correctly");
-                                               } catch (error) {
-                                          print("error from api");
-
-                                          callSnackBar(error.toString());
-                                                          }
-                                       
+                                           
 
                                         if (response != null) 
                                       {
@@ -289,13 +280,24 @@ class _LoginAState extends State<LoginA> {
                                             print("invalid username or password");
                                                                            }
                                       } //response is not null
-                                        else {  
-                                          //response is null
+                                        // else {  
+                                        //   //response is null
+                                        //   callSnackBar(
+                                        //       "network problem");
+                                        //   print(
+                                        //       "response is null");
+                                        // }
+                                         } on Exception catch (exception) {
+                                          print("exeception from api");
+
                                           callSnackBar(
                                               "network problem");
-                                          print(
-                                              "response is null");
-                                        }
+                                               } catch (error) {
+                                          print("error from api");
+
+                                          callSnackBar(error.toString());
+                                                          }
+                                       
               
                                         
                                      

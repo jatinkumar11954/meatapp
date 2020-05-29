@@ -198,7 +198,7 @@ hp.Response response;
             child: FlatButton(
               onPressed: () {
                 print("Login via Password");
-                                   Navigator.pushReplacementNamed(context, "LoginA", arguments: false);
+                                   Navigator.pushReplacementNamed(context, "Login", arguments: false);
 
               },
               child: Text(

@@ -1,9 +1,9 @@
 import 'package:meatapp/adjust/short.dart';
-import 'package:meatapp/screens/animate.dart';
+import 'package:meatapp/screens/entry/Login.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart' as snack;
 
-import 'package:meatapp/screens/animate.dart' as ani;
+import 'package:meatapp/screens/entry/Login.dart' as ani;
 import 'package:http/http.dart' as hp;
 import 'dart:convert';
 
@@ -28,7 +28,7 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
   AnimationController _controller;
   Animation<Offset> animation;
   hp.Response response;
-final GlobalKey<ScaffoldState> _scaffoldkey = new GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> _scaffoldkey = new GlobalKey<ScaffoldState>();
 
   void callSnackBar(String me) {
     print("called me for scnack bar");
@@ -38,6 +38,7 @@ final GlobalKey<ScaffoldState> _scaffoldkey = new GlobalKey<ScaffoldState>();
     );
     _scaffoldkey.currentState.showSnackBar(nackBar);
   }
+
   void initState() {
     // TODO: implement initState
     fullName = new TextEditingController();
@@ -96,21 +97,21 @@ final GlobalKey<ScaffoldState> _scaffoldkey = new GlobalKey<ScaffoldState>();
               color: Colors.white,
               child: Text(
                 "SignUp",
-                style:
-                    TextStyle(color: Colors.green, fontSize: 29
+                style: TextStyle(color: Colors.green, fontSize: 29
                     // Short.h * 0.046
                     ),
               ),
             ),
           ),
-
           Form(
             key: _form,
             child: Column(
               children: <Widget>[
                 Padding(
                   padding: EdgeInsets.only(
-                      top: Short.h*0.018, left: Short.w * 0.07, right: Short.w * 0.07),
+                      top: Short.h * 0.018,
+                      left: Short.w * 0.07,
+                      right: Short.w * 0.07),
                   child: Material(
                     color: Colors.white,
                     child: TextFormField(
@@ -132,7 +133,9 @@ final GlobalKey<ScaffoldState> _scaffoldkey = new GlobalKey<ScaffoldState>();
                 ),
                 Padding(
                   padding: EdgeInsets.only(
-                      top: Short.h*0.018, left: Short.w * 0.07, right: Short.w * 0.07),
+                      top: Short.h * 0.018,
+                      left: Short.w * 0.07,
+                      right: Short.w * 0.07),
                   child: Material(
                     color: Colors.white,
                     child: TextFormField(
@@ -154,7 +157,9 @@ final GlobalKey<ScaffoldState> _scaffoldkey = new GlobalKey<ScaffoldState>();
                 ),
                 Padding(
                   padding: EdgeInsets.only(
-                      top: Short.h*0.018, left: Short.w * 0.07, right: Short.w * 0.07),
+                      top: Short.h * 0.018,
+                      left: Short.w * 0.07,
+                      right: Short.w * 0.07),
                   child: Material(
                     color: Colors.white,
                     child: TextFormField(
@@ -176,7 +181,9 @@ final GlobalKey<ScaffoldState> _scaffoldkey = new GlobalKey<ScaffoldState>();
                 ),
                 Padding(
                   padding: EdgeInsets.only(
-                      top: Short.h*0.018, left: Short.w * 0.07, right: Short.w * 0.07),
+                      top: Short.h * 0.018,
+                      left: Short.w * 0.07,
+                      right: Short.w * 0.07),
                   child: Material(
                     color: Colors.white,
                     child: TextFormField(
@@ -198,7 +205,9 @@ final GlobalKey<ScaffoldState> _scaffoldkey = new GlobalKey<ScaffoldState>();
                 ),
                 Padding(
                   padding: EdgeInsets.only(
-                      top: Short.h*0.018, left: Short.w * 0.07, right: Short.w * 0.07),
+                      top: Short.h * 0.018,
+                      left: Short.w * 0.07,
+                      right: Short.w * 0.07),
                   child: Material(
                     color: Colors.white,
                     child: TextFormField(
@@ -237,7 +246,8 @@ final GlobalKey<ScaffoldState> _scaffoldkey = new GlobalKey<ScaffoldState>();
                 color: Colors.green,
                 onPressed: () async {
                   print("SIGN UP button is clicked");
-                  if (_form.currentState.validate()) {
+                  if (_form.currentState.validate()) 
+                {
                     print("Form is validated");
 
                     setState(() {
@@ -264,42 +274,55 @@ final GlobalKey<ScaffoldState> _scaffoldkey = new GlobalKey<ScaffoldState>();
                       isLoading = true;
                     });
                     print("before post" + data.toString());
-                    print(response.toString());
-                        try {
-                                          response = await hp.post("${Short.baseUrl}/signup",
-                        body: json.encode(data), headers: headers);
-                                        } on Exception catch (exception) {
-                                          print("exeception from api");
-
-                                          callSnackBar(
-                                              "User with these details already exists");
-                                        } catch (error) {
-                                          print("error from api");
-
-                                          callSnackBar(error.toString());
-                                        }
                    
+                    try {
+                      callSnackBar("Validating...");
+                      response = await hp.post("${Short.baseUrl}/signup",
+                          body: json.encode(data), headers: headers);
+                               print(response.toString());
+                      if (response != null) {
+                        Map res = json.decode(response.body);
+                        if (response.statusCode == 200) {
+                          print("inside response status");
+
+                          setState(() {
+                            isLoading = false;
+                          });
+                          Navigator.pushReplacementNamed(context, "Login",
+                              arguments: false);
+                                                         }
+                        if (response.statusCode == 400) {
+                          // callSnackBar("${res["msg"]}");
+                          callSnackBar(
+                              "User with these details already exists");
+
+                          print("User with these details already exists");
+                                                   }
+                                            } //response is not null
+                      // else {
+                      //   //response is null
+                      //   callSnackBar(
+                      //       "network problem");
+                      //   print(
+                      //       "response is null");
+                      // }
+
+                    }//try
+                     on Exception catch (exception) {
+
+                      print("exeception from api");
+
+                      callSnackBar("User with these details already exists");
+                    } catch (error) {
+                      print("error from api");
+
+                      callSnackBar(error.toString());
+                    }//catch
+
                     // setState(() {
                     //   isLoading=false;
                     // });
-                    if(response!=null){
-                    if (response.statusCode == 200) {
-                      print("inside response status");
-                      Map res = json.decode(response.body);
-
-                      if (res['status'] == 200) {
-                        setState(() {
-                          isLoading = false;
-                        });
-                        Navigator.pushReplacementNamed(context, "LoginA",
-                            arguments: false);
-                      } 
-                    } else {
-                         callSnackBar("Check your internet Connectivity");
-                    }
-                  }else {
-                         callSnackBar("User with these details already exists");
-                      }}
+                  }//form validation
                 },
                 shape: RoundedRectangleBorder(
                   borderRadius: new BorderRadius.circular(50.0),
@@ -309,7 +332,6 @@ final GlobalKey<ScaffoldState> _scaffoldkey = new GlobalKey<ScaffoldState>();
                     : Text("SIGN UP",
                         style: TextStyle(color: Colors.white, fontSize: 21)),
               )),
-
           Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
@@ -323,7 +345,8 @@ final GlobalKey<ScaffoldState> _scaffoldkey = new GlobalKey<ScaffoldState>();
                     )),
                 FlatButton(
                   onPressed: () {
-                   Navigator.pushReplacementNamed(context, "LoginA", arguments: false);
+                    Navigator.pushReplacementNamed(context, "Login",
+                        arguments: false);
                     print("login");
                   },
                   child: Text(
