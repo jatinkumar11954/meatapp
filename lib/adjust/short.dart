@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class Short {
   static double h, w;
-  static var baseUrl="http://3.6.231.159:3000";
+  static var baseUrl="http://3.6.231.159:3000/user";
   static var img = {
     0: "http://carigarifurniture.com/product_images/w/133365e0_a1b8_4f6d_89b5_d71cf79c27ef__92495_thumb.jpg",
     1: "http://carigarifurniture.com/product_images/h/img_6539__14221_thumb.jpg",

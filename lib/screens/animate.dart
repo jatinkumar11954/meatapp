@@ -81,7 +81,7 @@ class _LoginAState extends State<LoginA> {
       loginFalse();
     }
     Short().init(context);
-
+  
     // final style = TextStyle(color: Colors.green, fontSize: Short.h * 0.046);
     return Scaffold(
         key: _scaffoldkey,
@@ -138,10 +138,9 @@ class _LoginAState extends State<LoginA> {
                                   child: Text(
                                     "Login",
                                     style: TextStyle(
-                                        color: Colors.green,
-                                        fontSize:30
+                                        color: Colors.green, fontSize: 30
                                         //  Short.h * 0.046
-                                         ),
+                                        ),
                                   ),
                                 ),
                               ),
@@ -226,9 +225,11 @@ class _LoginAState extends State<LoginA> {
                                         left: Short.w * 0.33,
                                         right: Short.w * 0.33),
                                     color: Colors.green,
-                                    onPressed: () async {
-                                      print("SIGN UP button is clicked");
-                                      if (_formKey.currentState.validate()) {
+                                    onPressed: () async
+                               {
+                                      print("Login button is clicked");
+                                      if (_formKey.currentState.validate())
+                                   {
                                         print("Form is validated");
 
                                         setState(() {
@@ -241,56 +242,65 @@ class _LoginAState extends State<LoginA> {
                                           "password":
                                               // "152346"
                                               pwd.text
-                                        };
+                                                };
                                         setState(() {
                                           isLoading = true;
-                                        });
+                                                 });
                                         print("before post" + data.toString());
                                         try {
                                           response = await hp.post(
                                               "${Short.baseUrl}/login",
                                               body: json.encode(data),
                                               headers: headers);
-                                        } on Exception catch (exception) {
+                                            } on Exception catch (exception) {
                                           print("exeception from api");
 
                                           callSnackBar(
                                               "Please fill the details correctly");
-                                        } catch (error) {
+                                               } catch (error) {
                                           print("error from api");
 
                                           callSnackBar(error.toString());
-                                        }
-                                        print(response.toString());
+                                                          }
+                                       
 
-                                        if (response != null) {
-                                          if (response.statusCode == 200) {
+                                        if (response != null) 
+                                      {
+
+                                          Map res = json.decode(response.body);
+                                          if (response.statusCode == 200) 
+                                          {
                                             print("inside response status");
-                                            Map res =
-                                                json.decode(response.body);
 
-                                            if (res['status'] == 200) {
-                                              setState(() {
-                                                isLoading = false;
-                                              });
-                                             Navigator.pushReplacementNamed(
-                                                  context, "Main");
-                                            }
-                                          } else {
-                                            callSnackBar(
-                                                "Please fill the details correctly");
-
-                                            print("no response from api");
+                                            setState(() {
+                                              isLoading = false;
+                                            });
+                                            var jwt = json.decode(ascii.decode(base64.decode(base64.normalize(
+                                                res['token'].split(".")[1]))));
+                                                //store jwt locally
+                                                
+                                            print("jwt");
+                                            print(jwt.toString());
+                                            Navigator.pushReplacementNamed(context, "Main");
                                           }
-                                        } else {
+                                          if (response.statusCode == 400) {
+                                            callSnackBar("${res["msg"]}");
+
+                                            print("invalid username or password");
+                                                                           }
+                                      } //response is not null
+                                        else {  
+                                          //response is null
                                           callSnackBar(
-                                              "check your credentials");
+                                              "network problem");
                                           print(
-                                              "worng phone/email or password");
+                                              "response is null");
                                         }
-                                        print("Login button is clicked");
-                                      }
-                                    },
+              
+                                        
+                                     
+                                     }//form validation
+                                },//onpressed of login button
                                     shape: RoundedRectangleBorder(
                                       borderRadius:
                                           new BorderRadius.circular(50.0),
@@ -337,7 +347,8 @@ class _LoginAState extends State<LoginA> {
                                     bottom: Short.h * 0.018),
                                 child: FlatButton(
                                   onPressed: () {
-                                   Navigator.pushReplacementNamed(context, "LoginOtp");
+                                    Navigator.pushReplacementNamed(
+                                        context, "LoginOtp");
                                   },
                                   child: Text(
                                     "Login via OTP",
@@ -406,8 +417,9 @@ class _LoginAState extends State<LoginA> {
                                               fontSize: Short.h * 0.02),
                                         )),
                                     FlatButton(
-                                      onPressed: () =>Navigator.pushReplacementNamed(
-                                          context, "SignUp"),
+                                      onPressed: () =>
+                                          Navigator.pushReplacementNamed(
+                                              context, "SignUp"),
                                       child: Text(
                                         "Sign Up",
                                         style: TextStyle(
@@ -423,10 +435,3 @@ class _LoginAState extends State<LoginA> {
   }
 }
 
-String pwdValidator(String value) {
-  if (value.length < 3) {
-    return "please fill this field with atleast 3 characters";
-  } else {
-    return null;
-  }
-}
