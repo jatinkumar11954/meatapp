@@ -30,7 +30,7 @@ class _FirstScreenState extends State<FirstScreen> {
 // print(i.toString());
     Short().init(context);
     final appbar = AppBar(
-      backgroundColor: Colors.green,
+      backgroundColor: Theme.of(context).primaryColor,
       // Color.fromRGBO(191, 32, 37, 1.0),
       title: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -70,7 +70,7 @@ class _FirstScreenState extends State<FirstScreen> {
          Padding(
            padding: EdgeInsets.only(left:18.0,top:4,bottom: 5),
            child: Row(children: <Widget>[
-             Icon(Icons.location_on,color: Colors.green,size: 35,),
+             Icon(Icons.location_on,color: Theme.of(context).primaryColor,size: 35,),
              DropdownButton<String>(
           iconEnabledColor: Colors.grey,
           underline: Container(),

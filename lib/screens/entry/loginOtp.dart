@@ -69,7 +69,7 @@ hp.Response response;
                 padding: EdgeInsets.only(top:18.0,bottom: 10),
                 child: Text(
                   "Login via OTP",
-                  style: TextStyle(color: Colors.green, fontSize: 26
+                  style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 26
                   // Short.h * 0.04
                   ),
                 ),
@@ -115,7 +115,7 @@ hp.Response response;
                     bottom: Short.h * 0.01,
                     left: Short.w * 0.28,
                     right: Short.w * 0.28),
-                color: Colors.green,
+                color: Theme.of(context).primaryColor,
                 onPressed: () async {
 
                   print("Send OTP button is clicked");
@@ -204,7 +204,7 @@ hp.Response response;
               child: Text(
                 "Login via Password",
                 style:
-                    TextStyle(color: Colors.green, fontSize: Short.h * 0.025),
+                    TextStyle(color: Theme.of(context).primaryColor, fontSize: Short.h * 0.025),
               ),
             ),
           )),
@@ -229,7 +229,7 @@ hp.Response response;
                   child: Text(
                     "SignUp",
                     style: TextStyle(
-                        color: Colors.green, fontSize: Short.h * 0.023),
+                        color: Theme.of(context).primaryColor, fontSize: Short.h * 0.023),
                   ),
                 ),
               ]),
@@ -245,7 +245,7 @@ hp.Response response;
               alignment: Alignment.topCenter,
               child: Container(
                 height: MediaQuery.of(context).size.height,
-                color: Colors.green,
+                color: Theme.of(context).primaryColor,
               ),
             ),
             Align(

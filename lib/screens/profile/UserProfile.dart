@@ -2,11 +2,14 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:meatapp/adjust/bottomNavigation.dart';
+import 'package:meatapp/adjust/custom_route.dart';
 import 'package:meatapp/adjust/short.dart';
 import 'package:meatapp/adjust/widget.dart';
 import 'package:meatapp/details/userDetails.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shimmer/shimmer.dart';
+
+import 'manageProfile.dart';
 
 class UserProfile extends StatefulWidget {
   @override
@@ -57,7 +60,7 @@ class _UserProfileState extends State<UserProfile> {
   @override
   Widget build(BuildContext context) {
     final appbar = AppBar(
-      backgroundColor: Colors.green,
+      backgroundColor: Theme.of(context).primaryColor,
       // Color.fromRGBO(191, 32, 37, 1.0),
       title: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -87,7 +90,7 @@ class _UserProfileState extends State<UserProfile> {
                       child: ListTile(
                           title: Text("FullName",
                               style:
-                                  TextStyle(fontSize: 30, color: Colors.green)),
+                                  TextStyle(fontSize: 30, color: Theme.of(context).primaryColor)),
                           subtitle: Padding(
                             padding: const EdgeInsets.only(top: 8.0),
                             child: Column(
@@ -112,7 +115,7 @@ class _UserProfileState extends State<UserProfile> {
                         isThreeLine: true,
                         title: Text(user.fullName,
                             style:
-                                TextStyle(fontSize: 30, color: Colors.green)),
+                                TextStyle(fontSize: 30, color: Theme.of(context).primaryColor)),
                         subtitle: Padding(
                           padding: const EdgeInsets.only(top: 8.0),
                           child: Column(
@@ -140,10 +143,13 @@ class _UserProfileState extends State<UserProfile> {
                 children: <Widget>[
                   ListTile(
                     title: Text("Manage Profile",
-                        style: TextStyle(fontSize: 22, color: Colors.green)),
+                        style: TextStyle(fontSize: 22, color: Theme.of(context).primaryColor)),
                     subtitle: Text("Number,Name,Email,Password"),
                     leading: Icon(Icons.account_box),
                     trailing: Icon(Icons.arrow_forward_ios),
+                    onTap: 
+                    ()=>
+          Navigator.push(context, CustomRoute(builder: (context) => ManageProfile(),settings:RouteSettings(arguments:user))),
                   ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -152,7 +158,7 @@ class _UserProfileState extends State<UserProfile> {
                   ),
                   ListTile(
                     title: Text("Manage Address",
-                        style: TextStyle(fontSize: 22, color: Colors.green)),
+                        style: TextStyle(fontSize: 22, color: Theme.of(context).primaryColor)),
                     leading: Icon(Icons.location_on),
                     trailing: Icon(Icons.arrow_forward_ios),
                   ),
@@ -163,7 +169,7 @@ class _UserProfileState extends State<UserProfile> {
                   ),
                   ListTile(
                     title: Text("Manage Payment",
-                        style: TextStyle(fontSize: 22, color: Colors.green)),
+                        style: TextStyle(fontSize: 22, color: Theme.of(context).primaryColor)),
                     leading: Icon(Icons.payment),
                     trailing: Icon(Icons.arrow_forward_ios),
                   ),

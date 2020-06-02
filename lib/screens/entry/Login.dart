@@ -48,7 +48,11 @@ class _LoginState extends State<Login> {
 
     super.initState();
   }
-
+void dispose(){
+  super.dispose();
+  email.dispose();
+  pwd.dispose();
+}
   void _toggle() {
     setState(() {
       showPwd = !showPwd;
@@ -83,7 +87,7 @@ class _LoginState extends State<Login> {
     }
     Short().init(context);
   
-    // final style = TextStyle(color: Colors.green, fontSize: Short.h * 0.046);
+    // final style = TextStyle(color: Theme.of(context).primaryColor, fontSize: Short.h * 0.046);
     return Scaffold(
         key: _scaffoldkey,
         body: SingleChildScrollView(
@@ -92,7 +96,8 @@ class _LoginState extends State<Login> {
               alignment: Alignment.topCenter,
               child: Container(
                 height: MediaQuery.of(context).size.height,
-                color: Colors.green,
+                color: Theme.of(context).primaryColor,
+                // Theme.of(context).primaryColor,
               ),
             ),
             Align(
@@ -139,7 +144,7 @@ class _LoginState extends State<Login> {
                                   child: Text(
                                     "Login",
                                     style: TextStyle(
-                                        color: Colors.green, fontSize: 30
+                                        color: Theme.of(context).primaryColor, fontSize: 30
                                         //  Short.h * 0.046
                                         ),
                                   ),
@@ -225,7 +230,7 @@ class _LoginState extends State<Login> {
                                         bottom: Short.h * 0.01,
                                         left: Short.w * 0.33,
                                         right: Short.w * 0.33),
-                                    color: Colors.green,
+                                    color: Theme.of(context).primaryColor,
                                     onPressed: () async
                                {
                                       print("Login button is clicked");
@@ -367,7 +372,7 @@ class _LoginState extends State<Login> {
                                   child: Text(
                                     "Login via OTP",
                                     style: TextStyle(
-                                        color: Colors.green,
+                                        color: Theme.of(context).primaryColor,
                                         fontSize: Short.h * 0.025),
                                   ),
                                 ),
@@ -385,7 +390,7 @@ class _LoginState extends State<Login> {
                                   child: Text(
                                     "Forgot Password",
                                     style: TextStyle(
-                                        color: Colors.green,
+                                        color: Theme.of(context).primaryColor,
                                         fontSize: Short.h * 0.025),
                                   ),
                                 ),
@@ -437,7 +442,7 @@ class _LoginState extends State<Login> {
                                       child: Text(
                                         "Sign Up",
                                         style: TextStyle(
-                                            color: Colors.green,
+                                            color: Theme.of(context).primaryColor,
                                             fontSize: Short.h * 0.023),
                                       ),
                                     ),

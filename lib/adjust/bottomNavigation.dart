@@ -45,7 +45,7 @@ Widget bottomBar(BuildContext context, int index) {
                 fontWeight: FontWeight.w800)),
         activeIcon: Icon(
           Icons.home,
-          color: Colors.green,
+          color: Theme.of(context).primaryColor,
         ),
       ),
       BottomNavigationBarItem(
@@ -56,7 +56,7 @@ Widget bottomBar(BuildContext context, int index) {
           ),
            activeIcon:Icon(
             Icons.contacts,
-            color: Colors.green,
+            color: Theme.of(context).primaryColor,
             //  color:Colors.black45,
           ),
           title: Text('Orders',
@@ -71,7 +71,7 @@ Widget bottomBar(BuildContext context, int index) {
           ),
            activeIcon:Icon(
            Icons.account_circle,
-            color: Colors.green,
+            color: Theme.of(context).primaryColor,
             //  color:Colors.black45,
           ),
           title: Text('My Account',
@@ -80,7 +80,7 @@ Widget bottomBar(BuildContext context, int index) {
                 fontWeight: FontWeight.w800))),
     ],
     // unselectedLabelStyle: TextStyle(color: Colors.white),
-    selectedItemColor:  Colors.green,
+    selectedItemColor:  Theme.of(context).primaryColor,
     // fixedColor: 
     // Colors.grey,
     // Color.fromRGBO(127, 68, 0, .9),

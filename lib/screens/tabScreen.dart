@@ -21,7 +21,7 @@ class _TabScreenState extends State<TabScreen> {
     var w = Short.w;
     final appbar = AppBar(
       automaticallyImplyLeading: false,
-      backgroundColor: Colors.green,
+      backgroundColor: Theme.of(context).primaryColor,
       titleSpacing: 0,
 
       title: Stack(children: <Widget>[
@@ -151,7 +151,7 @@ class _TabScreenState extends State<TabScreen> {
           //       // new Icon(Icons.settings),
           //     ],
           labelColor: Colors.black,
-          unselectedLabelColor: Colors.green,
+          unselectedLabelColor: Theme.of(context).primaryColor,
           indicatorSize: TabBarIndicatorSize.tab,
           indicatorColor: Colors.grey,
           indicatorWeight:1 ,

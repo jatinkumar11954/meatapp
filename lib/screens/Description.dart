@@ -19,7 +19,7 @@ class _DescriptionState extends State<Description> {
     var w = Short.w;
     final appbar = AppBar(
       automaticallyImplyLeading: false,
-      backgroundColor: Colors.green,
+      backgroundColor: Theme.of(context).primaryColor,
       titleSpacing: 0,
 
       title: Stack(children: <Widget>[
@@ -119,7 +119,7 @@ class _DescriptionState extends State<Description> {
                       )),
                   Text("  500",
                       style: TextStyle(
-                        color: Colors.green,
+                        color: Theme.of(context).primaryColor,
                         fontSize: h * 0.035,
                       )),
                 ],
@@ -131,7 +131,7 @@ class _DescriptionState extends State<Description> {
               child: SizedBox(
                 width: w * 0.95,
                 child: RaisedButton(
-                    color: Colors.green,
+                    color: Theme.of(context).primaryColor,
                     onPressed: () => print("login button clicked"),
                     child: Row(
                       children: <Widget>[

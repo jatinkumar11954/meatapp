@@ -5,6 +5,7 @@ import 'package:meatapp/screens/entry/Otp.dart';
 import 'package:meatapp/screens/entry/Login.dart';
 import 'package:meatapp/screens/entry/loginOtp.dart';
 import 'package:meatapp/screens/profile/UserProfile.dart';
+import 'package:meatapp/screens/profile/manageProfile.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'screens/entry/Signup.dart';
 import 'screens/tabScreen.dart'as f;
@@ -35,7 +36,8 @@ class MyApp extends StatelessWidget {
                 fontFamily: 'Sans',
               ),
           // fontFamily: ,
-          primarySwatch: Colors.blue,
+          primaryColor: Color.fromRGBO(0, 175, 136, 1.0),
+          accentColor:  Color.fromRGBO(0, 167, 130, 1.0),
         ),
          initialRoute: jwt == null ? "Login" : "Main",
         home: Login(),
@@ -47,7 +49,9 @@ class MyApp extends StatelessWidget {
           'Desc': (BuildContext context) => new Description(),
           'SignUp': (BuildContext context) => new SignUp(),
           'tab': (BuildContext context) => new f.TabScreen(),
-                    'up': (BuildContext context) => new UserProfile(),
+          'up': (BuildContext context) => new UserProfile(),
+          'manageProfile': (BuildContext context) => new ManageProfile(),
+
 
         });
   }

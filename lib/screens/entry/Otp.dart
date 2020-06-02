@@ -80,7 +80,7 @@ class _OtpState extends State<Otp> with TickerProviderStateMixin{
               child: Text(
                 "OTP Verification",
                 style:
-                    TextStyle(color: Colors.green, fontSize: 33,fontWeight: FontWeight.w600),
+                    TextStyle(color: Theme.of(context).primaryColor, fontSize: 33,fontWeight: FontWeight.w600),
               ),
             ),
           ),
@@ -110,7 +110,7 @@ class _OtpState extends State<Otp> with TickerProviderStateMixin{
                               "+91-${i[1]}",//1 is for phone number
                               
                               style: TextStyle(
-                                  color: Colors.green,
+                                  color: Theme.of(context).primaryColor,
                                   fontSize: 25,
                                   fontWeight: FontWeight.w400),
                             ), 
@@ -152,7 +152,7 @@ class _OtpState extends State<Otp> with TickerProviderStateMixin{
                               },
                               onChanged: (value) {
                                 print(value);
-                                                  //cd /var/www/html/apis/freshMeat
+                                                  //frescd /var/www/html/apis/freshMeat-api
 
                                 setState(() {
                                   currentText = value;
@@ -175,7 +175,7 @@ class _OtpState extends State<Otp> with TickerProviderStateMixin{
                                   bottom: Short.h * 0.01,
                                   left: Short.w * 0.2,
                                   right: Short.w * 0.2),
-                              color: Colors.green,
+                              color: Theme.of(context).primaryColor,
                               onPressed: () {
                                 print("Verify OTP button is clicked");
                                  Navigator.pushReplacementNamed(
@@ -201,7 +201,7 @@ class _OtpState extends State<Otp> with TickerProviderStateMixin{
                             child: Text(
                               "Resend OTP",
                               style: TextStyle(
-                                  color: Colors.green,
+                                  color: Theme.of(context).primaryColor,
                                   fontSize: 22),
                             ),
                           ),
@@ -224,7 +224,7 @@ class _OtpState extends State<Otp> with TickerProviderStateMixin{
           alignment: Alignment.topCenter,
           child: Container(
             height: MediaQuery.of(context).size.height,
-            color: Colors.green,
+            color: Theme.of(context).primaryColor,
           ),
         ),
         Align(

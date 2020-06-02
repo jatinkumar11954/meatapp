@@ -100,7 +100,7 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
               color: Colors.white,
               child: Text(
                 "SignUp",
-                style: TextStyle(color: Colors.green, fontSize: 29
+                style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 29
                     // Short.h * 0.046
                     ),
               ),
@@ -250,7 +250,7 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
                     bottom: Short.h * 0.01,
                     left: Short.w * 0.3,
                     right: Short.w * 0.3),
-                color: Colors.green,
+                color: Theme.of(context).primaryColor,
                 onPressed: () async {
                   print("SIGN UP button is clicked");
                   if (_form.currentState.validate()) 
@@ -360,7 +360,7 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
                   child: Text(
                     "Login",
                     style: TextStyle(
-                        color: Colors.green, fontSize: Short.h * 0.023),
+                        color: Theme.of(context).primaryColor, fontSize: Short.h * 0.023),
                   ),
                 ),
               ]),
@@ -376,7 +376,7 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
               alignment: Alignment.topCenter,
               child: Container(
                 height: MediaQuery.of(context).size.height,
-                color: Colors.green,
+                color: Theme.of(context).primaryColor,
               ),
             ),
             Align(
