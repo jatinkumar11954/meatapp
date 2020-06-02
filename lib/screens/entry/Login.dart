@@ -6,6 +6,7 @@ import 'package:flutter/material.dart' as snack;
 import 'package:meatapp/adjust/short.dart';
 import 'package:meatapp/adjust/widget.dart';
 import 'package:http/http.dart' as hp;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -259,20 +260,31 @@ class _LoginState extends State<Login> {
                                       {
 
                                           Map res = json.decode(response.body);
-                                          if (response.statusCode == 200) 
+                                          if (response.statusCode == 200)  
                                           {
                                             print("inside response status");
 
-                                            setState(() {
+                                          
+                                            Map jwt = json.decode(ascii.decode(base64.decode(base64.normalize(
+                                                res['token'].split(".")[1]))));
+                                                
+                                                
+                                                 
+                                            storeLocal() async{
+                                               SharedPreferences store = await SharedPreferences.getInstance();
+                                                                                             print("storing jwt locally");
+
+                                                store.setString('jwt', res['token'].split(".")[1].toString());
+                                            }
+                                             setState(() {
+                                                    storeLocal();
                                               isLoading = false;
                                             });
-                                            var jwt = json.decode(ascii.decode(base64.decode(base64.normalize(
-                                                res['token'].split(".")[1]))));
                                                 //store jwt locally
                                                 
                                             print("jwt");
                                             print(jwt.toString());
-                                            Navigator.pushReplacementNamed(context, "Main");
+                                            Navigator.pushReplacementNamed(context, "Main",arguments: jwt);
                                           }
                                           if (response.statusCode == 400) {
                                             callSnackBar("${res["msg"]}");

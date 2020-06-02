@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:meatapp/adjust/short.dart';
+import 'package:shimmer/shimmer.dart';
 
 Widget Draw(BuildContext context) {
   return Drawer(
@@ -112,21 +113,24 @@ Widget Carousel(BuildContext context) {
               width: MediaQuery.of(context).size.width,
               margin: EdgeInsets.symmetric(horizontal: 10.0),
               decoration:
-                  BoxDecoration(color: Color.fromRGBO(255, 184, 102, .2)),
+                  BoxDecoration(color: Colors.grey[300]),
               child: GestureDetector(
                   child: Image.network(
                     i,
                     fit: BoxFit.fill,
                     loadingBuilder: (BuildContext context, Widget child,
                         ImageChunkEvent loadingProgress) {
-                      if (loadingProgress == null) return child;
-                      return Center(
-                        child: CircularProgressIndicator(
-                            // value: loadingProgress.expectedTotalBytes != null
-                            //     ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes
-                            //     : null,
-                            ),
-                      );
+                      if (loadingProgress == null)
+                            return child;
+                          return Shimmer.fromColors(
+                    baseColor: Colors.grey[400],
+                    highlightColor: Colors.white,
+                    child: Container(
+             width: MediaQuery.of(context).size.width,
+              color: Colors.grey,
+                    )
+                    
+                  ) ;
                     },
                     height: MediaQuery.of(context).size.width,
                   ),

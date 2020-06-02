@@ -1,9 +1,9 @@
+import 'package:geolocator/geolocator.dart';
 import 'package:meatapp/adjust/short.dart';
 import 'package:meatapp/screens/entry/Login.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart' as snack;
-
-import 'package:meatapp/screens/entry/Login.dart' as ani;
+import 'package:meatapp/location/locator.dart';
 import 'package:http/http.dart' as hp;
 import 'dart:convert';
 
@@ -23,8 +23,11 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
   Icon _icon = Icon(
     Icons.visibility,
   );
+  Position _currentPosition;
   GlobalKey<FormState> _form = GlobalKey<FormState>(debugLabel: "key2");
   bool isLoading = false;
+    bool getLocation = false;
+
   AnimationController _controller;
   Animation<Offset> animation;
   hp.Response response;
@@ -79,7 +82,7 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
       }
     });
   }
-
+ 
   @override
   Widget build(BuildContext context) {
     var child = Container(
@@ -184,23 +187,27 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
                       top: Short.h * 0.018,
                       left: Short.w * 0.07,
                       right: Short.w * 0.07),
-                  child: Material(
-                    color: Colors.white,
-                    child: TextFormField(
-                      decoration: InputDecoration(
-                        labelStyle: TextStyle(
-                            color: Colors.grey, fontSize: Short.h * 0.02),
-                        labelText: 'Address',
-                        hintText: "Enter your Address",
-                        hintStyle: TextStyle(
-                            color: Colors.grey, fontSize: Short.h * 0.02),
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(Short.h * 2.5)),
-                      ),
-                      controller: address,
-                      keyboardType: TextInputType.multiline,
-                      // validator: Short().validateAddr,
-                    ),
+                  child: RaisedButton(
+                    padding:EdgeInsets.only(
+                      top: Short.h * 0.018,
+                      left: Short.w * 0.07,
+                      right: Short.w * 0.07),
+                   child:getLocation
+                    ? CircularProgressIndicator()
+                    : Text("Get Location",
+                        style: TextStyle(color: Colors.white, fontSize: 21)),
+                onPressed:(){
+   setState(() {
+
+  getLocation=true;
+});
+                   _currentPosition= getCurrentLocation();
+                  //  print(  _currentPosition.longitude);
+                   setState(() {
+  getLocation=false;
+});
+                   
+                   },
                   ),
                 ),
                 Padding(
@@ -247,7 +254,8 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
                 onPressed: () async {
                   print("SIGN UP button is clicked");
                   if (_form.currentState.validate()) 
-                {
+                {          
+
                     print("Form is validated");
 
                     setState(() {
@@ -265,8 +273,8 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
                           phoneNumber.text,
                       "address":
                           // "no addres",
-                          address.text,
-                      "password":
+                         _currentPosition.toString(),
+                                               "password":
                           // "152346"
                           signUppwd.text
                     };

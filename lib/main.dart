@@ -4,10 +4,23 @@ import 'package:meatapp/screens/FirestScreen.dart';
 import 'package:meatapp/screens/entry/Otp.dart';
 import 'package:meatapp/screens/entry/Login.dart';
 import 'package:meatapp/screens/entry/loginOtp.dart';
+import 'package:meatapp/screens/profile/UserProfile.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'screens/entry/Signup.dart';
 import 'screens/tabScreen.dart'as f;
 
-void main() => runApp(MyApp());
+String jwt;
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  jwt = await prefs.getString("jwt");  
+  
+  print('jwt ${jwt}');
+  runApp(MyApp());
+}
+// void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
@@ -24,6 +37,7 @@ class MyApp extends StatelessWidget {
           // fontFamily: ,
           primarySwatch: Colors.blue,
         ),
+         initialRoute: jwt == null ? "Login" : "Main",
         home: Login(),
         routes: <String, WidgetBuilder>{
           'Login': (BuildContext context) => new Login(),
@@ -33,6 +47,8 @@ class MyApp extends StatelessWidget {
           'Desc': (BuildContext context) => new Description(),
           'SignUp': (BuildContext context) => new SignUp(),
           'tab': (BuildContext context) => new f.TabScreen(),
+                    'up': (BuildContext context) => new UserProfile(),
+
         });
   }
 }

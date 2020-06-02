@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/src/widgets/navigator.dart';
 
 class CustomRoute<T> extends MaterialPageRoute<T> {
   CustomRoute({
@@ -16,9 +17,9 @@ class CustomRoute<T> extends MaterialPageRoute<T> {
     Animation<double> secondaryAnimation,
     Widget child,
   ) {
-    if (settings.isInitialRoute) {
-      return child;
-    }
+    // if (settings.) {
+    //   return child;
+    // }
     return 
     // FadeTransition(       //for fade transition uncomment this
     //   opacity: animation,
