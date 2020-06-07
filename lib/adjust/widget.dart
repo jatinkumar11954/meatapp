@@ -7,88 +7,90 @@ import 'package:shimmer/shimmer.dart';
 Widget Draw(BuildContext context) {
   return Drawer(
 
-    child: ListView(
-        padding: EdgeInsets.zero,
-        children: <Widget>[
-    // DrawerHeader(
-    //   padding: EdgeInsets.fromLTRB(0, 0,0,0,),
-    //   margin: EdgeInsets.all(0),
-    //   child: Text('Login'),
-    //   decoration: BoxDecoration(
-    //     color: Theme.of(context).primaryColor,
-    //   ),
-    // ),
-     Container(
-       color:Theme.of(context).primaryColor,
-       child: ListTile(
+    child: SafeArea(
+          child: ListView(
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+      // DrawerHeader(
+      //   padding: EdgeInsets.fromLTRB(0, 0,0,0,),
+      //   margin: EdgeInsets.all(0),
+      //   child: Text('Login'),
+      //   decoration: BoxDecoration(
+      //     color: Theme.of(context).primaryColor,
+      //   ),
+      // ),
+       Container(
+         color:Theme.of(context).primaryColor,
+         child: ListTile(
+           leading: new Icon(
+            Icons.exit_to_app,
+            color: Colors.white,
+          ),
+          trailing:new IconButton(
+           icon:Icon(Icons.arrow_back),
+            color: Colors.white,
+            onPressed: ()=>Navigator.pop(context),
+          ) ,
+          title: Text('Login',style:TextStyle(color:Colors.white)),
+          onTap: () {
+            // Update the state of the app.
+            // ...
+            
+          },
+      ),
+       ),
+      ListTile(
          leading: new Icon(
-          Icons.exit_to_app,
-          color: Colors.white,
+          Icons.home,
+          color: Theme.of(context).primaryColor,
         ),
-        trailing:new IconButton(
-         icon:Icon(Icons.arrow_back),
-          color: Colors.white,
-          onPressed: ()=>Navigator.pop(context),
-        ) ,
-        title: Text('Login',style:TextStyle(color:Colors.white)),
+        title: Text('Home',style:TextStyle(color:Colors.grey)),
         onTap: () {
           // Update the state of the app.
           // ...
           
         },
-    ),
-     ),
-    ListTile(
-       leading: new Icon(
-        Icons.home,
-        color: Theme.of(context).primaryColor,
       ),
-      title: Text('Home',style:TextStyle(color:Colors.grey)),
-      onTap: () {
-        // Update the state of the app.
-        // ...
-        
-      },
-    ),
-       ListTile(
-       leading: new Icon(
-        Icons.location_on,
-        color: Theme.of(context).primaryColor,
+         ListTile(
+         leading: new Icon(
+          Icons.location_on,
+          color: Theme.of(context).primaryColor,
+        ),
+        title: Text('Store Locator',style:TextStyle(color:Colors.grey)),
+        onTap: () {
+          // Update the state of the app.
+          // ...
+          
+        },
       ),
-      title: Text('Store Locator',style:TextStyle(color:Colors.grey)),
-      onTap: () {
-        // Update the state of the app.
-        // ...
-        
-      },
-    ),
-       ListTile(
-       leading: new Icon(
-        Icons.phone_in_talk,
-        color: Theme.of(context).primaryColor,
+         ListTile(
+         leading: new Icon(
+          Icons.phone_in_talk,
+          color: Theme.of(context).primaryColor,
+        ),
+        title: Text('Contact Us',style:TextStyle(color:Colors.grey)),
+        onTap: () {
+          // Update the state of the app.
+          // ...
+          
+        },
       ),
-      title: Text('Contact Us',style:TextStyle(color:Colors.grey)),
-      onTap: () {
-        // Update the state of the app.
-        // ...
-        
-      },
-    ),
-       ListTile(
-       leading: new Icon(
-        Icons.info,
-        color: Theme.of(context).primaryColor,
+         ListTile(
+         leading: new Icon(
+          Icons.info,
+          color: Theme.of(context).primaryColor,
+        ),
+        title: Text('Why FreshMeat?',style:TextStyle(color:Colors.grey)),
+        onTap: () {
+          // Update the state of the app.
+          // ...
+          
+        },
       ),
-      title: Text('Why FreshMeat?',style:TextStyle(color:Colors.grey)),
-      onTap: () {
-        // Update the state of the app.
-        // ...
-        
-      },
+          
+          ],
+        ),
     ),
-        
-        ],
-      ),
   );
 }
 
@@ -183,7 +185,7 @@ Widget LoginBftrAnim(BuildContext context, Function loginFalse,UniqueKey k1) {
                     child: Text(
                       "or",
                       style: TextStyle(
-                          color: Colors.grey, fontSize: Short.h * 0.02),
+                          color: Colors.grey, fontSize: 19),
                     )),
                 Expanded(
                   child: new Container(
@@ -225,7 +227,7 @@ Widget LoginBftrAnim(BuildContext context, Function loginFalse,UniqueKey k1) {
                         child: Text(
                           "Don't have an account ? ",
                           style: TextStyle(
-                              color: Colors.grey, fontSize: Short.h * 0.021),
+                              color: Colors.grey, fontSize: 19),
                         )),
                     FlatButton(
                       onPressed:() =>Navigator.pushNamed(context,'SignUp'),

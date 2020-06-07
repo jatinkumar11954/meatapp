@@ -48,11 +48,13 @@ class _LoginState extends State<Login> {
 
     super.initState();
   }
-void dispose(){
-  super.dispose();
-  email.dispose();
-  pwd.dispose();
-}
+
+  void dispose() {
+    super.dispose();
+    email.dispose();
+    pwd.dispose();
+  }
+
   void _toggle() {
     setState(() {
       showPwd = !showPwd;
@@ -86,7 +88,7 @@ void dispose(){
       loginFalse();
     }
     Short().init(context);
-  
+
     // final style = TextStyle(color: Theme.of(context).primaryColor, fontSize: Short.h * 0.046);
     return Scaffold(
         key: _scaffoldkey,
@@ -97,6 +99,22 @@ void dispose(){
               child: Container(
                 height: MediaQuery.of(context).size.height,
                 color: Theme.of(context).primaryColor,
+                // Theme.of(context).primaryColor,
+              ),
+            ),
+            Align(
+              alignment: Alignment.topCenter,
+              child: Container(
+                height: Short.h * 0.3,
+                color: Theme.of(context).primaryColor,
+                child: Center(
+                    child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Image.asset(
+                    "img/freshMeat.png",
+                    alignment: Alignment.bottomCenter,
+                  ),
+                )),
                 // Theme.of(context).primaryColor,
               ),
             ),
@@ -124,10 +142,10 @@ void dispose(){
                     child: _child
                         ? LoginBftrAnim(context, loginFalse, k1)
                         : Container(
-                            margin: EdgeInsets.only(top: Short.h * 0.18),
+                            margin: EdgeInsets.only(top: Short.h * 0.25),
 
                             key: k2,
-                            height: Short.h * 0.82,
+                            height: Short.h * 0.75,
                             width: Short.w,
 
                             // Define how long the animation should take.
@@ -138,18 +156,18 @@ void dispose(){
                                     topLeft: Radius.circular(80),
                                     topRight: Radius.circular(80))),
                             child: Column(children: <Widget>[
-                              Center(
-                                child: Material(
-                                  color: Colors.white,
-                                  child: Text(
-                                    "Login",
-                                    style: TextStyle(
-                                        color: Theme.of(context).primaryColor, fontSize: 30
-                                        //  Short.h * 0.046
-                                        ),
-                                  ),
-                                ),
-                              ),
+                              // Center(
+                              //   child: Material(
+                              //     color: Colors.white,
+                              //     child: Text(
+                              //       "Login",
+                              //       style: TextStyle(
+                              //           color: Theme.of(context).primaryColor, fontSize: 30
+                              //           //  Short.h * 0.046
+                              //           ),
+                              //     ),
+                              //   ),
+                              // ),
                               // SizedBox(height:Short.h*0.1),
 
                               Form(
@@ -158,7 +176,7 @@ void dispose(){
                                   children: <Widget>[
                                     Padding(
                                       padding: EdgeInsets.only(
-                                          top: 25,
+                                          top: Short.h * 0.10,
                                           left: Short.w * 0.07,
                                           right: Short.w * 0.07),
                                       child: Material(
@@ -167,12 +185,12 @@ void dispose(){
                                           decoration: InputDecoration(
                                             labelStyle: TextStyle(
                                                 color: Colors.grey,
-                                                fontSize: Short.h * 0.02),
+                                                fontSize: 19),
                                             labelText: 'Email/Phone',
                                             hintText: "Enter your email /Phone",
                                             hintStyle: TextStyle(
                                                 color: Colors.grey,
-                                                fontSize: Short.h * 0.02),
+                                                fontSize: 19),
                                             border: OutlineInputBorder(
                                                 borderRadius:
                                                     BorderRadius.circular(
@@ -197,12 +215,12 @@ void dispose(){
                                           decoration: InputDecoration(
                                             labelStyle: TextStyle(
                                                 color: Colors.grey,
-                                                fontSize: Short.h * 0.02),
+                                                fontSize: 19),
                                             labelText: 'Password',
                                             hintText: "Enter your Password",
                                             hintStyle: TextStyle(
                                                 color: Colors.grey,
-                                                fontSize: Short.h * 0.02),
+                                                fontSize: 19),
                                             suffixIcon: IconButton(
                                               icon: _icon,
                                               onPressed: _toggle,
@@ -231,11 +249,9 @@ void dispose(){
                                         left: Short.w * 0.33,
                                         right: Short.w * 0.33),
                                     color: Theme.of(context).primaryColor,
-                                    onPressed: () async
-                               {
+                                    onPressed: () async {
                                       print("Login button is clicked");
-                                      if (_formKey.currentState.validate())
-                                   {
+                                      if (_formKey.currentState.validate()) {
                                         print("Form is validated");
 
                                         setState(() {
@@ -248,78 +264,80 @@ void dispose(){
                                           "password":
                                               // "152346"
                                               pwd.text
-                                                };
+                                        };
                                         setState(() {
                                           isLoading = true;
-                                                 });
+                                        });
                                         print("before post" + data.toString());
                                         try {
-                                          callSnackBar("Checking the entered details");
+                                          callSnackBar(
+                                              "Checking the entered details");
                                           response = await hp.post(
                                               "${Short.baseUrl}/login",
                                               body: json.encode(data),
                                               headers: headers);
-                                           
 
-                                        if (response != null) 
-                                      {
+                                          if (response != null) {
+                                            Map res =
+                                                json.decode(response.body);
+                                            if (response.statusCode == 200) {
+                                              print("inside response status");
 
-                                          Map res = json.decode(response.body);
-                                          if (response.statusCode == 200)  
-                                          {
-                                            print("inside response status");
+                                              Map jwt = json.decode(ascii
+                                                  .decode(base64.decode(base64
+                                                      .normalize(res['token']
+                                                          .split(".")[1]))));
 
-                                          
-                                            Map jwt = json.decode(ascii.decode(base64.decode(base64.normalize(
-                                                res['token'].split(".")[1]))));
-                                                
-                                                
-                                                 
-                                            storeLocal() async{
-                                               SharedPreferences store = await SharedPreferences.getInstance();
-                                                                                             print("storing jwt locally");
+                                              storeLocal() async {
+                                                SharedPreferences store =
+                                                    await SharedPreferences
+                                                        .getInstance();
+                                                print("storing jwt locally");
 
-                                                store.setString('jwt', res['token'].split(".")[1].toString());
+                                                store.setString(
+                                                    'jwt',
+                                                    res['token']
+                                                        .split(".")[1]
+                                                        .toString());
+                                              }
+
+                                              setState(() {
+                                                storeLocal();
+                                                isLoading = false;
+                                              });
+                                              //store jwt locally
+
+                                              print("jwt");
+                                              print(jwt.toString());
+                                              Navigator.pushReplacementNamed(
+                                                  context, "Main",
+                                                  arguments: jwt);
                                             }
-                                             setState(() {
-                                                    storeLocal();
-                                              isLoading = false;
-                                            });
-                                                //store jwt locally
-                                                
-                                            print("jwt");
-                                            print(jwt.toString());
-                                            Navigator.pushReplacementNamed(context, "Main",arguments: jwt);
-                                          }
-                                          if (response.statusCode == 400) {
-                                            callSnackBar("${res["msg"]}");
+                                            if (response.statusCode == 400) {
+                                              callSnackBar("${res["msg"]}");
 
-                                            print("invalid username or password");
-                                                                           }
-                                      } //response is not null
-                                        // else {  
-                                        //   //response is null
-                                        //   callSnackBar(
-                                        //       "network problem");
-                                        //   print(
-                                        //       "response is null");
-                                        // }
-                                         } on Exception catch (exception) {
+                                              print(
+                                                  "invalid username or password");
+                                            }
+                                          } //response is not null
+                                          // else {
+                                          //   //response is null
+                                          //   callSnackBar(
+                                          //       "network problem");
+                                          //   print(
+                                          //       "response is null");
+                                          // }
+                                        } on Exception catch (exception) {
                                           print("exeception from api");
 
-                                          callSnackBar(
-                                              "network problem");
-                                               } catch (error) {
+                                          callSnackBar("network problem");
+                                        } catch (error) {
                                           print("error from api");
 
                                           callSnackBar(error.toString());
-                                                          }
-                                       
-              
-                                        
-                                     
-                                     }//form validation
-                                },//onpressed of login button
+                                        }
+                                      } //form validation
+                                    }, //onpressed of login button
                                     shape: RoundedRectangleBorder(
                                       borderRadius:
                                           new BorderRadius.circular(50.0),
@@ -331,55 +349,56 @@ void dispose(){
                                                 color: Colors.white,
                                                 fontSize: 25))),
                               ),
-                              Row(children: <Widget>[
-                                Expanded(
-                                  child: new Container(
-                                      margin: const EdgeInsets.only(
-                                          left: 10.0, right: 20.0),
-                                      child: Divider(
-                                        color: Colors.grey,
-                                        height: 36,
-                                      )),
-                                ),
-                                Material(
-                                    color: Colors.white,
-                                    child: Text(
-                                      "or",
-                                      style: TextStyle(
-                                          color: Colors.grey,
-                                          fontSize: Short.h * 0.02),
-                                    )),
-                                Expanded(
-                                  child: new Container(
-                                      margin: const EdgeInsets.only(
-                                          left: 20.0, right: 10.0),
-                                      child: Divider(
-                                        color: Colors.grey,
-                                        height: 36,
-                                      )),
-                                ),
-                              ]),
-                              Center(
-                                  child: Padding(
-                                padding: EdgeInsets.only(
-                                    top: Short.h * 0.018,
-                                    bottom: Short.h * 0.018),
-                                child: FlatButton(
-                                  onPressed: () {
-                                    Navigator.pushReplacementNamed(
-                                        context, "LoginOtp");
-                                  },
-                                  child: Text(
-                                    "Login via OTP",
-                                    style: TextStyle(
-                                        color: Theme.of(context).primaryColor,
-                                        fontSize: Short.h * 0.025),
-                                  ),
-                                ),
-                              )),
+                              // Row(children: <Widget>[
+                              //   Expanded(
+                              //     child: new Container(
+                              //         margin: const EdgeInsets.only(
+                              //             left: 10.0, right: 20.0),
+                              //         child: Divider(
+                              //           color: Colors.grey,
+                              //           height: 36,
+                              //         )),
+                              //   ),
+                              //   Material(
+                              //       color: Colors.white,
+                              //       child: Text(
+                              //         "or",
+                              //         style: TextStyle(
+                              //             color: Colors.grey,
+                              //             fontSize: 19),
+                              //       )),
+                              //   Expanded(
+                              //     child: new Container(
+                              //         margin: const EdgeInsets.only(
+                              //             left: 20.0, right: 10.0),
+                              //         child: Divider(
+                              //           color: Colors.grey,
+                              //           height: 36,
+                              //         )),
+                              //   ),
+                              // ]),
+                              // Center(
+                              //     child: Padding(
+                              //   padding: EdgeInsets.only(
+                              //       top: Short.h * 0.018,
+                              //       bottom: Short.h * 0.018),
+                              //   child: FlatButton(
+                              //     onPressed: () {
+                              //       Navigator.pushReplacementNamed(
+                              //           context, "LoginOtp");
+                              //     },
+                              //     child: Text(
+                              //       "Login via OTP",
+                              //       style: TextStyle(
+                              //           color: Theme.of(context).primaryColor,
+                              //           fontSize: 195),
+                              //     ),
+                              //   ),
+                              // )),
                               Divider(
                                   color: Colors.grey[300],
-                                  thickness: Short.h * 0.01),
+                                  height: Short.h * 0.08,
+                                  thickness: 8),
                               Center(
                                   child: Padding(
                                 padding: EdgeInsets.only(top: Short.h * 0.01),
@@ -387,11 +406,16 @@ void dispose(){
                                   onPressed: () {
                                     print("Forgot Password");
                                   },
-                                  child: Text(
-                                    "Forgot Password",
-                                    style: TextStyle(
-                                        color: Theme.of(context).primaryColor,
-                                        fontSize: Short.h * 0.025),
+                                  child: ListTile(
+                                    title: Center(
+                                      child: Text(
+                                        "Forgot Password",
+                                        style: TextStyle(
+                                            color:
+                                                Theme.of(context).primaryColor,
+                                            fontSize: 22),
+                                      ),
+                                    ),
                                   ),
                                 ),
                               )),
@@ -410,8 +434,7 @@ void dispose(){
                                     child: Text(
                                       "or",
                                       style: TextStyle(
-                                          color: Colors.grey,
-                                          fontSize: Short.h * 0.02),
+                                          color: Colors.grey, fontSize: 19),
                                     )),
                                 Expanded(
                                   child: new Container(
@@ -432,8 +455,7 @@ void dispose(){
                                         child: Text(
                                           "Don't have an account ? ",
                                           style: TextStyle(
-                                              color: Colors.grey,
-                                              fontSize: Short.h * 0.02),
+                                              color: Colors.grey, fontSize: 19),
                                         )),
                                     FlatButton(
                                       onPressed: () =>
@@ -442,8 +464,9 @@ void dispose(){
                                       child: Text(
                                         "Sign Up",
                                         style: TextStyle(
-                                            color: Theme.of(context).primaryColor,
-                                            fontSize: Short.h * 0.023),
+                                            color:
+                                                Theme.of(context).primaryColor,
+                                            fontSize: 21),
                                       ),
                                     ),
                                   ]),
@@ -453,4 +476,3 @@ void dispose(){
         ));
   }
 }
-

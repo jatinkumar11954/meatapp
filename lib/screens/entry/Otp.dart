@@ -60,8 +60,9 @@ class _OtpState extends State<Otp> with TickerProviderStateMixin{
 
   @override
   Widget build(BuildContext context) {
-    Map  i=ModalRoute.of(context).settings.arguments;
-    textEditingController.text="${i[0]}";//0 is for otp
+    // List<String> i=ModalRoute.of(context).settings.arguments;
+   String i=ModalRoute.of(context).settings.arguments;
+    textEditingController.text="1526";//0 is for otp
     var child = Container(
      
       height: Short.h * 0.82,
@@ -107,7 +108,7 @@ class _OtpState extends State<Otp> with TickerProviderStateMixin{
              padding: const EdgeInsets.all(8.0),
              child: Center(
                child:Text(
-                              "+91-${i[1]}",//1 is for phone number
+                              "+91-${i}",//1 is for phone number
                               
                               style: TextStyle(
                                   color: Theme.of(context).primaryColor,

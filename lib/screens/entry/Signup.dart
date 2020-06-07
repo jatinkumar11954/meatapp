@@ -130,7 +130,7 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
                       ),
                       controller: fullName,
                       keyboardType: TextInputType.text,
-                      // validator: Short().validateName,
+                      validator: Short().validateName,
                     ),
                   ),
                 ),
@@ -154,7 +154,7 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
                       ),
                       controller: signUPemail,
                       keyboardType: TextInputType.emailAddress,
-                      // validator: Short().validateEmail,
+                      validator: Short().validateEmail,
                     ),
                   ),
                 ),
@@ -178,7 +178,7 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
                       ),
                       controller: phoneNumber,
                       keyboardType: TextInputType.number,
-                      // validator: Short().validateMobile,
+                      validator: Short().validateMobile,
                     ),
                   ),
                 ),
@@ -187,28 +187,43 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
                       top: Short.h * 0.018,
                       left: Short.w * 0.07,
                       right: Short.w * 0.07),
-                  child: RaisedButton(
-                    padding:EdgeInsets.only(
-                      top: Short.h * 0.018,
-                      left: Short.w * 0.07,
-                      right: Short.w * 0.07),
-                   child:getLocation
-                    ? CircularProgressIndicator()
-                    : Text("Get Location",
-                        style: TextStyle(color: Colors.white, fontSize: 21)),
-                onPressed:(){
-   setState(() {
+                  child: 
+                   TextFormField(
+                      decoration: InputDecoration(
+                        labelStyle: TextStyle(
+                            color: Colors.grey, fontSize: Short.h * 0.02),
+                        labelText: 'Address',
+                        hintText: "Enter your Address",
+                        hintStyle: TextStyle(
+                            color: Colors.grey, fontSize: Short.h * 0.02),
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(Short.h * 2.5)),
+                      ),
+                      controller: address,
+                      keyboardType: TextInputType.text,
+                      validator: Short().validateAddr,
+                    ),
+//                   RaisedButton(
+//                     padding:EdgeInsets.only(
+//                       top: Short.h * 0.018,
+//                       left: Short.w * 0.07,
+//                       right: Short.w * 0.07),
+//                    child:getLocation
+//                     ? CircularProgressIndicator()
+//                     : Text("Get Location",
+//                         style: TextStyle(color: Colors.white, fontSize: 21)),
+//                 onPressed:(){
+//    setState(() {
 
-  getLocation=true;
-});
-                   _currentPosition= getCurrentLocation();
-                  //  print(  _currentPosition.longitude);
-                   setState(() {
-  getLocation=false;
-});
+//   getLocation=true;
+// });
+//                   //  print(  _currentPosition.longitude);
+//                    setState(() {
+//   getLocation=false;
+// });
                    
-                   },
-                  ),
+//                    },
+//                   ),
                 ),
                 Padding(
                   padding: EdgeInsets.only(
@@ -261,6 +276,7 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
                     setState(() {
                       isLoading = true;
                     });
+                    _currentPosition=getCurrentLocation();
                     Map<String, dynamic> data = {
                       "fullname":
                           // "jatin",
@@ -273,7 +289,7 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
                           phoneNumber.text,
                       "address":
                           // "no addres",
-                         _currentPosition.toString(),
+                          address.text+" " +_currentPosition.toString(),
                                                "password":
                           // "152346"
                           signUppwd.text
@@ -360,7 +376,7 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
                   child: Text(
                     "Login",
                     style: TextStyle(
-                        color: Theme.of(context).primaryColor, fontSize: Short.h * 0.023),
+                        color: Theme.of(context).primaryColor,  fontSize: 21),
                   ),
                 ),
               ]),

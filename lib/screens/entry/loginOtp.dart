@@ -90,11 +90,11 @@ hp.Response response;
                     child: TextFormField(
                       decoration: InputDecoration(
                         labelStyle: TextStyle(
-                            color: Colors.grey, fontSize: Short.h * 0.02),
+                            color: Colors.grey, fontSize: 19),
                         labelText: 'Phone Number',
                         hintText: "Enter your Phone Number",
                         hintStyle: TextStyle(
-                            color: Colors.grey, fontSize: Short.h * 0.02),
+                            color: Colors.grey, fontSize: 19),
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(Short.h * 2.5)),
                       ),
@@ -116,48 +116,54 @@ hp.Response response;
                     left: Short.w * 0.28,
                     right: Short.w * 0.28),
                 color: Theme.of(context).primaryColor,
-                onPressed: () async {
+                onPressed: () =>
+Navigator.pushReplacementNamed(context, "Otp",
+                          arguments: phoneNumber.text),
+//                           async {
+//                   print("Send OTP button is clicked");
+//                   Map<String, String> data = {"phoneno": phoneNumber.text};
+//                         try {
+//                                       response = await hp.post(
+//                       '${Short.baseUrl}/loginviaotp',
+//                       headers: headers,
+//                       body: json.encode(data));
+//                                         } on Exception catch (exception) {
+//                                           print("exeception from api");
 
-                  print("Send OTP button is clicked");
-                  Map<String, String> data = {"phoneno": phoneNumber.text};
-                        try {
-                                      response = await hp.post(
-                      '${Short.baseUrl}/loginviaotp',
-                      headers: headers,
-                      body: json.encode(data));
-                                        } on Exception catch (exception) {
-                                          print("exeception from api");
+//                                           callSnackBar(
+//                                               "Phone number already exists");
+//                                         } catch (error) {
+//                                           print("error from api");
 
-                                          callSnackBar(
-                                              "Phone number already exists");
-                                        } catch (error) {
-                                          print("error from api");
-
-                                          callSnackBar(error.toString());
-                                        }
+//                                           callSnackBar(error.toString());
+//                                         }
                    
-                    // setState(() {
-                    //   isLoading=false;
-                    // });
-                    if(response!=null){
-                    if (response.statusCode == 200) {
-                      print("inside response status");
-                      Map res = json.decode(response.body);
-
-                      if (res['status'] == 200) {
-                        setState(() {
-                          isLoading = false;
-                        });
-                          Navigator.pushReplacementNamed(context, "Otp",
-                          arguments: {res['msg'],phoneNumber.text});
-                      } 
-                    } else {
-                         callSnackBar("Check your internet Connectivity");
-                    }
-                  }else {
-                         callSnackBar("Phone number already exists");
-                      }
-                },
+//                     // setState(() {
+//                     //   isLoading=false;
+//                     // });
+//                     if(response!=null){
+//                     if (response.statusCode == 200) {
+//                       print("inside response status");
+//                       Map res = json.decode(response.body);
+//                       print(res.toString());
+//  List<String> arg = List();
+//                         arg.  add(res['msg']);
+//                         arg.add(phoneNumber.text);
+//                         print(arg.toString());
+//                       if (res['status'] == 200) {
+//                         setState(() {
+//                           isLoading = false;
+//                         });
+                       
+                          
+//                       } 
+//                     } else {
+//                          callSnackBar("Check your internet Connectivity");
+//                     }
+//                   }else {
+//                          callSnackBar("Phone number already exists");
+//                       }
+//                 },
                  
            
                 shape: RoundedRectangleBorder(
@@ -180,7 +186,7 @@ hp.Response response;
                 child: Text(
                   "or",
                   style:
-                      TextStyle(color: Colors.grey, fontSize: Short.h * 0.02),
+                      TextStyle(color: Colors.grey, fontSize: 19),
                 )),
             Expanded(
               child: new Container(
@@ -219,7 +225,7 @@ hp.Response response;
                     child: Text(
                       "Don't have an account ?",
                       style: TextStyle(
-                          color: Colors.grey, fontSize: Short.h * 0.022),
+                          color: Colors.grey, fontSize: 19),
                     )),
                 FlatButton(
                   onPressed: () {
@@ -229,7 +235,7 @@ hp.Response response;
                   child: Text(
                     "SignUp",
                     style: TextStyle(
-                        color: Theme.of(context).primaryColor, fontSize: Short.h * 0.023),
+                        color: Theme.of(context).primaryColor,  fontSize: 21),
                   ),
                 ),
               ]),

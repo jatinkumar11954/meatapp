@@ -125,7 +125,7 @@ class _FirstScreenState extends State<FirstScreen> {
             child: GestureDetector(
         onTap: () {
           print("navigating");
-          Navigator.push(context, CustomRoute(builder: (context) => UserProfile(),settings:RouteSettings(arguments:i)));
+          Navigator.push(context, CustomRoute(builder: (context) => TabScreen(),settings:RouteSettings(arguments:i)));
           // Navigator.pushNamed(context, "tab", arguments: i);
         },
         child: Column(

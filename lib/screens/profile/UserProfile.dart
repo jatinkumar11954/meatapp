@@ -6,17 +6,19 @@ import 'package:meatapp/adjust/custom_route.dart';
 import 'package:meatapp/adjust/short.dart';
 import 'package:meatapp/adjust/widget.dart';
 import 'package:meatapp/details/userDetails.dart';
+import 'package:meatapp/screens/address/manageAddress.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shimmer/shimmer.dart';
 
+import '../FirestScreen.dart';
 import 'manageProfile.dart';
 
 class UserProfile extends StatefulWidget {
   @override
-  _UserProfileState createState() => _UserProfileState();
+  UserProfileState createState() => UserProfileState();
 }
 
-class _UserProfileState extends State<UserProfile> {
+class UserProfileState extends State<UserProfile> {
   UserDetails user;
   bool isLoading = false;
   String token ;
@@ -42,7 +44,7 @@ class _UserProfileState extends State<UserProfile> {
           json.decode(ascii.decode(base64.decode(base64.normalize(token))));
       print(jwt["data"].toString());
       user = UserDetails.fromJson(jwt["data"]);
-      print(user.fullName);
+      // print(user.fullName);
       
 
     }
@@ -56,6 +58,7 @@ class _UserProfileState extends State<UserProfile> {
     // }
    
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -79,16 +82,46 @@ class _UserProfileState extends State<UserProfile> {
                 bottomNavigationBar: bottomBar(context, 2),
 
         drawer: Draw(context),
-        body: Column(
-          children: <Widget>[
-            isLoading 
-                ? Shimmer.fromColors(
-                    baseColor: Colors.grey[400],
-                    highlightColor: Colors.white,
-                    child: Padding(
+        body: WillPopScope(
+          onWillPop: () {
+                     Navigator.push(context, CustomRoute(builder: (context) => FirstScreen()));
+
+        },
+                  child: Column(
+            children: <Widget>[
+              isLoading 
+                  ? Shimmer.fromColors(
+                      baseColor: Colors.grey[400],
+                      highlightColor: Colors.white,
+                      child: Padding(
+                        padding: EdgeInsets.only(left: 18.0, top: 20),
+                        child: ListTile(
+                            title: Text("FullName",
+                                style:
+                                    TextStyle(fontSize: 30, color: Theme.of(context).primaryColor)),
+                            subtitle: Padding(
+                              padding: const EdgeInsets.only(top: 8.0),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Text("Phone : PhoneNumber",
+                                      style: TextStyle(
+                                          fontSize: 19, color: Colors.black)),
+                                  SizedBox(height: 8),
+                                  Text("Email  :  email@domain.com",
+                                      style: TextStyle(
+                                          fontSize: 19, color: Colors.black))
+                                ],
+                              ),
+                            )),
+                      ),
+                    )
+                  : Padding(
                       padding: EdgeInsets.only(left: 18.0, top: 20),
                       child: ListTile(
-                          title: Text("FullName",
+                          isThreeLine: true,
+                          title: Text(user.fullName==null?"FullName":user.fullName,
                               style:
                                   TextStyle(fontSize: 30, color: Theme.of(context).primaryColor)),
                           subtitle: Padding(
@@ -97,91 +130,71 @@ class _UserProfileState extends State<UserProfile> {
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
-                                Text("Phone : PhoneNumber",
+                                Text(user.phoneNo==null?"Phone : PhoneNumber":"Phone : ${user.phoneNo}",
                                     style: TextStyle(
                                         fontSize: 19, color: Colors.black)),
                                 SizedBox(height: 8),
-                                Text("Email  :  email@domain.com",
+                                Text(user.email==null?"Email  :  email@domain.com":"Email  :  ${user.email}",
                                     style: TextStyle(
                                         fontSize: 19, color: Colors.black))
                               ],
                             ),
                           )),
                     ),
-                  )
-                : Padding(
-                    padding: EdgeInsets.only(left: 18.0, top: 20),
-                    child: ListTile(
-                        isThreeLine: true,
-                        title: Text(user.fullName,
-                            style:
-                                TextStyle(fontSize: 30, color: Theme.of(context).primaryColor)),
-                        subtitle: Padding(
-                          padding: const EdgeInsets.only(top: 8.0),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text("Phone : ${user.phoneNo}",
-                                  style: TextStyle(
-                                      fontSize: 19, color: Colors.black)),
-                              SizedBox(height: 8),
-                              Text("Email  :  ${user.email}",
-                                  style: TextStyle(
-                                      fontSize: 19, color: Colors.black))
-                            ],
-                          ),
-                        )),
-                  ),
-            SizedBox(
-              height: 5,
-            ),
-            Divider(height: 5, thickness: 3, color: Colors.grey[400]),
-            Padding(
-              padding: EdgeInsets.only(top: 18.0, left: 20, right: 20),
-              child: Column(
-                children: <Widget>[
-                  ListTile(
-                    title: Text("Manage Profile",
-                        style: TextStyle(fontSize: 22, color: Theme.of(context).primaryColor)),
-                    subtitle: Text("Number,Name,Email,Password"),
-                    leading: Icon(Icons.account_box),
-                    trailing: Icon(Icons.arrow_forward_ios),
-                    onTap: 
-                    ()=>
-          Navigator.push(context, CustomRoute(builder: (context) => ManageProfile(),settings:RouteSettings(arguments:user))),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Divider(
-                        height: 5, thickness: 3, color: Colors.grey[300]),
-                  ),
-                  ListTile(
-                    title: Text("Manage Address",
-                        style: TextStyle(fontSize: 22, color: Theme.of(context).primaryColor)),
-                    leading: Icon(Icons.location_on),
-                    trailing: Icon(Icons.arrow_forward_ios),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Divider(
-                        height: 5, thickness: 3, color: Colors.grey[300]),
-                  ),
-                  ListTile(
-                    title: Text("Manage Payment",
-                        style: TextStyle(fontSize: 22, color: Theme.of(context).primaryColor)),
-                    leading: Icon(Icons.payment),
-                    trailing: Icon(Icons.arrow_forward_ios),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Divider(
-                        height: 5, thickness: 3, color: Colors.grey[300]),
-                  ),
-                ],
+              SizedBox(
+                height: 5,
               ),
-            ),
-          ],
+              Divider(height: 5, thickness: 3, color: Colors.grey[400]),
+              Padding(
+                padding: EdgeInsets.only(top: 18.0, left: 20, right: 20),
+                child: Column(
+                  children: <Widget>[
+                    ListTile(
+                      title: Text("Manage Profile",
+                          style: TextStyle(fontSize: 22, color: Theme.of(context).primaryColor)),
+                      subtitle: Text("Number,Name,Email,Password"),
+                      leading: Icon(Icons.account_box),
+                      trailing: Icon(Icons.arrow_forward_ios),
+                      onTap: 
+                      ()=>
+            Navigator.push(context, CustomRoute(builder: (context) => ManageProfile(),settings:RouteSettings(arguments:user))),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Divider(
+                          height: 5, thickness: 3, color: Colors.grey[300]),
+                    ),
+                    ListTile(
+                      title: Text("Manage Address",
+                          style: TextStyle(fontSize: 22, color: Theme.of(context).primaryColor)),
+                      leading: Icon(Icons.location_on),
+                      trailing: Icon(Icons.arrow_forward_ios),
+                       onTap: 
+                      ()=>
+            Navigator.push(context, CustomRoute(builder: (context) => ManageAddress(),settings:RouteSettings(arguments:user))),
+                  
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Divider(
+                          height: 5, thickness: 3, color: Colors.grey[300]),
+                    ),
+                    ListTile(
+                      title: Text("Manage Payment",
+                          style: TextStyle(fontSize: 22, color: Theme.of(context).primaryColor)),
+                      leading: Icon(Icons.payment),
+                      trailing: Icon(Icons.arrow_forward_ios),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Divider(
+                          height: 5, thickness: 3, color: Colors.grey[300]),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ));
   }
 }
