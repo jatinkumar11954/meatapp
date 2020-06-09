@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:meatapp/adjust/short.dart';
+import 'package:meatapp/main.dart';
 import 'package:shimmer/shimmer.dart';
 
 Widget Draw(BuildContext context) {
@@ -31,7 +32,7 @@ Widget Draw(BuildContext context) {
             color: Colors.white,
             onPressed: ()=>Navigator.pop(context),
           ) ,
-          title: Text('Login',style:TextStyle(color:Colors.white)),
+          title: Text(isLogin?'Login':"Profile",style:TextStyle(color:Colors.white)),
           onTap: () {
             // Update the state of the app.
             // ...

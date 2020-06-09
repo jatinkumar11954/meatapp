@@ -11,13 +11,15 @@ import 'screens/entry/Signup.dart';
 import 'screens/tabScreen.dart'as f;
 
 String jwt;
-
+bool login = false;
+bool get isLogin => login;
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   SharedPreferences prefs = await SharedPreferences.getInstance();
   jwt = await prefs.getString("jwt");  
-  
+ login=  jwt != null? true: false;
+
   print('jwt ${jwt}');
   runApp(MyApp());
 }
@@ -39,7 +41,8 @@ class MyApp extends StatelessWidget {
           primaryColor: Color.fromRGBO(0, 175, 136, 1.0),
           accentColor:  Color.fromRGBO(0, 167, 130, 1.0),
         ),
-         initialRoute: jwt == null ? "Login" : "Main",
+        // initialRoute: jwt == null ? "Login" : "Main",
+           initialRoute: jwt != null ? "Login" : "Main",
         home: Login(),
         routes: <String, WidgetBuilder>{
           'Login': (BuildContext context) => new Login(),

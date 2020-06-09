@@ -26,7 +26,7 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
   Position _currentPosition;
   GlobalKey<FormState> _form = GlobalKey<FormState>(debugLabel: "key2");
   bool isLoading = false;
-    bool getLocation = false;
+  bool getLocation = false;
 
   AnimationController _controller;
   Animation<Offset> animation;
@@ -82,37 +82,37 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
       }
     });
   }
- 
+
   @override
   Widget build(BuildContext context) {
     var child = Container(
-      height: Short.h * 0.82,
+      height: Short.h * 0.75,
       width: Short.w,
-      margin: EdgeInsets.only(top: Short.h * 0.18),
+      margin: EdgeInsets.only(top: Short.h * 0.25),
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.only(
               topLeft: Radius.circular(80), topRight: Radius.circular(80))),
       child: Column(
         children: <Widget>[
-          Center(
-            child: Material(
-              color: Colors.white,
-              child: Text(
-                "SignUp",
-                style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 29
-                    // Short.h * 0.046
-                    ),
-              ),
-            ),
-          ),
+          // Center(
+          //   child: Material(
+          //     color: Colors.white,
+          //     child: Text(
+          //       "SignUp",
+          //       style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 29
+          //           // Short.h * 0.046
+          //           ),
+          //     ),
+          //   ),
+          // ),
           Form(
             key: _form,
             child: Column(
               children: <Widget>[
                 Padding(
                   padding: EdgeInsets.only(
-                      top: Short.h * 0.018,
+                      top: Short.h * 0.065,
                       left: Short.w * 0.07,
                       right: Short.w * 0.07),
                   child: Material(
@@ -187,22 +187,21 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
                       top: Short.h * 0.018,
                       left: Short.w * 0.07,
                       right: Short.w * 0.07),
-                  child: 
-                   TextFormField(
-                      decoration: InputDecoration(
-                        labelStyle: TextStyle(
-                            color: Colors.grey, fontSize: Short.h * 0.02),
-                        labelText: 'Address',
-                        hintText: "Enter your Address",
-                        hintStyle: TextStyle(
-                            color: Colors.grey, fontSize: Short.h * 0.02),
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(Short.h * 2.5)),
-                      ),
-                      controller: address,
-                      keyboardType: TextInputType.text,
-                      validator: Short().validateAddr,
+                  child: TextFormField(
+                    decoration: InputDecoration(
+                      labelStyle: TextStyle(
+                          color: Colors.grey, fontSize: Short.h * 0.02),
+                      labelText: 'Address',
+                      hintText: "Enter your Address",
+                      hintStyle: TextStyle(
+                          color: Colors.grey, fontSize: Short.h * 0.02),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(Short.h * 2.5)),
                     ),
+                    controller: address,
+                    keyboardType: TextInputType.text,
+                    validator: Short().validateAddr,
+                  ),
 //                   RaisedButton(
 //                     padding:EdgeInsets.only(
 //                       top: Short.h * 0.018,
@@ -221,7 +220,7 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
 //                    setState(() {
 //   getLocation=false;
 // });
-                   
+
 //                    },
 //                   ),
                 ),
@@ -268,15 +267,13 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
                 color: Theme.of(context).primaryColor,
                 onPressed: () async {
                   print("SIGN UP button is clicked");
-                  if (_form.currentState.validate()) 
-                {          
-
+                  if (_form.currentState.validate()) {
                     print("Form is validated");
 
                     setState(() {
                       isLoading = true;
                     });
-                    _currentPosition=getCurrentLocation();
+                    _currentPosition = getCurrentLocation();
                     Map<String, dynamic> data = {
                       "fullname":
                           // "jatin",
@@ -289,8 +286,8 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
                           phoneNumber.text,
                       "address":
                           // "no addres",
-                          address.text+" " +_currentPosition.toString(),
-                                               "password":
+                          address.text + " " + _currentPosition.toString(),
+                      "password":
                           // "152346"
                           signUppwd.text
                     };
@@ -298,12 +295,12 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
                       isLoading = true;
                     });
                     print("before post" + data.toString());
-                   
+
                     try {
                       callSnackBar("Validating...");
                       response = await hp.post("${Short.baseUrl}/signup",
                           body: json.encode(data), headers: headers);
-                               print(response.toString());
+                      print(response.toString());
                       if (response != null) {
                         Map res = json.decode(response.body);
                         if (response.statusCode == 200) {
@@ -314,15 +311,17 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
                           });
                           Navigator.pushReplacementNamed(context, "Login",
                               arguments: false);
-                                                         }
+                        }
                         if (response.statusCode == 400) {
                           // callSnackBar("${res["msg"]}");
                           callSnackBar(
                               "User with these details already exists");
-
+                          setState(() {
+                            isLoading = false;
+                          });
                           print("User with these details already exists");
-                                                   }
-                                            } //response is not null
+                        }
+                      } //response is not null
                       // else {
                       //   //response is null
                       //   callSnackBar(
@@ -331,22 +330,25 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
                       //       "response is null");
                       // }
 
-                    }//try
-                     on Exception catch (exception) {
-
+                    } //try
+                    on Exception catch (exception) {
                       print("exeception from api");
-
+                      setState(() {
+                        isLoading = false;
+                      });
                       callSnackBar("User with these details already exists");
                     } catch (error) {
                       print("error from api");
-
+                      setState(() {
+                        isLoading = false;
+                      });
                       callSnackBar(error.toString());
-                    }//catch
+                    } //catch
 
                     // setState(() {
                     //   isLoading=false;
                     // });
-                  }//form validation
+                  } //form validation
                 },
                 shape: RoundedRectangleBorder(
                   borderRadius: new BorderRadius.circular(50.0),
@@ -376,7 +378,7 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
                   child: Text(
                     "Login",
                     style: TextStyle(
-                        color: Theme.of(context).primaryColor,  fontSize: 21),
+                        color: Theme.of(context).primaryColor, fontSize: 21),
                   ),
                 ),
               ]),
@@ -393,6 +395,21 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
               child: Container(
                 height: MediaQuery.of(context).size.height,
                 color: Theme.of(context).primaryColor,
+              ),
+            ),
+            Align(
+              alignment: Alignment.topCenter,
+              child: Container(
+                height: Short.h * 0.3,
+                color: Theme.of(context).primaryColor,
+                child: Center(
+                    child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Image.asset(
+                    "img/freshMeat.png",
+                    alignment: Alignment.bottomCenter,
+                  ),
+                )),
               ),
             ),
             Align(

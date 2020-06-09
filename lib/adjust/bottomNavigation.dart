@@ -5,7 +5,7 @@ import 'package:meatapp/screens/FirestScreen.dart';
 import 'package:meatapp/screens/profile/UserProfile.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'custom_route.dart';
-
+import 'package:meatapp/main.dart';
 
 Widget bottomBar(BuildContext context, int index) {
   return Theme(
@@ -39,7 +39,7 @@ Widget bottomBar(BuildContext context, int index) {
 
           case 2:
             {
-                               Navigator.push(context, CustomRoute(builder: (context) => UserProfile()));
+                               Navigator.push(context, MaterialPageRoute(builder: (context) => UserProfile()));
               break;
             }
         }

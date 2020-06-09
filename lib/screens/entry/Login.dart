@@ -309,31 +309,33 @@ class _LoginState extends State<Login> {
 
                                               print("jwt");
                                               print(jwt.toString());
+                                              email.clear();
+                                              pwd.clear();
                                               Navigator.pushReplacementNamed(
                                                   context, "Main",
                                                   arguments: jwt);
                                             }
                                             if (response.statusCode == 400) {
                                               callSnackBar("${res["msg"]}");
-
+                                              setState(() {
+                                                isLoading = false;
+                                              });
                                               print(
                                                   "invalid username or password");
                                             }
                                           } //response is not null
-                                          // else {
-                                          //   //response is null
-                                          //   callSnackBar(
-                                          //       "network problem");
-                                          //   print(
-                                          //       "response is null");
-                                          // }
+
                                         } on Exception catch (exception) {
                                           print("exeception from api");
-
+                                          setState(() {
+                                            isLoading = false;
+                                          });
                                           callSnackBar("network problem");
                                         } catch (error) {
                                           print("error from api");
-
+                                          setState(() {
+                                            isLoading = false;
+                                          });
                                           callSnackBar(error.toString());
                                         }
                                       } //form validation

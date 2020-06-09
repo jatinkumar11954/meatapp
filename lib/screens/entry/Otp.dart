@@ -53,6 +53,7 @@ class _OtpState extends State<Otp> with TickerProviderStateMixin{
   void dispose() {
        errorController.close();
     _controller.dispose();
+    textEditingController.dispose();
     super.dispose();
   }
 
@@ -65,26 +66,26 @@ class _OtpState extends State<Otp> with TickerProviderStateMixin{
     textEditingController.text="1526";//0 is for otp
     var child = Container(
      
-      height: Short.h * 0.82,
+      height: Short.h * 0.75,
       width: Short.w,
 
-      margin: EdgeInsets.only(top: Short.h * 0.18),
+      margin: EdgeInsets.only(top: Short.h * 0.25),
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.only(
               topLeft: Radius.circular(80), topRight: Radius.circular(80))),
       child: Column(
         children: <Widget>[
-          Center(
-            child: Padding(
-              padding: const EdgeInsets.only(top:15.0),
-              child: Text(
-                "OTP Verification",
-                style:
-                    TextStyle(color: Theme.of(context).primaryColor, fontSize: 33,fontWeight: FontWeight.w600),
-              ),
-            ),
-          ),
+          // Center(
+          //   child: Padding(
+          //     padding: const EdgeInsets.only(top:15.0),
+          //     child: Text(
+          //       "OTP Verification",
+          //       style:
+          //           TextStyle(color: Theme.of(context).primaryColor, fontSize: 33,fontWeight: FontWeight.w600),
+          //     ),
+          //   ),
+          // ),
           // SizedBox(height:Short.h*0.1),
            Padding(
              padding:  EdgeInsets.only(top:50.0),
@@ -179,6 +180,7 @@ class _OtpState extends State<Otp> with TickerProviderStateMixin{
                               color: Theme.of(context).primaryColor,
                               onPressed: () {
                                 print("Verify OTP button is clicked");
+                                 textEditingController.clear();
                                  Navigator.pushReplacementNamed(
                                                   context, "Main");
                               },
@@ -228,6 +230,19 @@ class _OtpState extends State<Otp> with TickerProviderStateMixin{
             color: Theme.of(context).primaryColor,
           ),
         ),
+        Align(
+              alignment: Alignment.topCenter,
+              child: Container(
+                height: Short.h * 0.3,
+                color: Theme.of(context).primaryColor,
+                child: Center(
+                    child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Image.asset(
+                    "img/freshMeat.png",
+                    alignment: Alignment.bottomCenter,
+                  ),
+                )),),),
         Align(
             alignment: Alignment.bottomCenter,
             child: AnimatedBuilder(
