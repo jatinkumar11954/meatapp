@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:meatapp/Api/categoryApi.dart';
 import 'package:meatapp/adjust/short.dart';
 import 'package:meatapp/adjust/short.dart' as soty;
 
@@ -68,15 +69,15 @@ class _TabScreenState extends State<TabScreen> {
         appBar: appbar,
         drawer: Draw(context),
         body: TabBarView(
-            children: Short.catgry.entries.map((o) {
+            children: 
+ tab.map((o) {
           // print(soty.o.value);
-          print(Short.cat[o.key][1]);
+          // print(Short.cat[o.key][1]);
           return Padding(
               padding: const EdgeInsets.all(8.0),
               child: ListView.builder(
-                itemCount: Short.cat[o.key].length,
+                itemCount: o.length,
                 itemBuilder: (ctx, i) {
-                  print(o.value);
                   return Center(
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
@@ -97,16 +98,16 @@ class _TabScreenState extends State<TabScreen> {
                           ]),
                           child: GridTile(
                               child: Image.network(
-                                "http://carigarifurniture.com/product_images/h/img_6539__14221_thumb.jpg",
+                              o[i].img,
                                 fit: BoxFit.contain,
                               ),
                               footer: GridTileBar(
                                   backgroundColor: Colors.white,
-                                  title: Text(Short.cat[o.key][i],
+                                  title: Text(o[i].item,
                                       style: TextStyle(color: Colors.black)))),
                         ),
                         onTap: () => Navigator.pushNamed(context, "Desc",
-                            arguments: o.key),
+                            arguments: o),
                       ),
                     ),
                   );
