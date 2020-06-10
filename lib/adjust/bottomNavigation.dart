@@ -39,7 +39,7 @@ Widget bottomBar(BuildContext context, int index) {
 
           case 2:
             {
-                               Navigator.push(context, MaterialPageRoute(builder: (context) => UserProfile()));
+                               Navigator.pushNamed(context, "MaterialPageRoute(builder: (context) => UserProfile())");
               break;
             }
         }

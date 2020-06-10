@@ -23,7 +23,7 @@ class Short {
     1: Icons.rss_feed,
     2: Icons.perm_identity,
     3: Icons.settings,
-    4: Icons.linear_scale
+    // 4: Icons.linear_scale
   };
   
     static var catgry = {

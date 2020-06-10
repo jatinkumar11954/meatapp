@@ -21,17 +21,23 @@ Future<List<Category>> getCategories(
 
     if (response != null) {
       Map catJson = json.decode(response.body);
-      Map subCatJson = json.decode(response.body);
+      Map subCatJson = json.decode(subResponse.body);
       if (response.statusCode == 200) {
         print("inside response status");
         catList = (catJson['data'] as List)
             .map((item) => new Category.fromJson(item))
             .toList();
+        print("this is category length ${catList.length}");
+        for (int t = 0; t < catList.length; t++) print(catList[t].categoryName);
         subCatList = (subCatJson['data'] as List)
             .map((item) => new SubCategory.fromJson(item))
             .toList();
+        print("this is category length ${subCatList.length}");
+        for (int t = 0; t < subCatList.length; t++) print(subCatList[t].item);
         subCatList.sort(((a, b) => a.catname.compareTo(b.catname)));
         getSubCategory();
+        print("get cat");
+
         return catList;
       }
       if (response.statusCode == 400) {
@@ -49,36 +55,72 @@ Future<List<Category>> getCategories(
 }
 
 getSubCategory() {
+  bool whole = false;
+
   for (int i = 0; i < catList.length; i++) {
     for (int j = 0; j < subCatList.length; j++) {
       print("this is j  $j");
 
       if (catList[i].categoryName == subCatList[j].catname) {
         if (tab.length == 0) {
+          print("one sub added into tab");
           tab.add([subCatList[j]]);
         } else if (tab.length <= catList.length) {
-          for (int k = 0; k < tab.length && tab.length < catList.length; k++)
-            if (tab[k][0].catname != subCatList[j].catname &&
-                tab[k][0].id != subCatList[j].id) tab.add([subCatList[j]]);
+          print("into tab length else if");
+          for (int k = 0; k < tab.length && tab.length < catList.length; k++) {
+            if (tab[k][0].catname != subCatList[j].catname) {
+              whole = true;
+            } else {
+              whole = false;
+            }
+          }
+          if (whole && tab.length < catList.length) {
+            tab.add([subCatList[j]]);
+          }
         }
+        print("this in the else if of adding subcatergory");
       }
     }
   }
+  // for (int i = 0; i < tab.length; i++) {
+  //   for (int j = 0; j < tab[i].length; j++) {
+  //     print("${tab.length} $i $j");
+  //     print(tab[i][j].catname);
+  //   }
+  // }
+  // subCatList.sort(((a, b) => a.catname.compareTo(b.catname)));
+
+  //  for (int j = 0; j < subCatList.length; j++) {
+  //    print(subCatList[j].item );
+  //  }
   int inc;
+  print(tab.length);
   for (int i = 0; i < catList.length; i++) {
+    // print("inside  for i ");
+
     for (int j = 0; j < subCatList.length; j++) {
+      // print("inside  for j ");
+
       if (tab[i][0].catname == subCatList[j].catname) {
+        print("cat names are same");
+
         for (int l = 0; l < tab[i].length; l++) {
           if (tab[i][l].id == subCatList[j].id) {
+            print("$l value inc");
+
             inc = l;
           }
         }
+        print(inc.toString());
         if (tab[i][inc].id != subCatList[j].id) {
+          print("inside  for inc ");
+
           tab[i].insert(inc + 1, subCatList[j]);
         }
       }
     }
   }
+  print("after tab has added");
 
   for (int i = 0; i < tab.length; i++) {
     for (int j = 0; j < tab[i].length; j++) {
@@ -105,8 +147,8 @@ class SubCategory {
       this.weight});
   factory SubCategory.fromJson(Map<dynamic, dynamic> json) {
     return SubCategory(
-        catname: json['categoryName'],
-        id: json["SubCategoryegory_id"],
+        catname: json['categoryname'],
+        id: json["subcategory_id"],
         price: json["price"],
         item: json["itemname"],
         desc: json["description"],
@@ -123,7 +165,7 @@ class Category {
   Category({this.categoryName, this.id, this.img});
   factory Category.fromJson(Map<dynamic, dynamic> json) {
     return Category(
-        categoryName: json['categoryName'],
+        categoryName: json['categoryname'],
         id: json["category_id"],
         img: json["img_url"]);
   }
@@ -134,9 +176,9 @@ Future<List<Scroll>> getCarousel(GlobalKey<ScaffoldState> scaffoldkey) async {
     scrollResponse =
         await hp.get("${Short.baseUrl}/getscrollimages", headers: headers);
 
-    if (response != null) {
-      Map scrollJson = json.decode(response.body);
-      if (response.statusCode == 200) {
+    if (scrollResponse != null) {
+      Map scrollJson = json.decode(scrollResponse.body);
+      if (scrollResponse.statusCode == 200) {
         print("inside response status");
         scrollList = (scrollJson['data'] as List)
             .map((item) => new Scroll.fromJson(item))
@@ -144,7 +186,7 @@ Future<List<Scroll>> getCarousel(GlobalKey<ScaffoldState> scaffoldkey) async {
 
         return scrollList;
       }
-      if (response.statusCode == 400) {
+      if (scrollResponse.statusCode == 400) {
         callSnackBar("${scrollJson["msg"]}", scaffoldkey);
 
         print("carousel api bad req");

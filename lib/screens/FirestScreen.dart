@@ -144,6 +144,7 @@ class _FirstScreenState extends State<FirstScreen> {
                 future: getCategories(firstscreen),
                 builder: (context, category) {
                   if (category.hasData) {
+                    print("category has data");
                     return SliverGrid(
                       delegate: SliverChildBuilderDelegate(
                         (BuildContext ctx, int i) {
@@ -190,10 +191,11 @@ class _FirstScreenState extends State<FirstScreen> {
                                                   if (loadingProgress == null)
                                                     return child;
                                                   return Shimmer.fromColors(
+                                                    loop: 2,
                                                       baseColor:
                                                           Colors.grey[400],
                                                       highlightColor:
-                                                          Colors.white,
+                                                          Colors.white12,
                                                       child: Container(
                                                         height: h * 0.20,
                                                         width: w * 0.45,
@@ -238,10 +240,22 @@ class _FirstScreenState extends State<FirstScreen> {
                   } else if (category.hasError) {
                     return Text("${category.error}");
                   }
-                  return Shimmer.fromColors(
-                      baseColor: Colors.grey[400],
+                  return SliverGrid(
+                      delegate: SliverChildBuilderDelegate(
+                        (BuildContext ctx, int i) {
+                return  Shimmer.fromColors(
+                      baseColor: Colors.grey[300],
                       highlightColor: Colors.white,
-                      child: ShrimGrid(context, h, w));
+                      child: ShrimGrid(context, h, w));},
+                      childCount: 4,
+                      ),
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        childAspectRatio: 98 / 90,
+                        crossAxisSpacing: 0,
+                        mainAxisSpacing: 0,
+                      ),
+                      );
                 }),
             SliverList(
               delegate: SliverChildListDelegate(

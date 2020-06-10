@@ -92,7 +92,7 @@ Widget Draw(BuildContext context) {
 }
 
 Widget Carousel(BuildContext context, GlobalKey<ScaffoldState> scaffoldkey) {
-  return FutureBuilder(
+  return FutureBuilder<List<Scroll>>(
       future: getCarousel(scaffoldkey),
       builder: (context, carousel) {
         if (carousel.hasData) {
@@ -110,7 +110,7 @@ Widget Carousel(BuildContext context, GlobalKey<ScaffoldState> scaffoldkey) {
                       decoration: BoxDecoration(color: Colors.grey[300]),
                       child: GestureDetector(
                           child: Image.network(
-                            i,
+                            i.img,
                             fit: BoxFit.fill,
                             loadingBuilder: (BuildContext context, Widget child,
                                 ImageChunkEvent loadingProgress) {
@@ -119,7 +119,8 @@ Widget Carousel(BuildContext context, GlobalKey<ScaffoldState> scaffoldkey) {
                                   baseColor: Colors.grey[400],
                                   highlightColor: Colors.white,
                                   child: Container(
-                                    width: MediaQuery.of(context).size.width,
+                                     width: MediaQuery.of(context).size.width*0.7,
+                                              height: MediaQuery.of(context).size.width*0.7,
                                     color: Colors.grey,
                                   ));
                             },
@@ -136,14 +137,18 @@ Widget Carousel(BuildContext context, GlobalKey<ScaffoldState> scaffoldkey) {
           return Text("${carousel.error}");
         }
         return Shimmer.fromColors(
-            baseColor: Colors.grey[400],
+            baseColor: Colors.grey[300],
             highlightColor: Colors.white,
             child: Shimmer.fromColors(
                 baseColor: Colors.grey[400],
                 highlightColor: Colors.white,
-                child: Container(
-                  width: MediaQuery.of(context).size.width,
-                  color: Colors.grey,
+                child: Center(
+                  child: Container(
+                    width: MediaQuery.of(context).size.width*0.75,
+                                                height: MediaQuery.of(context).size.width*0.5,
+
+                    color: Colors.grey,
+                  ),
                 )));
       });
 }

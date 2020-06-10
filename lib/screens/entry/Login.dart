@@ -187,6 +187,7 @@ class _LoginState extends State<Login> {
                                                 color: Colors.grey,
                                                 fontSize: 19),
                                             labelText: 'Email/Phone',
+                                        
                                             hintText: "Enter your email /Phone",
                                             hintStyle: TextStyle(
                                                 color: Colors.grey,

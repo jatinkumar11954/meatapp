@@ -5,6 +5,7 @@ import 'package:meatapp/adjust/short.dart';
 import 'package:meatapp/adjust/short.dart' as soty;
 
 import 'package:meatapp/adjust/widget.dart';
+import 'package:shimmer/shimmer.dart';
 
 class TabScreen extends StatefulWidget {
   @override
@@ -63,102 +64,126 @@ class _TabScreenState extends State<TabScreen> {
 
     return DefaultTabController(
       initialIndex: index,
-      length: 5,
+      length: 4,
       child: new Scaffold(
-        key: _scaffoldKey,
-        appBar: appbar,
-        drawer: Draw(context),
-        body: TabBarView(
-            children: 
- tab.map((o) {
-          // print(soty.o.value);
-          // print(Short.cat[o.key][1]);
-          return Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: ListView.builder(
-                itemCount: o.length,
-                itemBuilder: (ctx, i) {
-                  return Center(
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: GestureDetector(
-                        child: Container(
-                          height: 202,
-                          width: w * 0.7,
-                          decoration: BoxDecoration(boxShadow: [
-                            BoxShadow(
-                              color: Colors.black12,
-                              blurRadius: 5.0, // soften the shadow
-                              spreadRadius: 1.0, //extend the shadow
-                              offset: Offset(
-                                5.0, // Move to right 10  horizontally
-                                5.0, // Move to bottom 10 Vertically
-                              ),
-                            ),
-                          ]),
-                          child: GridTile(
-                              child: Image.network(
-                              o[i].img,
-                                fit: BoxFit.contain,
-                              ),
-                              footer: GridTileBar(
-                                  backgroundColor: Colors.white,
-                                  title: Text(o[i].item,
-                                      style: TextStyle(color: Colors.black)))),
-                        ),
-                        onTap: () => Navigator.pushNamed(context, "Desc",
-                            arguments: o),
-                      ),
-                    ),
-                  );
-                },
-              ));
-        }).toList()),
-        //     new Container(
-        //       color: Colors.yellow,
-        //     ),
-
-        //     // new Container(color: Colors.orange,),
-        //     new Container(
-        //       color: Colors.lightGreen,
-        //     ),
-        //     new Container(
-        //       color: Colors.red,
-        //     ),
-        //   ],
-        // ),
-        bottomNavigationBar: new TabBar(
-          tabs: Short.icon.entries.map((p) {
+          key: _scaffoldKey,
+          appBar: appbar,
+          drawer: Draw(context),
+          body: TabBarView(
+              children: tab.map((o) {
             // print(soty.o.value);
-            print("this is p value${p}");
-            return Container(
-              color:Colors.white,
-              child: Tab(
-                  text: "${Short.catgry[p.key]}", icon: Icon(Short.icon[p.key])),
-            );
-          }).toList(),
-          //      [
+            // print(Short.cat[o.key][1]);
+            return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ListView.builder(
+                  itemCount: o.length,
+                  itemBuilder: (ctx, i) {
+                    return Center(
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: GestureDetector(
+                          child: Container(
+                            height: 202,
+                            width: w * 0.7,
+                            decoration: BoxDecoration(boxShadow: [
+                              BoxShadow(
+                                color: Colors.black12,
+                                blurRadius: 5.0, // soften the shadow
+                                spreadRadius: 1.0, //extend the shadow
+                                offset: Offset(
+                                  5.0, // Move to right 10  horizontally
+                                  5.0, // Move to bottom 10 Vertically
+                                ),
+                              ),
+                            ]),
+                            child: GridTile(
+                                child: Image.network(
+                                  o[i].img,
+                                  errorBuilder: (BuildContext contet,Object ex, StackTrace stackTrace) {
+                                    if (stackTrace == null) return ex;
+                                    return Shimmer.fromColors(
+                                        baseColor: Colors.grey[400],
+                                        highlightColor: Colors.white,
+                                        child: Container(
+                                          height: 202,
+                                          width: w * 0.7,
+                                          color: Colors.grey,
+                                        ));
+                                  },
+                                  loadingBuilder: (BuildContext context,
+                                      Widget child,
+                                      ImageChunkEvent loadingProgress) {
+                                    if (loadingProgress == null) return child;
+                                    return Shimmer.fromColors(
+                                        baseColor: Colors.grey[400],
+                                        highlightColor: Colors.white,
+                                        child: Container(
+                                          height: 202,
+                                          width: w * 0.7,
+                                          color: Colors.grey,
+                                        ));
+                                  },
+                                  fit: BoxFit.contain,
+                                ),
+                                footer: GridTileBar(
+                                    backgroundColor: Colors.white,
+                                    title: Text(o[i].item,
+                                        style:
+                                            TextStyle(color: Colors.black)))),
+                          ),
+                          onTap: () => Navigator.pushNamed(context, "Desc",
+                              arguments: o),
+                        ),
+                      ),
+                    );
+                  },
+                ));
+          }).toList()),
+          //     new Container(
+          //       color: Colors.yellow,
+          //     ),
 
-          //  Tab(text: "Add",icon: Icon(Icons.home)),
-          //         Tab(text: "Add",icon: Icon(Icons.rss_feed)),
+          //     // new Container(color: Colors.orange,),
+          //     new Container(
+          //       color: Colors.lightGreen,
+          //     ),
+          //     new Container(
+          //       color: Colors.red,
+          //     ),
+          //   ],
+          // ),
+          bottomNavigationBar: new TabBar(
+            tabs: Short.icon.entries.map((p) {
+              // print(soty.o.value);
+              print("this is p value${p}");
+              return Container(
+                color: Colors.white,
+                child: Tab(
+                    text: "${Short.catgry[p.key]}",
+                    icon: Icon(Short.icon[p.key])),
+              );
+            }).toList(),
+            //      [
 
-          //  Tab(text: "Add",icon: Icon(Icons.panorama_fish_eye)),
+            //  Tab(text: "Add",icon: Icon(Icons.home)),
+            //         Tab(text: "Add",icon: Icon(Icons.rss_feed)),
 
-          //  Tab(text: "Add",icon: Icon(Icons.settings)),
+            //  Tab(text: "Add",icon: Icon(Icons.panorama_fish_eye)),
 
-          //       // new Icon(Icons.home),
-          //       // new Icon(Icons.rss_feed),
-          //       // new Icon(Icons.perm_identity),
-          //       // new Icon(Icons.settings),
-          //     ],
-          labelColor: Colors.black,
-          unselectedLabelColor: Theme.of(context).primaryColor,
-          indicatorSize: TabBarIndicatorSize.tab,
-          indicatorColor: Colors.grey,
-          indicatorWeight:1 ,
-        ),
-        backgroundColor: Colors.white
-      ),
+            //  Tab(text: "Add",icon: Icon(Icons.settings)),
+
+            //       // new Icon(Icons.home),
+            //       // new Icon(Icons.rss_feed),
+            //       // new Icon(Icons.perm_identity),
+            //       // new Icon(Icons.settings),
+            //     ],
+            labelColor: Colors.black,
+            unselectedLabelColor: Theme.of(context).primaryColor,
+            indicatorSize: TabBarIndicatorSize.tab,
+            indicatorColor: Colors.grey,
+            indicatorWeight: 1,
+          ),
+          backgroundColor: Colors.white),
     );
   }
 }
