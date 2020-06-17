@@ -138,86 +138,90 @@ class TabScreen extends StatelessWidget {
                                   },
                                 ),
                               ),
-                              footer: Column(
-                                children: <Widget>[
-                                  GridTileBar(
-                                      backgroundColor: Colors.white,
-                                      title: Text(o[i].item,
-                                          style:
-                                              TextStyle(color: Colors.black))),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: <Widget>[
-                                      Text(o[i].desc),
-                                      Spacer(),
-                                      o[i].quantity > 0
-                                          ? Row(
-                                              children: <Widget>[
-                                                IconButton(
-                                                    icon: Icon(
-                                                        Icons.remove_circle),
-                                                    onPressed: () {
-                                                          if(o[i].quantity==1){        
-                                                                cart.removeItem(o[i].id);
+                              footer: Container(
+                        color: Colors.white,
+                                child: Column(
+                                  children: <Widget>[
+                                    GridTileBar(
+                                        backgroundColor: Colors.white,
+                                        title: Text(o[i].item,
+                                            style:
+                                                TextStyle(color: Colors.black))),
+                                    Row(
+                                      mainAxisAlignment:
+                                       MainAxisAlignment.spaceBetween,
+                                      children: <Widget>[
+                                        Text(o[i].desc),
+                                        Spacer(),
+                                        o[i].quantity > 0
+                                            ? Row(
+                                                children: <Widget>[
+                                                  IconButton(
+                                                      icon: Icon(
+                                                          Icons.remove_circle,color:Theme.of(context).primaryColor),
+                                                      onPressed: () {
+                                                            if(o[i].quantity==1){        
+                                                                  cart.removeItem(o[i].id);
 
-                                                                print(cart.items.length);
-                                                                }
+                                                                  print(cart.items.length);
+                                                                  }
 
-                                                       productProvider.subQuant(
-                                                    o[i].catname, i);
-                                                    cart.reduceQuant(o[i].id, o[i].price, o[i].item,
-                                                          o[i].catname,
-                                                          i);
-                                                    }),
-                                                Text(o[i].quantity.toString()),
-                                                IconButton(
-                                                    icon:
-                                                        Icon(Icons.add_circle),
-                                                    onPressed: () {
-                                                      productProvider.addQuant(
-                                                          o[i].catname, i);
-                                                      cart.addItem(
-                                                          o[i].id,
-                                                          o[i].price,
-                                                          o[i].item,
-                                                          o[i].catname,
-                                                          i);
-                                                    }),
-                                              ],
-                                            )
-                                          : IconButton(
-                                              icon: Icon(
-                                                Icons.shopping_cart,
+                                                         productProvider.subQuant(
+                                                      o[i].catname, i);
+                                                      cart.reduceQuant(o[i].id, o[i].price, o[i].item,
+                                                            o[i].catname,
+                                                            i);
+                                                      }),
+                                                  Text(o[i].quantity.toString(),style:TextStyle(color: Colors.black,fontWeight: FontWeight.bold)),
+                                                  IconButton(
+                                                      icon:
+                                                          Icon(Icons.add_circle,color:Theme.of(context).primaryColor),
+                                                      onPressed: () {
+                                                        productProvider.addQuant(
+                                                            o[i].catname, i);
+                                                        cart.addItem(
+                                                            o[i].id,
+                                                            o[i].price,
+                                                            o[i].item,
+                                                            o[i].catname,
+                                                            i);
+                                                      }),
+                                                ],
+                                              )
+                                            : IconButton(
+                                                icon: Icon(
+                                                  Icons.shopping_cart,
+                                                ),
+                                                onPressed: () {
+                                                  cart.addItem(o[i].id,
+                                                      o[i].price, o[i].item,
+                                                            o[i].catname,
+                                                            i);
+                                                  productProvider.addQuant(
+                                                      o[i].catname, i);
+                                                },
+                                                color:
+                                                    Theme.of(context).accentColor,
                                               ),
-                                              onPressed: () {
-                                                cart.addItem(o[i].id,
-                                                    o[i].price, o[i].item,
-                                                          o[i].catname,
-                                                          i);
-                                                productProvider.addQuant(
-                                                    o[i].catname, i);
-                                              },
-                                              color:
-                                                  Theme.of(context).accentColor,
+                                        Consumer<Products>(
+                                          builder: (ctx, produc, ch) {return IconButton(
+                                            icon: Icon(
+                                              o[i].fav
+                                                  ? Icons.favorite
+                                                  : Icons.favorite_border,
                                             ),
-                                      Consumer<Products>(
-                                        builder: (ctx, produc, _) => IconButton(
-                                          icon: Icon(
-                                            o[i].fav
-                                                ? Icons.favorite
-                                                : Icons.favorite_border,
-                                          ),
-                                          color: Theme.of(context).accentColor,
-                                          onPressed: () {
-                                            produc.toggleFavoriteStatus(
-                                                o[i].catname, i);
-                                          },
+                                            color: Theme.of(context).accentColor,
+                                            onPressed: () {
+                                              produc.toggleFavoriteStatus(
+                                                  o[i].catname, i);
+                                            ch=CircularProgressIndicator();},
+                                          );
+                                      },
                                         ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
+                                      ],
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           ),

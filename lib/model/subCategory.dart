@@ -78,6 +78,7 @@ class Products with ChangeNotifier {
       return ele.categoryName == r;
     });
     _items[ro][c].fav = !_items[ro][c].fav;
+
     notifyListeners();
   }
   // SubCategory findById(int id) {

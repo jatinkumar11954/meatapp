@@ -82,6 +82,7 @@ class CartScreen extends StatelessWidget {
                       subtitle: Text(
                           'Total: \$${(cart.items.values.toList()[i].price * cart.items.values.toList()[i].quantity)}'),
                       trailing: SizedBox(
+                        
                           width: 120,
                           child:
                               // Row(children: <Widget>[Text("hai")],))
@@ -91,7 +92,7 @@ class CartScreen extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: <Widget>[
                                 IconButton(
-                                    icon: Icon(Icons.remove_circle),
+                                    icon: Icon(Icons.remove_circle,color:Theme.of(context).primaryColor),
                                     onPressed: () {
                                         if (cart.items.values
                                               .toList()[i]
@@ -123,9 +124,9 @@ class CartScreen extends StatelessWidget {
                                 Text(cart.items.values
                                     .toList()[i]
                                     .quantity
-                                    .toString()),
+                                    .toString(),style:TextStyle(color: Colors.black,fontWeight: FontWeight.bold)),
                                 IconButton(
-                                    icon: Icon(Icons.add_circle),
+                                    icon: Icon(Icons.add_circle,color:Theme.of(context).primaryColor),
                                     onPressed: () {
                                       productProvider.addQuant(
                                           cart.items.values.toList()[i].catName,
