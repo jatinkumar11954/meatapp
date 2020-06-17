@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:meatapp/Api/categoryApi.dart';
 import 'package:meatapp/adjust/short.dart';
 import 'package:meatapp/adjust/widget.dart';
+import 'package:meatapp/main.dart';
+import 'package:meatapp/model/subCategory.dart';
+import 'package:provider/provider.dart';
 
 class Description extends StatefulWidget {
+  String catName;
+  Description({this.catName});
   @override
   _DescriptionState createState() => _DescriptionState();
 }
@@ -11,9 +17,14 @@ class Description extends StatefulWidget {
 class _DescriptionState extends State<Description> {
   @override
   Widget build(BuildContext context) {
+    final product = Provider.of<Products>(context, listen: false).items;
+
     final GlobalKey<ScaffoldState> _scaffoldKey =
         new GlobalKey<ScaffoldState>();
     final i = ModalRoute.of(context).settings.arguments;
+    int ro = catList.indexWhere((ele) {
+      return ele.categoryName == widget.catName;
+    });
     Short().init(context);
 
     var w = Short.w;
@@ -44,7 +55,7 @@ class _DescriptionState extends State<Description> {
             top: 10,
             child: SizedBox(
               width: w * 0.83,
-              child: Text(Short.catgry[i]),
+              child: Text(product[ro][i].item),
             )),
       ]),
 
@@ -68,7 +79,7 @@ class _DescriptionState extends State<Description> {
               child: Hero(
                 tag: i,
                 child: Image.network(
-                  Short.img[i],
+                  product[ro][i].img,
                   fit: BoxFit.fill,
                   width: w * 0.98,
                   height: h * 0.4,
@@ -78,13 +89,15 @@ class _DescriptionState extends State<Description> {
             Padding(
               padding: EdgeInsets.only(bottom: 5, top: 25, left: 17),
               child: ListTile(
-                  title: Text(Short.catgry[i],
+                  title: Text(product[ro][i].desc,
                       style: TextStyle(
                           color: Colors.black,
                           fontSize: h * 0.03,
                           fontWeight: FontWeight.w500)),
                   subtitle: Text(
-                    "29-30 Pieces",
+                    product[ro][i].weight == null
+                        ? "weigth"
+                        : product[ro][i].weight,
                     style: TextStyle(
                         color: Colors.grey,
                         fontSize: h * 0.02,
@@ -117,7 +130,10 @@ class _DescriptionState extends State<Description> {
                         fontSize: h * 0.03,
                         decoration: TextDecoration.lineThrough,
                       )),
-                  Text("  500",
+                  Text(
+                      product[ro][i].weight == null
+                          ? " price"
+                          : "  ${product[ro][i].price}",
                       style: TextStyle(
                         color: Theme.of(context).primaryColor,
                         fontSize: h * 0.035,
@@ -127,7 +143,7 @@ class _DescriptionState extends State<Description> {
             ),
             Divider(thickness: 4),
             SizedBox(height: 30),
-            Center(
+            isLogin? Container(): Center(
               child: SizedBox(
                 width: w * 0.95,
                 child: RaisedButton(

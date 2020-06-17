@@ -15,7 +15,7 @@ class _LoginOtpState extends State<LoginOtp> with TickerProviderStateMixin {
   TextEditingController phoneNumber;
 
   GlobalKey<FormState> _form = GlobalKey<FormState>(debugLabel: "key2");
-  bool isLoading = false;
+  bool _isLoading = false;
   AnimationController _controller;
   Animation<Offset> animation;
   final GlobalKey<ScaffoldState> _scaffoldkey = new GlobalKey<ScaffoldState>();
@@ -125,7 +125,7 @@ class _LoginOtpState extends State<LoginOtp> with TickerProviderStateMixin {
                     print("Form is validated");
 
                     setState(() {
-                      isLoading = true;
+                      _isLoading = true;
                     });
                     Map<String, String> data = {"phoneno": phoneNumber.text};
 
@@ -141,7 +141,7 @@ class _LoginOtpState extends State<LoginOtp> with TickerProviderStateMixin {
                           print("inside response status");
 
                           setState(() {
-                            isLoading = false;
+                            _isLoading = false;
                           });
                           phoneNumber.clear();
                           Navigator.pushReplacementNamed(context, "Otp",
@@ -150,7 +150,7 @@ class _LoginOtpState extends State<LoginOtp> with TickerProviderStateMixin {
                         if (response.statusCode == 400) {
                           callSnackBar("${res["msg"]}");
                           setState(() {
-                            isLoading = false;
+                            _isLoading = false;
                           });
                           print("error with phone number");
                         }
@@ -159,13 +159,13 @@ class _LoginOtpState extends State<LoginOtp> with TickerProviderStateMixin {
                     } on Exception catch (exception) {
                       print("exeception from api");
                       setState(() {
-                        isLoading = false;
+                        _isLoading = false;
                       });
                       callSnackBar("network problem");
                     } catch (error) {
                       print("error from api");
                       setState(() {
-                        isLoading = false;
+                        _isLoading = false;
                       });
                       callSnackBar(error.toString());
                     }
@@ -191,7 +191,7 @@ class _LoginOtpState extends State<LoginOtp> with TickerProviderStateMixin {
 //                                         }
 
 //                     // setState(() {
-//                     //   isLoading=false;
+//                     //   _isLoading=false;
 //                     // });
 //                     if(response!=null){
 //                     if (response.statusCode == 200) {
@@ -205,7 +205,7 @@ class _LoginOtpState extends State<LoginOtp> with TickerProviderStateMixin {
 // phoneNumber.clear();
 //                       if (res['status'] == 200) {
 //                         setState(() {
-//                           isLoading = false;
+//                           _isLoading = false;
 //                         });
 
 //                       }
@@ -297,6 +297,7 @@ class _LoginOtpState extends State<LoginOtp> with TickerProviderStateMixin {
       ),
     );
     return Scaffold(
+   
       key: _scaffoldkey,
       body: SingleChildScrollView(
         child: Stack(

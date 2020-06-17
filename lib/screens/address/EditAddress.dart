@@ -24,7 +24,7 @@ class _EditAddressState extends State<EditAddress> {
   TextEditingController pincode;
   static const headers = {'Content-Type': 'application/json'};
   GlobalKey<FormState> _form = GlobalKey<FormState>(debugLabel: "key2");
-  bool isLoading = false;
+  bool _isLoading = false;
   bool getLocation = false;
 
   hp.Response response;
@@ -210,7 +210,7 @@ class _EditAddressState extends State<EditAddress> {
                             print("Form is validated");
 
                             setState(() {
-                              isLoading = true;
+                              _isLoading = true;
                             });
                             print(user.address);
                             user.address = flatNo.text +","+
@@ -224,7 +224,7 @@ class _EditAddressState extends State<EditAddress> {
                               "address": user.address,
                             };
                             setState(() {
-                              isLoading = true;
+                              _isLoading = true;
                             });
                             print("before post" + data.toString());
 
@@ -242,7 +242,7 @@ class _EditAddressState extends State<EditAddress> {
                                   print("inside response status");
 
                                   setState(() {
-                                    isLoading = false;
+                                    _isLoading = false;
                                   });
                                         await Future.delayed(Duration(
                                                       milliseconds: 3000));
@@ -260,7 +260,7 @@ class _EditAddressState extends State<EditAddress> {
                                   callSnackBar(
                                       "error while editing");
                                         setState(() {
-                                    isLoading = false;
+                                    _isLoading = false;
                                   });
 
                                   print(
@@ -288,14 +288,14 @@ class _EditAddressState extends State<EditAddress> {
                             } //catch
 
                             // setState(() {
-                            //   isLoading=false;
+                            //   _isLoading=false;
                             // });
                           } //form validation
                         },
                         shape: RoundedRectangleBorder(
                           borderRadius: new BorderRadius.circular(50.0),
                         ),
-                        child: isLoading
+                        child: _isLoading
                             ? CircularProgressIndicator()
                             : Text("CONTINUE",
                                 style: TextStyle(

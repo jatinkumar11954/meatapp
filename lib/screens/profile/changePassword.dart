@@ -37,7 +37,7 @@ class _ChangePasswordState extends State<ChangePassword> {
   bool cnfrmPwdTap = false, newPwdTap = false;
   bool showPwd = true;
   bool showCnfrmPwd = true;
-  bool isLoading = false;
+  bool _isLoading = false;
 
   Icon _iconCnfrm = Icon(
     Icons.visibility,
@@ -202,7 +202,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                                           print("Form is validated");
                                           if (cnfrmPwd.text == newPwd.text) {
                                             setState(() {
-                                              isLoading = true;
+                                              _isLoading = true;
                                             });
                                             Map<String, dynamic> data = {
                                               "phoneno":
@@ -213,7 +213,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                                                   cnfrmPwd.text
                                             };
                                             setState(() {
-                                              isLoading = true;
+                                              _isLoading = true;
                                             });
                                             print("before post" +
                                                 data.toString());
@@ -256,7 +256,7 @@ class _ChangePasswordState extends State<ChangePassword> {
 
                                                   setState(() {
                                                     // storeLocal();
-                                                    isLoading = false;
+                                                    _isLoading = false;
                                                   });
 
                                                   //store jwt locally
@@ -289,7 +289,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                                                       "invalid username or password");
                                                   setState(() {
                                                     // storeLocal();
-                                                    isLoading = false;
+                                                    _isLoading = false;
                                                   });
                                                 }
                                               } //response is not null
@@ -309,7 +309,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                                               print("error from api");
                                               setState(() {
                                                 // storeLocal();
-                                                isLoading = false;
+                                                _isLoading = false;
                                               });
                                               callSnackBar(error.toString(), 3);
                                             }
@@ -326,7 +326,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                                         borderRadius:
                                             new BorderRadius.circular(50.0),
                                       ),
-                                      child: isLoading
+                                      child: _isLoading
                                           ? CircularProgressIndicator()
                                           : Text("CHANGE PASSWORD",
                                               style: TextStyle(

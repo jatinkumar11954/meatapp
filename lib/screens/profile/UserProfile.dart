@@ -20,7 +20,7 @@ class UserProfile extends StatefulWidget {
 
 class UserProfileState extends State<UserProfile> {
   UserDetails user;
-  bool isLoading = false;
+  bool _isLoading = false;
   String token ;
   @override
   void initState() {
@@ -31,14 +31,15 @@ class UserProfileState extends State<UserProfile> {
 
   Future<UserDetails> getDetails() async {
     setState(() {
-      isLoading = true;
+      _isLoading = true;
     });
     await Future.delayed(Duration(milliseconds: 500));
 
     SharedPreferences store = await SharedPreferences.getInstance();
+    store.remove("jwt");
+
     print("getting jwt from the device");
      token = store.getString('jwt');
-
     if (token != null) {
       Map jwt =
           json.decode(ascii.decode(base64.decode(base64.normalize(token))));
@@ -49,11 +50,11 @@ class UserProfileState extends State<UserProfile> {
 
     }
      setState(() {
-      isLoading = false;
+      _isLoading = false;
     });
     // if(token==null){
     //   setState(() {
-    //   isLoading = true;
+    //   _isLoading = true;
     // });
     // }
    
@@ -89,7 +90,7 @@ class UserProfileState extends State<UserProfile> {
         },
                   child: Column(
             children: <Widget>[
-              isLoading 
+              _isLoading 
                   ? Shimmer.fromColors(
                       baseColor: Colors.grey[400],
                       highlightColor: Colors.white,

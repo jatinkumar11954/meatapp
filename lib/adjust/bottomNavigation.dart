@@ -39,7 +39,7 @@ Widget bottomBar(BuildContext context, int index) {
 
           case 2:
             {
-                               Navigator.pushNamed(context, "MaterialPageRoute(builder: (context) => UserProfile())");
+                               Navigator.push(context, CustomRoute(builder: (context) => UserProfile()));
               break;
             }
         }
@@ -107,3 +107,87 @@ Widget bottomBar(BuildContext context, int index) {
     ),
   );
 }
+// final _selectedItemColor = Colors.white;
+// final _unselectedItemColor = Colors.white30;
+// final _selectedBgColor = Colors.indigo;
+// final _unselectedBgColor = Colors.blue;
+// int _selectedIndex = 0;
+//  const TextStyle optionStyle =
+//     TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+//  const List<Widget> _widgetOptions = <Widget>[
+//   Text(
+//     'Index 0: Home',
+//     style: optionStyle,
+//   ),
+//   Text(
+//     'Index 1: Business',
+//     style: optionStyle,
+//   ),
+//   Text(
+//     'Index 2: School',
+//     style: optionStyle,
+//   ),
+// ];
+
+// // void _onItemTapped(int index) {
+// //   setState(() {
+// //     _selectedIndex = index;
+// //   });
+// // }
+
+// Color _getBgColor(int index) =>
+//     _selectedIndex == index ? _selectedBgColor : _unselectedBgColor;
+
+// Color _getItemColor(int index) =>
+//     _selectedIndex == index ? _selectedItemColor : _unselectedItemColor;
+
+// Widget _buildIcon(IconData iconData, String text, int index) => Container(
+//       width: double.infinity,
+//       height: kBottomNavigationBarHeight,
+//       child: Material(
+//         color: _getBgColor(index),
+//         child: InkWell(
+//           child: Column(
+//             mainAxisAlignment: MainAxisAlignment.center,
+//             children: <Widget>[
+//               Icon(iconData),
+//               Text(text,
+//                   style: TextStyle(fontSize: 12, color: _getItemColor(index))),
+//             ],
+//           ),
+//           onTap: () {},
+//         ),
+//       ),
+//     );
+
+// @override
+// Widget build(BuildContext context) {
+//   return Scaffold(
+//     appBar: AppBar(
+//       title: const Text('BottomNavigationBar Sample'),
+//     ),
+//     body: Center(
+//       child: _widgetOptions.elementAt(_selectedIndex),
+//     ),
+//     bottomNavigationBar: BottomNavigationBar(
+//       selectedFontSize: 0,
+//       items: <BottomNavigationBarItem>[
+//         BottomNavigationBarItem(
+//           icon: _buildIcon(Icons.home, 'Home', 0),
+//           title: SizedBox.shrink(),
+//         ),
+//         BottomNavigationBarItem(
+//           icon: _buildIcon(Icons.business, 'Business', 1),
+//           title: SizedBox.shrink(),
+//         ),
+//         BottomNavigationBarItem(
+//           icon: _buildIcon(Icons.school, 'School', 2),
+//           title: SizedBox.shrink(),
+//         ),
+//       ],
+//       currentIndex: _selectedIndex,
+//       selectedItemColor: _selectedItemColor,
+//       unselectedItemColor: _unselectedItemColor,
+//     ),
+//   );
+// }

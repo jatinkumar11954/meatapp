@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart' as snack;
-
+import 'package:meatapp/main.dart' ;
 import 'package:meatapp/adjust/short.dart';
 import 'package:meatapp/adjust/widget.dart';
 import 'package:http/http.dart' as hp;
@@ -17,7 +17,7 @@ class _LoginState extends State<Login> {
   static const headers = {'Content-Type': 'application/json'};
 
   hp.Response response;
-  bool isLoading = false;
+  bool _isLoading = false;
 
   TextEditingController email;
   TextEditingController pwd;
@@ -256,7 +256,7 @@ class _LoginState extends State<Login> {
                                         print("Form is validated");
 
                                         setState(() {
-                                          isLoading = true;
+                                          _isLoading = true;
                                         });
                                         Map<String, dynamic> data = {
                                           "phoneno":
@@ -267,7 +267,7 @@ class _LoginState extends State<Login> {
                                               pwd.text
                                         };
                                         setState(() {
-                                          isLoading = true;
+                                          _isLoading = true;
                                         });
                                         print("before post" + data.toString());
                                         try {
@@ -304,7 +304,7 @@ class _LoginState extends State<Login> {
 
                                               setState(() {
                                                 storeLocal();
-                                                isLoading = false;
+                                                _isLoading = false;
                                               });
                                               //store jwt locally
 
@@ -312,6 +312,7 @@ class _LoginState extends State<Login> {
                                               print(jwt.toString());
                                               email.clear();
                                               pwd.clear();
+                                              login=true;
                                               Navigator.pushReplacementNamed(
                                                   context, "Main",
                                                   arguments: jwt);
@@ -319,7 +320,7 @@ class _LoginState extends State<Login> {
                                             if (response.statusCode == 400) {
                                               callSnackBar("${res["msg"]}");
                                               setState(() {
-                                                isLoading = false;
+                                                _isLoading = false;
                                               });
                                               print(
                                                   "invalid username or password");
@@ -329,13 +330,13 @@ class _LoginState extends State<Login> {
                                         } on Exception catch (exception) {
                                           print("exeception from api");
                                           setState(() {
-                                            isLoading = false;
+                                            _isLoading = false;
                                           });
                                           callSnackBar("network problem");
                                         } catch (error) {
                                           print("error from api");
                                           setState(() {
-                                            isLoading = false;
+                                            _isLoading = false;
                                           });
                                           callSnackBar(error.toString());
                                         }
@@ -345,7 +346,7 @@ class _LoginState extends State<Login> {
                                       borderRadius:
                                           new BorderRadius.circular(50.0),
                                     ),
-                                    child: isLoading
+                                    child: _isLoading
                                         ? CircularProgressIndicator()
                                         : Text("LOGIN",
                                             style: TextStyle(

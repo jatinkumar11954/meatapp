@@ -20,7 +20,7 @@ class ManageProfile extends StatefulWidget {
 
 class _ManageProfileState extends State<ManageProfile> {
   final GlobalKey<ScaffoldState> _scaffoldkey = new GlobalKey<ScaffoldState>();
-  bool isLoading = false;
+  bool _isLoading = false;
   void callSnackBar(String me, int sec) {
     print("called me for scnack bar");
     final nackBar = new snack.SnackBar(
@@ -351,7 +351,7 @@ bool changeEmail=false;
                               print("Form is validated");
 
                               setState(() {
-                                isLoading = true;
+                                _isLoading = true;
                               });
                               Map<String, dynamic> data = {
                                 "fullname":
@@ -367,7 +367,7 @@ bool changeEmail=false;
                                 // "152346"
                               };
                               setState(() {
-                                isLoading = true;
+                                _isLoading = true;
                               });
                               print("before post" + data.toString());
 
@@ -384,7 +384,7 @@ bool changeEmail=false;
                                     print("inside response status");
 
                                     setState(() {
-                                      isLoading = false;
+                                      _isLoading = false;
                                     });
     await Future.delayed(Duration(milliseconds: 3000));
                                        Navigator.pushReplacement(
@@ -427,7 +427,7 @@ bool changeEmail=false;
                               } //catch
 
                               // setState(() {
-                              //   isLoading=false;
+                              //   _isLoading=false;
                               // });
                             } 
                             
@@ -439,7 +439,7 @@ bool changeEmail=false;
                           shape: RoundedRectangleBorder(
                             borderRadius: new BorderRadius.circular(50.0),
                           ),
-                          child: isLoading
+                          child: _isLoading
                               ? CircularProgressIndicator()
                               : Text("Update",
                                   style: TextStyle(

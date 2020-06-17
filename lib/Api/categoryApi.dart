@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:meatapp/model/subCategory.dart';
 
 import 'package:flutter/material.dart';
 import 'package:meatapp/adjust/short.dart';
@@ -131,38 +132,17 @@ getSubCategory() {
   return tab;
 }
 
-class SubCategory {
-  String catname;
-  int id, price, pieces, weight;
-
-  String item, desc, img;
-  SubCategory(
-      {this.catname,
-      this.pieces,
-      this.img,
-      this.id,
-      this.item,
-      this.price,
-      this.desc,
-      this.weight});
-  factory SubCategory.fromJson(Map<dynamic, dynamic> json) {
-    return SubCategory(
-        catname: json['categoryname'],
-        id: json["subcategory_id"],
-        price: json["price"],
-        item: json["itemname"],
-        desc: json["description"],
-        pieces: json["pieces"],
-        weight: json["weight"],
-        img: json["img_url"]);
-  }
-}
-
-class Category {
+class Category with ChangeNotifier {
   String categoryName;
   int id;
+
   String img, desc;
-  Category({this.categoryName, this.id, this.img});
+  Category({
+    this.categoryName,
+    this.id,
+    this.img,
+    this.desc,
+  });
   factory Category.fromJson(Map<dynamic, dynamic> json) {
     return Category(
         categoryName: json['categoryname'],

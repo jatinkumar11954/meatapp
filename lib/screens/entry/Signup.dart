@@ -25,7 +25,7 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
   );
   Position _currentPosition;
   GlobalKey<FormState> _form = GlobalKey<FormState>(debugLabel: "key2");
-  bool isLoading = false;
+  bool _isLoading = false;
   bool getLocation = false;
 
   AnimationController _controller;
@@ -271,9 +271,9 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
                     print("Form is validated");
 
                     setState(() {
-                      isLoading = true;
+                      _isLoading = true;
                     });
-                    _currentPosition = getCurrentLocation();
+                    List<Placemark> _Position =await place();
                     Map<String, dynamic> data = {
                       "fullname":
                           // "jatin",
@@ -286,13 +286,13 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
                           phoneNumber.text,
                       "address":
                           // "no addres",
-                          address.text + " " + _currentPosition.toString(),
+                          address.text + " " + _Position.toString(),
                       "password":
                           // "152346"
                           signUppwd.text
                     };
                     setState(() {
-                      isLoading = true;
+                      _isLoading = true;
                     });
                     print("before post" + data.toString());
 
@@ -307,7 +307,7 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
                           print("inside response status");
 
                           setState(() {
-                            isLoading = false;
+                            _isLoading = false;
                           });
                           Navigator.pushReplacementNamed(context, "Login",
                               arguments: false);
@@ -317,7 +317,7 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
                           callSnackBar(
                               "User with these details already exists");
                           setState(() {
-                            isLoading = false;
+                            _isLoading = false;
                           });
                           print("User with these details already exists");
                         }
@@ -334,26 +334,26 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
                     on Exception catch (exception) {
                       print("exeception from api");
                       setState(() {
-                        isLoading = false;
+                        _isLoading = false;
                       });
                       callSnackBar("User with these details already exists");
                     } catch (error) {
                       print("error from api");
                       setState(() {
-                        isLoading = false;
+                        _isLoading = false;
                       });
                       callSnackBar(error.toString());
                     } //catch
 
                     // setState(() {
-                    //   isLoading=false;
+                    //   _isLoading=false;
                     // });
                   } //form validation
                 },
                 shape: RoundedRectangleBorder(
                   borderRadius: new BorderRadius.circular(50.0),
                 ),
-                child: isLoading
+                child: _isLoading
                     ? CircularProgressIndicator()
                     : Text("SIGN UP",
                         style: TextStyle(color: Colors.white, fontSize: 21)),

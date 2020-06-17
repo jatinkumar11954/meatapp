@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:meatapp/adjust/badge.dart';
 import 'package:meatapp/adjust/bottomNavigation.dart';
 import 'package:meatapp/adjust/shimmer.dart';
 import 'package:meatapp/adjust/widget.dart';
@@ -7,8 +8,11 @@ import 'package:flutter/material.dart' as snack;
 import 'package:meatapp/adjust/short.dart';
 import 'package:meatapp/adjust/custom_route.dart';
 import 'package:meatapp/Api/categoryApi.dart';
+import 'package:meatapp/model/cart.dart';
+import 'package:meatapp/screens/cart_screen.dart';
 import 'package:meatapp/screens/profile/UserProfile.dart';
 import 'package:meatapp/screens/tabScreen.dart';
+import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../main.dart';
@@ -79,7 +83,9 @@ class _FirstScreenState extends State<FirstScreen> {
         key: firstscreen,
         resizeToAvoidBottomPadding: false,
         appBar: appbar,
-        bottomNavigationBar: isLogin ? bottomBar(context, 0) : SizedBox(),
+        // bottomNavigationBar: isLogin ? bottomBar(context, 0) : SizedBox(),
+                bottomNavigationBar: bottomBar(context, 0) ,//for testing
+
         drawer: Draw(context),
         body: CustomScrollView(
           scrollDirection: Axis.vertical,
@@ -155,6 +161,7 @@ class _FirstScreenState extends State<FirstScreen> {
                               child: GestureDetector(
                                 onTap: () {
                                   print("navigating");
+                                  
                                   Navigator.push(
                                       context,
                                       CustomRoute(
@@ -181,7 +188,7 @@ class _FirstScreenState extends State<FirstScreen> {
                                             child: Hero(
                                               tag: i,
                                               child: Image.network(
-                                                category.data[i].img,
+                                               category.data[i].img,
                                                 fit: BoxFit.fill,
                                                 loadingBuilder:
                                                     (BuildContext context,
@@ -281,6 +288,29 @@ class _FirstScreenState extends State<FirstScreen> {
               ),
             ),
           ],
-        ));
+        ),
+        floatingActionButton:  FloatingActionButton(
+          elevation: 4.0,
+      onPressed: () {
+        // Add your onPressed code here!
+      },
+      child: Consumer<Cart>(
+            builder: (_, cart, ch) => Badge(
+                  child: ch,
+                  value: cart.itemCount.toString(),
+                  color: Colors.black,
+                ),
+            child: IconButton(
+              icon: Icon(
+                Icons.shopping_cart,
+                color: Colors.white,
+              ),
+              onPressed: () {
+                Navigator.push(context, CustomRoute(builder:(c)=>CartScreen()));
+              },
+            ),
+          ),
+      backgroundColor: Theme.of(context).primaryColor,
+    ), );
   }
 }
