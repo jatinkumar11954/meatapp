@@ -155,7 +155,26 @@ Widget bottomBar(BuildContext context, int index) {
 //                   style: TextStyle(fontSize: 12, color: _getItemColor(index))),
 //             ],
 //           ),
-//           onTap: () {},
+//           onTap: (index) {
+        // switch (index) {
+        //   case 0:
+        //     {
+        //                        Navigator.push(context, CustomRoute(builder: (context) => FirstScreen()));
+        //       break;
+        //     }
+        //   case 1:
+        //     {
+        //       Navigator.pushNamed(context, 'Main');
+        //       break;
+        //     }
+
+        //   case 2:
+        //     {
+        //                        Navigator.push(context, CustomRoute(builder: (context) => UserProfile()));
+        //       break;
+        //     }
+        // },
+      
 //         ),
 //       ),
 //     );

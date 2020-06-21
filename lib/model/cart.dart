@@ -2,7 +2,10 @@ import 'package:flutter/foundation.dart';
 import 'package:intl/intl.dart';
 class CartItem {
   final int id;
+
   final String title;
+    final String img;
+
   final String catName;
   final int column;
   final int quantity;
@@ -10,6 +13,8 @@ class CartItem {
 
   CartItem({
     @required this.id,
+        @required this.img,
+
     @required this.title,
       @required this.catName,
    @required this. column,
@@ -43,7 +48,7 @@ class Cart with ChangeNotifier {
   void addItem(
    int  id,
     int price,
-    String title,String catName,int column
+    String title,String img,String catName,int column
   ) {
     if (_items.containsKey(id.toString())) {
       // change quantity...
@@ -52,6 +57,8 @@ class Cart with ChangeNotifier {
         id.toString(),
         (existingCartItem) => CartItem(
               id: existingCartItem.id,
+                            img: existingCartItem.img,
+
               title: existingCartItem.title,
               price: existingCartItem.price,
               quantity: existingCartItem.quantity + 1,
@@ -66,6 +73,8 @@ class Cart with ChangeNotifier {
       id.toString(),
         () => CartItem(
               id:  id,
+                                          img: img,
+
               title: title,
               price: price,
               quantity: 1,
@@ -79,7 +88,7 @@ class Cart with ChangeNotifier {
   void reduceQuant(
    int  id,
     int price,
-    String title,String catName,int column
+    String title,String img,String catName,int column
   ) {
     if (_items.containsKey(id.toString())) {
       // change quantity...
@@ -88,6 +97,8 @@ class Cart with ChangeNotifier {
         id.toString(),
         (existingCartItem) => CartItem(
               id: existingCartItem.id,
+                                          img: existingCartItem.img,
+
               title: existingCartItem.title,
               price: existingCartItem.price,
               quantity: existingCartItem.quantity - 1,

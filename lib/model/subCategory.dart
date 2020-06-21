@@ -72,6 +72,16 @@ class Products with ChangeNotifier {
 
     notifyListeners();
   }
+  
+  void removeFrmCart(String r, int c) {
+    int ro = catList.indexWhere((ele) {
+      return ele.categoryName == r;
+    });
+    _items[ro][c].quantity=0;
+
+
+    notifyListeners();
+  }
 
   void toggleFavoriteStatus(String r, int c) {
     int ro = catList.indexWhere((ele) {

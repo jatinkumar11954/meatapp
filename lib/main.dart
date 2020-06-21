@@ -10,6 +10,7 @@ import 'package:meatapp/screens/profile/UserProfile.dart';
 import 'package:meatapp/screens/profile/manageProfile.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'model/bottom.dart';
 import 'model/cart.dart';
 import 'model/subCategory.dart';
 import 'screens/entry/Signup.dart';
@@ -47,6 +48,9 @@ class MyApp extends StatelessWidget {
        
          ChangeNotifierProvider.value(
           value:Products(),
+        ),
+        ChangeNotifierProvider.value(
+          value:Bottom(),
         ),
         ChangeNotifierProvider.value(
           value: Cart(),
