@@ -21,13 +21,13 @@ class ChangePassword extends StatefulWidget {
 class _ChangePasswordState extends State<ChangePassword> {
   final GlobalKey<ScaffoldState> _scaffoldkey = new GlobalKey<ScaffoldState>();
 
-  void callSnackBar(String me, int sec) {
-    print("called me for scnack bar");
-    final nackBar = new snack.SnackBar(
-      content: new Text(me),
+  void callSnackBar(String msg, int sec) {
+    print(msg+"snack msg");
+    final Snack = new snack.SnackBar(
+      content: new Text(msg),
       duration: new Duration(seconds: sec),
     );
-    _scaffoldkey.currentState.showSnackBar(nackBar);
+    _scaffoldkey.currentState.showSnackBar(Snack);
   }
 
   hp.Response response;

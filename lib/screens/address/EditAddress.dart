@@ -30,13 +30,13 @@ class _EditAddressState extends State<EditAddress> {
   hp.Response response;
   final GlobalKey<ScaffoldState> _scaffoldkey = new GlobalKey<ScaffoldState>();
 
-  void callSnackBar(String me) {
-    print("called me for scnack bar");
-    final nackBar = new snack.SnackBar(
-      content: new Text(me),
+  void callSnackBar(String msg) {
+    print(msg+"snack msg");
+    final Snack = new snack.SnackBar(
+      content: new Text(msg),
       duration: new Duration(seconds: 3),
     );
-    _scaffoldkey.currentState.showSnackBar(nackBar);
+    _scaffoldkey.currentState.showSnackBar(Snack);
   }
 
   void initState() {

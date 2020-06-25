@@ -21,13 +21,13 @@ class ManageProfile extends StatefulWidget {
 class _ManageProfileState extends State<ManageProfile> {
   final GlobalKey<ScaffoldState> _scaffoldkey = new GlobalKey<ScaffoldState>();
   bool _isLoading = false;
-  void callSnackBar(String me, int sec) {
-    print("called me for scnack bar");
-    final nackBar = new snack.SnackBar(
-      content: new Text(me),
+  void callSnackBar(String msg, int sec) {
+    print(msg+"snack msg");
+    final Snack = new snack.SnackBar(
+      content: new Text(msg),
       duration: new Duration(seconds: sec),
     );
-    _scaffoldkey.currentState.showSnackBar(nackBar);
+    _scaffoldkey.currentState.showSnackBar(Snack);
   }
 bool changeName=false;
 bool changeEmail=false;

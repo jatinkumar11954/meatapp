@@ -156,13 +156,13 @@ Widget Carousel(BuildContext context, GlobalKey<ScaffoldState> scaffoldkey) {
 Widget LoginBftrAnim(BuildContext context, Function loginFalse, UniqueKey k1) {
   return Container(
     key: k1,
-    height: Short.h * 0.8,
-    margin: EdgeInsets.only(top: Short.h * 0.18),
+    height: Short.h * 0.75,
+    margin: EdgeInsets.only(top: Short.h * 0.16),
     width: Short.w,
     child: Padding(
         padding: EdgeInsets.only(
             bottom: Short.h * 0.14,
-            top: Short.h * 0.18,
+            top: Short.h * 0.15,
             left: Short.w * 0.03,
             right: Short.w * 0.03),
         child: Card(
@@ -170,44 +170,52 @@ Widget LoginBftrAnim(BuildContext context, Function loginFalse, UniqueKey k1) {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Center(
-                  child: FlatButton(
-                onPressed: loginFalse,
-                child: Text(
-                  "Login via Email / Phone",
-                  style: TextStyle(
-                      color: Theme.of(context).primaryColor,
-                      fontSize: Short.h * 0.025),
-                ),
-              )),
-              Row(children: <Widget>[
-                Expanded(
-                  child: new Container(
-                      margin: const EdgeInsets.only(left: 10.0, right: 20.0),
-                      child: Divider(
-                        color: Colors.grey,
-                        height: 36,
-                      )),
-                ),
+              Padding(
+                padding:  EdgeInsets.only(
+            bottom: Short.h * 0.015,
+            top: Short.h * 0.05,
+          ),
+                child: Center(
+                    child: FlatButton(
+                  onPressed: loginFalse,
+                  child: Text(
+                    "Login via Email / Phone",
+                    style: TextStyle(
+                        color: Theme.of(context).primaryColor,
+                        fontSize: Short.h * 0.025),
+                  ),
+                )),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                // Expanded(
+                //   child: new Container(
+                //       margin: const EdgeInsets.only(left: 10.0, right: 20.0),
+                //       child: Divider(
+                //         color: Colors.grey,
+                //         height: 36,
+                //       )),
+                // ),
                 Material(
                     color: Colors.white,
                     child: Text(
                       "or",
                       style: TextStyle(color: Colors.grey, fontSize: 19),
                     )),
-                Expanded(
-                  child: new Container(
-                      margin: const EdgeInsets.only(left: 20.0, right: 10.0),
-                      child: Divider(
-                        color: Colors.grey,
-                        height: 36,
-                      )),
-                ),
+                // Expanded(
+                //   child: new Container(
+                //       margin: const EdgeInsets.only(left: 20.0, right: 10.0),
+                //       child: Divider(
+                //         color: Colors.grey,
+                //         height: 36,
+                //       )),
+                // ),
               ]),
               Center(
                   child: Padding(
                 padding: EdgeInsets.only(
-                    top: Short.h * 0.02, bottom: Short.h * 0.02),
+                    top: Short.h * 0.015, bottom: Short.h * 0.025),
                 child: FlatButton(
                   onPressed: () {
                     print("Login via otp");
@@ -223,9 +231,10 @@ Widget LoginBftrAnim(BuildContext context, Function loginFalse, UniqueKey k1) {
               )),
               Padding(
                 padding: EdgeInsets.only(
-                    top: Short.h * 0.02, bottom: Short.h * 0.05),
+                    top: Short.h * 0.02, bottom: Short.h * 0.03),
                 child:
-                    Divider(color: Colors.grey[300], thickness: Short.h * 0.01),
+                    Container(
+                       margin: const EdgeInsets.only(left: 20.0, right: 20.0),child: Divider(color: Colors.grey[300],thickness: 2, height: Short.h * 0.005)),
               ),
               Row(
                   crossAxisAlignment: CrossAxisAlignment.center,

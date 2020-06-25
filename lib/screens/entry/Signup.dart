@@ -33,13 +33,13 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
   hp.Response response;
   final GlobalKey<ScaffoldState> _scaffoldkey = new GlobalKey<ScaffoldState>();
 
-  void callSnackBar(String me) {
-    print("called me for scnack bar");
-    final nackBar = new snack.SnackBar(
-      content: new Text(me),
+  void callSnackBar(String msg) {
+    print(msg+"snack msg");
+    final Snack = new snack.SnackBar(
+      content: new Text(msg),
       duration: new Duration(seconds: 3),
     );
-    _scaffoldkey.currentState.showSnackBar(nackBar);
+    _scaffoldkey.currentState.showSnackBar(Snack);
   }
 
   void initState() {
@@ -118,7 +118,10 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
                   child: Material(
                     color: Colors.white,
                     child: TextFormField(
+                      style: TextStyle(color:Theme.of(context).primaryColor ),
                       decoration: InputDecoration(
+                        fillColor: Theme.of(context).accentColor,
+                                                filled: true,
                         labelStyle: TextStyle(
                             color: Colors.grey, fontSize: Short.h * 0.02),
                         labelText: 'Full Name',
@@ -126,6 +129,7 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
                         hintStyle: TextStyle(
                             color: Colors.grey, fontSize: Short.h * 0.02),
                         border: OutlineInputBorder(
+                          borderSide: BorderSide.none,
                             borderRadius: BorderRadius.circular(Short.h * 2.5)),
                       ),
                       controller: fullName,
@@ -142,7 +146,10 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
                   child: Material(
                     color: Colors.white,
                     child: TextFormField(
+                      style: TextStyle(color:Theme.of(context).primaryColor ),
                       decoration: InputDecoration(
+                        fillColor: Theme.of(context).accentColor,
+                                                filled: true,
                         labelStyle: TextStyle(
                             color: Colors.grey, fontSize: Short.h * 0.02),
                         labelText: 'Email',
@@ -150,6 +157,7 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
                         hintStyle: TextStyle(
                             color: Colors.grey, fontSize: Short.h * 0.02),
                         border: OutlineInputBorder(
+                          borderSide: BorderSide.none,
                             borderRadius: BorderRadius.circular(Short.h * 2.5)),
                       ),
                       controller: signUPemail,
@@ -166,7 +174,10 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
                   child: Material(
                     color: Colors.white,
                     child: TextFormField(
+                      style: TextStyle(color:Theme.of(context).primaryColor ),
                       decoration: InputDecoration(
+                        fillColor: Theme.of(context).accentColor,
+                                                filled: true,
                         labelStyle: TextStyle(
                             color: Colors.grey, fontSize: Short.h * 0.02),
                         labelText: 'Mobile Number',
@@ -174,6 +185,7 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
                         hintStyle: TextStyle(
                             color: Colors.grey, fontSize: Short.h * 0.02),
                         border: OutlineInputBorder(
+                          borderSide: BorderSide.none,
                             borderRadius: BorderRadius.circular(Short.h * 2.5)),
                       ),
                       controller: phoneNumber,
@@ -188,7 +200,10 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
                       left: Short.w * 0.07,
                       right: Short.w * 0.07),
                   child: TextFormField(
+                      style: TextStyle(color:Theme.of(context).primaryColor ),
                     decoration: InputDecoration(
+                        fillColor: Theme.of(context).accentColor,
+                                                filled: true,
                       labelStyle: TextStyle(
                           color: Colors.grey, fontSize: Short.h * 0.02),
                       labelText: 'Address',
@@ -196,6 +211,7 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
                       hintStyle: TextStyle(
                           color: Colors.grey, fontSize: Short.h * 0.02),
                       border: OutlineInputBorder(
+                          borderSide: BorderSide.none,
                           borderRadius: BorderRadius.circular(Short.h * 2.5)),
                     ),
                     controller: address,
@@ -232,8 +248,13 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
                   child: Material(
                     color: Colors.white,
                     child: TextFormField(
+                      style: TextStyle(color:Theme.of(context).primaryColor ),
                       obscureText: showPwd,
                       decoration: InputDecoration(
+                        fillColor: Theme.of(context).accentColor,
+                                                filled: true,
+
+                        focusColor: Theme.of(context).accentColor ,
                         labelStyle: TextStyle(
                             color: Colors.grey, fontSize: Short.h * 0.02),
                         labelText: 'Password',
@@ -245,6 +266,7 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
                           onPressed: _toggle,
                         ),
                         border: OutlineInputBorder(
+                          borderSide: BorderSide.none,
                             borderRadius: BorderRadius.circular(Short.h * 2.5)),
                       ),
                       controller: signUppwd,
@@ -273,7 +295,7 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
                     setState(() {
                       _isLoading = true;
                     });
-                    List<Placemark> _Position =await place();
+                 _currentPosition =await getCurrentLocation();
                     Map<String, dynamic> data = {
                       "fullname":
                           // "jatin",
@@ -286,7 +308,7 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
                           phoneNumber.text,
                       "address":
                           // "no addres",
-                          address.text + " " + _Position.toString(),
+                          address.text + " " + _currentPosition.toString(),
                       "password":
                           // "152346"
                           signUppwd.text
@@ -398,9 +420,9 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
               ),
             ),
             Align(
-              alignment: Alignment.topCenter,
+              alignment: Alignment.topCenter,//229,247,243,
               child: Container(
-                height: Short.h * 0.3,
+                height: Short.h * 0.35,
                 color: Theme.of(context).primaryColor,
                 child: Center(
                     child: Padding(

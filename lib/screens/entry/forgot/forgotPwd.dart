@@ -6,12 +6,12 @@ import 'package:flutter/material.dart' as snack;
 import 'package:meatapp/adjust/short.dart';
 import 'package:http/http.dart' as hp;
 
-class LoginOtp extends StatefulWidget {
+class ForgotPwd extends StatefulWidget {
   @override
-  _LoginOtpState createState() => _LoginOtpState();
+  _ForgotPwdState createState() => _ForgotPwdState();
 }
 
-class _LoginOtpState extends State<LoginOtp> with TickerProviderStateMixin {
+class _ForgotPwdState extends State<ForgotPwd> with TickerProviderStateMixin {
   TextEditingController phoneNumber;
 
   GlobalKey<FormState> _form = GlobalKey<FormState>(debugLabel: "key2");
@@ -93,7 +93,6 @@ class _LoginOtpState extends State<LoginOtp> with TickerProviderStateMixin {
                   child: Material(
                     color: Colors.white,
                     child: TextFormField(
-                      style: TextStyle(color:Theme.of(context).primaryColor ),
                       decoration: InputDecoration(
                         fillColor: Theme.of(context).accentColor,
                                                 filled: true,
@@ -102,7 +101,7 @@ class _LoginOtpState extends State<LoginOtp> with TickerProviderStateMixin {
                         hintText: "Enter your Phone Number",
                         hintStyle: TextStyle(color: Colors.grey, fontSize: 19),
                         border: OutlineInputBorder(
-                          borderSide: BorderSide.none,
+                            borderSide: BorderSide.none,
                             borderRadius: BorderRadius.circular(Short.h * 2.5)),
                       ),
                       controller: phoneNumber,
@@ -131,9 +130,8 @@ class _LoginOtpState extends State<LoginOtp> with TickerProviderStateMixin {
                     setState(() {
                       _isLoading = true;
                     });
-                    phoneNumber.text = "+91" + phoneNumber.text;
-                    print(phoneNumber.text);
                     Map<String, String> data = {"phoneno": phoneNumber.text};
+
                     print("before post" + data.toString());
                     try {
                       callSnackBar("Checking the entered details");
@@ -157,8 +155,6 @@ class _LoginOtpState extends State<LoginOtp> with TickerProviderStateMixin {
                           setState(() {
                             _isLoading = false;
                           });
-                          phoneNumber.clear();
-
                           print("error with phone number");
                         }
                       } //response is not null
@@ -169,17 +165,60 @@ class _LoginOtpState extends State<LoginOtp> with TickerProviderStateMixin {
                         _isLoading = false;
                       });
                       callSnackBar("network problem");
-                      phoneNumber.clear();
                     } catch (error) {
                       print("error from api");
                       setState(() {
                         _isLoading = false;
                       });
                       callSnackBar(error.toString());
-                      phoneNumber.clear();
                     }
                   } //form validation
                 }, //onpressed of login via otp button
+//                           async {
+//                   print("Send OTP button is clicked");
+//                   Map<String, String> data = {"phoneno": phoneNumber.text};
+//                         try {
+//                                       response = await hp.post(
+//                       '${Short.baseUrl}/loginviaotp',
+//                       headers: headers,
+//                       body: json.encode(data));
+//                                         } on Exception catch (exception) {
+//                                           print("exeception from api");
+
+//                                           callSnackBar(
+//                                               "Phone number already exists");
+//                                         } catch (error) {
+//                                           print("error from api");
+
+//                                           callSnackBar(error.toString());
+//                                         }
+
+//                     // setState(() {
+//                     //   _isLoading=false;
+//                     // });
+//                     if(response!=null){
+//                     if (response.statusCode == 200) {
+//                       print("inside response status");
+//                       Map res = json.decode(response.body);
+//                       print(res.toString());
+//  List<String> arg = List();
+//                         arg.  add(res['msg']);
+//                         arg.add(phoneNumber.text);
+//                         print(arg.toString());
+// phoneNumber.clear();
+//                       if (res['status'] == 200) {
+//                         setState(() {
+//                           _isLoading = false;
+//                         });
+
+//                       }
+//                     } else {
+//                          callSnackBar("Check your internet Connectivity");
+//                     }
+//                   }else {
+//                          callSnackBar("Phone number already exists");
+//                       }
+//                 },
 
                 shape: RoundedRectangleBorder(
                   borderRadius: new BorderRadius.circular(50.0),
@@ -187,7 +226,48 @@ class _LoginOtpState extends State<LoginOtp> with TickerProviderStateMixin {
                 child: Text("SEND OTP",
                     style: TextStyle(color: Colors.white, fontSize: 22))),
           ),
-
+          // Row(children: <Widget>[
+          //   Expanded(
+          //     child: new Container(
+          //         margin: const EdgeInsets.only(left: 10.0, right: 20.0),
+          //         child: Divider(
+          //           color: Colors.grey,
+          //           height: 36,
+          //         )),
+          //   ),
+          //   Material(
+          //       color: Colors.white,
+          //       child: Text(
+          //         "or",
+          //         style: TextStyle(color: Colors.grey, fontSize: 19),
+          //       )),
+          //   Expanded(
+          //     child: new Container(
+          //         margin: const EdgeInsets.only(left: 20.0, right: 10.0),
+          //         child: Divider(
+          //           color: Colors.grey,
+          //           height: 36,
+          //         )),
+          //   ),
+          // ]),
+          // Center(
+          //     child: Padding(
+          //   padding:
+          //       EdgeInsets.only(top: Short.h * 0.018, bottom: Short.h * 0.018),
+          //   child: FlatButton(
+          //     onPressed: () {
+          //       print("Login via Password");
+          //       Navigator.pushReplacementNamed(context, "Login",
+          //           arguments: false);
+          //     },
+          //     child: Text(
+          //       "Login via Password",
+          //       style: TextStyle(
+          //           color: Theme.of(context).primaryColor,
+          //           fontSize: Short.h * 0.025),
+          //     ),
+          //   ),
+          // )),
           Divider(
             color: Colors.grey[300],
             thickness: Short.h * 0.01,

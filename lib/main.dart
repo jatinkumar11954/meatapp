@@ -26,11 +26,10 @@ Future<void> main() async {
   jwt = await prefs.getString("jwt");  
 //  login=  jwt != null? true: false;
  var g= Geolocator()..forceAndroidLocationManager;
- g
-        .getCurrentPosition(desiredAccuracy: LocationAccuracy.best);
+ g .getCurrentPosition(desiredAccuracy: LocationAccuracy.best);
 // place();
     // SharedPreferences store = await SharedPreferences.getInstance();
-    // store.remove("jwt");
+    // store.("jwt");
 
 
   print('jwt ${jwt}');
@@ -67,13 +66,14 @@ class MyApp extends StatelessWidget {
                 ),
             // fontFamily: ,
             primaryColor: Color.fromRGBO(0, 175, 136, 1.0),
-            accentColor:  Color.fromRGBO(0, 167, 130, 1.0),
+            accentColor:  Color.fromRGBO(229,247,243, 1.0),
+            // focusColor: Color.fromRGBO(229,247,243, 1.0),
           ),
-        // initialRoute: 
-        // jwt == null ? "Login" : "Main",
+        initialRoute: 
+        jwt == null ? "Login" : "Main",
           //         initialRoute: !login ? "Login" : "Main",//testinh for login screen
 
-             initialRoute: jwt != null ? "Login" : "Main",
+            //  initialRoute: jwt != null ? "Login" : "Main",
           home: Login(),
           routes: <String, WidgetBuilder>{
             'Login': (BuildContext context) => new Login(),

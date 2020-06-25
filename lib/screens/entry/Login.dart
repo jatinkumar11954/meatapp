@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart' as snack;
-import 'package:meatapp/main.dart' ;
+import 'package:meatapp/main.dart';
 import 'package:meatapp/adjust/short.dart';
 import 'package:meatapp/adjust/widget.dart';
 import 'package:http/http.dart' as hp;
@@ -31,13 +31,13 @@ class _LoginState extends State<Login> {
 
   final GlobalKey<ScaffoldState> _scaffoldkey = new GlobalKey<ScaffoldState>();
 
-  void callSnackBar(String me) {
-    print("called me for scnack bar");
-    final nackBar = new snack.SnackBar(
-      content: new Text(me),
+  void callSnackBar(String msg) {
+    print(msg + "snack msg");
+    final Snack = new snack.SnackBar(
+      content: new Text(msg),
       duration: new Duration(seconds: 3),
     );
-    _scaffoldkey.currentState.showSnackBar(nackBar);
+    _scaffoldkey.currentState.showSnackBar(Snack);
   }
 
   @override
@@ -105,7 +105,7 @@ class _LoginState extends State<Login> {
             Align(
               alignment: Alignment.topCenter,
               child: Container(
-                height: Short.h * 0.3,
+                height: Short.h * 0.35,
                 color: Theme.of(context).primaryColor,
                 child: Center(
                     child: Padding(
@@ -182,17 +182,20 @@ class _LoginState extends State<Login> {
                                       child: Material(
                                         color: Colors.white,
                                         child: TextFormField(
+                      style: TextStyle(color:Theme.of(context).primaryColor ),
                                           decoration: InputDecoration(
+                        fillColor: Theme.of(context).accentColor,
+                                                filled: true,
                                             labelStyle: TextStyle(
                                                 color: Colors.grey,
                                                 fontSize: 19),
                                             labelText: 'Email/Phone',
-                                        
                                             hintText: "Enter your email /Phone",
                                             hintStyle: TextStyle(
                                                 color: Colors.grey,
                                                 fontSize: 19),
                                             border: OutlineInputBorder(
+                          borderSide: BorderSide.none,
                                                 borderRadius:
                                                     BorderRadius.circular(
                                                         Short.h * 2.5)),
@@ -212,8 +215,11 @@ class _LoginState extends State<Login> {
                                       child: Material(
                                         color: Colors.white,
                                         child: TextFormField(
+                      style: TextStyle(color:Theme.of(context).primaryColor ),
                                           obscureText: showPwd,
                                           decoration: InputDecoration(
+                        fillColor: Theme.of(context).accentColor,
+                                                filled: true,
                                             labelStyle: TextStyle(
                                                 color: Colors.grey,
                                                 fontSize: 19),
@@ -227,6 +233,7 @@ class _LoginState extends State<Login> {
                                               onPressed: _toggle,
                                             ),
                                             border: OutlineInputBorder(
+                          borderSide: BorderSide.none,
                                                 borderRadius:
                                                     BorderRadius.circular(
                                                         Short.h * 2.5)),
@@ -251,6 +258,10 @@ class _LoginState extends State<Login> {
                                         right: Short.w * 0.33),
                                     color: Theme.of(context).primaryColor,
                                     onPressed: () async {
+                                      void a() {
+                                        print("A");
+                                      }
+
                                       print("Login button is clicked");
                                       if (_formKey.currentState.validate()) {
                                         print("Form is validated");
@@ -262,8 +273,7 @@ class _LoginState extends State<Login> {
                                           "phoneno":
                                               // "6556121480",
                                               email.text,
-                                          "password":
-                                              // "152346"
+                                          "password": // "152346"
                                               pwd.text
                                         };
                                         setState(() {
@@ -273,6 +283,7 @@ class _LoginState extends State<Login> {
                                         try {
                                           callSnackBar(
                                               "Checking the entered details");
+
                                           response = await hp.post(
                                               "${Short.baseUrl}/login",
                                               body: json.encode(data),
@@ -312,7 +323,7 @@ class _LoginState extends State<Login> {
                                               print(jwt.toString());
                                               email.clear();
                                               pwd.clear();
-                                              login=true;
+                                              login = true;
                                               Navigator.pushReplacementNamed(
                                                   context, "Main",
                                                   arguments: jwt);

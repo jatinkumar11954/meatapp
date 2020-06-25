@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class Short {
   static double h, w;
-  static var baseUrl="http://3.6.231.159:3000/user";
+  static var baseUrl = "http://3.6.231.159:3000/user";
   // cd /var/www/html/apis/freshMeat-api
   static var img = {
     0: "http://carigarifurniture.com/product_images/w/133365e0_a1b8_4f6d_89b5_d71cf79c27ef__92495_thumb.jpg",
@@ -18,40 +18,40 @@ class Short {
     3: egg,
     4: deal,
   };
-    static var icon = {
+  static var icon = {
     0: Icons.home,
     1: Icons.rss_feed,
     2: Icons.perm_identity,
     3: Icons.settings,
     // 4: Icons.linear_scale
   };
-  
-    static var catgry = {
+
+  static var catgry = {
     0: "CHICKEN",
     1: "MUTTON",
     2: "SEA FOOD",
     3: "EGGS",
     4: "DEALS",
   };
-    static var chicken = {
+  static var chicken = {
     0: "ChickenCurryLeg",
     1: "ChickenCurry",
     2: "ChickenLeg",
     3: "Chicken65",
   };
-     static var mutton = {
+  static var mutton = {
     0: " MuttonCurryLeg",
     1: " MuttonCurry",
     2: " MuttonLeg",
     3: " Mutton65",
   };
-     static var egg = {
+  static var egg = {
     0: " EggCurryLeg",
     1: " EggCurry",
     2: " EggLeg",
     3: " Egg65",
   };
-     static var sea = {
+  static var sea = {
     0: " SeaCurryLeg",
     1: " SeaCurry",
     2: " SeaLeg",
@@ -69,13 +69,15 @@ class Short {
     h = (MediaQuery.of(context).size.height);
     w = (MediaQuery.of(context).size.width);
   }
-   String validateName(String value) {
+
+  String validateName(String value) {
     if (value.length < 3)
       return 'Name must be more than 2 charater';
     else
       return null;
   }
-   String validateAddr(String value) {
+
+  String validateAddr(String value) {
     if (value.length < 3)
       return 'Name must be more than 2 charater';
     else
@@ -88,13 +90,15 @@ class Short {
     else
       return null;
   }
-    String validatePin(String value) {
+
+  String validatePin(String value) {
     if (value.length <= 5)
       return 'Length must be greater than 5';
     else
       return null;
   }
-    String validatePwd(String value) {
+
+  String validatePwd(String value) {
     if (value.length <= 6)
       return 'Length must be greater than 6';
     else
@@ -111,4 +115,3 @@ class Short {
       return null;
   }
 }
- 

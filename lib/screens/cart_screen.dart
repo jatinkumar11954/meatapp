@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:meatapp/adjust/bottomNavigation.dart';
 import 'package:meatapp/model/subCategory.dart';
 import 'package:provider/provider.dart';
 
@@ -29,6 +30,7 @@ var catgry = {
       appBar: AppBar(
         title: Text('Your Cart'),
       ),
+      bottomNavigationBar: bottomBar(context, 1),
       body: Column(
         children: <Widget>[
           Card(

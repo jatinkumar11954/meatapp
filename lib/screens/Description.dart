@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:meatapp/Api/categoryApi.dart';
+import 'package:meatapp/adjust/bottomNavigation.dart';
 import 'package:meatapp/adjust/short.dart';
 import 'package:meatapp/adjust/widget.dart';
 import 'package:meatapp/main.dart';
@@ -55,7 +56,9 @@ class _DescriptionState extends State<Description> {
             top: 10,
             child: SizedBox(
               width: w * 0.83,
-              child: Text(product[ro][i].item),
+              child: 
+              Text("Desc"),
+              // Text(product[ro][i].item), testing uncomment
             )),
       ]),
 
@@ -73,7 +76,10 @@ class _DescriptionState extends State<Description> {
         key: _scaffoldKey,
         appBar: appbar,
         drawer: Draw(context),
-        body: ListView(
+        bottomNavigationBar: bottomBar(context, 2),//testing remove afterwards
+        body: 
+        ListView(
+          
           children: <Widget>[
             Center(
               child: Hero(

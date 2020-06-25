@@ -1,18 +1,21 @@
 import 'package:geolocator/geolocator.dart';
 
-// Future<Position>  getCurrentLocation() async{
-//   Position position;
+Future<Position>  getCurrentLocation() async{
+  Position position;
    
-//     try{
-//    position=await 
+    try{
+       final Geolocator geolocator = Geolocator()..forceAndroidLocationManager;
+ 
+   position=await geolocator
+        .getCurrentPosition(desiredAccuracy: LocationAccuracy.best);
         
-//        return position;
+       return position;
 
    
-//     } catch(e){
-//       print(e);
-//     }
-//   }
+    } catch(e){
+      print(e);
+    }
+  }
  Future <List<Placemark>> place ()async{
    print("inside place");
     final Geolocator geolocator = Geolocator()..forceAndroidLocationManager;
