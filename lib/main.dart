@@ -14,7 +14,7 @@ import 'model/bottom.dart';
 import 'model/cart.dart';
 import 'model/subCategory.dart';
 import 'screens/entry/Signup.dart';
-import 'screens/tabScreen.dart'as f;
+import 'screens/tabScreen.dart' as f;
 
 String jwt;
 bool login = false;
@@ -22,15 +22,14 @@ bool get isLogin => login;
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  
-  jwt = await prefs.getString("jwt");  
-//  login=  jwt != null? true: false;
- var g= Geolocator()..forceAndroidLocationManager;
- g .getCurrentPosition(desiredAccuracy: LocationAccuracy.best);
-// place();
-    // SharedPreferences store = await SharedPreferences.getInstance();
-    // store.("jwt");
 
+  jwt = await prefs.getString("jwt");
+//  login=  jwt != null? true: false;
+  var g = Geolocator()..forceAndroidLocationManager;
+  g.getCurrentPosition(desiredAccuracy: LocationAccuracy.best);
+// place();
+  // SharedPreferences store = await SharedPreferences.getInstance();
+  // store.("jwt");
 
   print('jwt ${jwt}');
   runApp(MyApp());
@@ -41,39 +40,35 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    
     return MultiProvider(
       providers: [
-       
-         ChangeNotifierProvider.value(
-          value:Products(),
+        ChangeNotifierProvider.value(
+          value: Products(),
         ),
         ChangeNotifierProvider.value(
-          value:Bottom(),
+          value: Bottom(),
         ),
         ChangeNotifierProvider.value(
           value: Cart(),
         )
-       
-       
       ],
-          child: MaterialApp(
+      child: MaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'Flutter Demo',
           theme: ThemeData(
-            textTheme: Theme.of(context).textTheme.apply(
-                  fontFamily: 'Sans',
-                ),
-            // fontFamily: ,
-            primaryColor: Color.fromRGBO(0, 175, 136, 1.0),
-            accentColor:  Color.fromRGBO(229,247,243, 1.0),
-            // focusColor: Color.fromRGBO(229,247,243, 1.0),
-          ),
-        initialRoute: 
-        jwt == null ? "Login" : "Main",
+              textTheme: Theme.of(context).textTheme.apply(
+                    fontFamily: 'Sans',
+                  ),
+              // fontFamily: ,
+              primaryColor: Color.fromRGBO(0, 175, 136, 1.0),
+              accentColor: Color.fromRGBO(229, 247, 243, 1.0),
+              cursorColor: Color.fromRGBO(0, 175, 136, 1.0)
+              // focusColor: Color.fromRGBO(229,247,243, 1.0),
+              ),
+          initialRoute: jwt == null ? "Login" : "Main",
           //         initialRoute: !login ? "Login" : "Main",//testinh for login screen
 
-            //  initialRoute: jwt != null ? "Login" : "Main",
+          //  initialRoute: jwt != null ? "Login" : "Main",
           home: Login(),
           routes: <String, WidgetBuilder>{
             'Login': (BuildContext context) => new Login(),
@@ -85,42 +80,7 @@ class MyApp extends StatelessWidget {
             'tab': (BuildContext context) => new f.TabScreen(),
             'up': (BuildContext context) => new UserProfile(),
             'manageProfile': (BuildContext context) => new ManageProfile(),
-
-
           }),
     );
   }
 }
-
-// class Home extends StatefulWidget {
-//   @override
-//   _HomeState createState() => _HomeState();
-// }
-
-// class _HomeState extends State<Home> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text("Routes"),
-//       ),
-//       body: Center(
-//         child: Column(
-//           mainAxisAlignment: MainAxisAlignment.center,
-//           children: <Widget>[
-//             RaisedButton(
-//                 onPressed: () =>Navigator.pushReplacementNamed(context, "Login"),
-//                 child: Text("Login")),
-//             RaisedButton(
-//                 onPressed: () =>Navigator.pushReplacementNamed(context, "Login"),
-//                 child: Text("AnimatedLogin")),
-//             RaisedButton(
-//                 onPressed: () =>
-//                     Navigator.pushReplacementNamed(context, "Main"),
-//                 child: Text("FirstScreen")),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }

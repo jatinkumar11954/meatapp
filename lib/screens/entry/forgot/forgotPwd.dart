@@ -55,10 +55,16 @@ class _ForgotPwdState extends State<ForgotPwd> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     const headers = {'Content-Type': 'application/json'};
     var child = Container(
-      height: Short.h * 0.75,
+      height: Short.h * 0.73,
       width: Short.w,
-      margin: EdgeInsets.only(top: Short.h * 0.25),
+      margin: EdgeInsets.only(top: Short.h * 0.27),
       decoration: BoxDecoration(
+          boxShadow: [
+            BoxShadow(
+                blurRadius: 20.0,
+                offset: Offset(0.0, -3.5),
+                color: Colors.black45),
+          ],
           color: Colors.white,
           borderRadius: BorderRadius.only(
               topLeft: Radius.circular(80), topRight: Radius.circular(80))),
@@ -87,15 +93,16 @@ class _ForgotPwdState extends State<ForgotPwd> with TickerProviderStateMixin {
               children: <Widget>[
                 Padding(
                   padding: EdgeInsets.only(
-                      top: Short.h * 0.15,
-                      left: Short.w * 0.08,
-                      right: Short.w * 0.08),
+                      top: Short.h * 0.1,
+                      left: Short.w * 0.1,
+                      right: Short.w * 0.1),
                   child: Material(
                     color: Colors.white,
                     child: TextFormField(
+                      style: TextStyle(color: Theme.of(context).primaryColor),
                       decoration: InputDecoration(
                         fillColor: Theme.of(context).accentColor,
-                                                filled: true,
+                        filled: true,
                         labelStyle: TextStyle(color: Colors.grey, fontSize: 19),
                         labelText: 'Phone Number',
                         hintText: "Enter your Phone Number",
@@ -119,8 +126,8 @@ class _ForgotPwdState extends State<ForgotPwd> with TickerProviderStateMixin {
                 padding: EdgeInsets.only(
                     top: Short.h * 0.01,
                     bottom: Short.h * 0.01,
-                    left: Short.w * 0.28,
-                    right: Short.w * 0.28),
+                    left: Short.w * 0.27,
+                    right: Short.w * 0.27),
                 color: Theme.of(context).primaryColor,
                 onPressed: () async {
                   print("Send OTP button is clicked");
@@ -130,8 +137,9 @@ class _ForgotPwdState extends State<ForgotPwd> with TickerProviderStateMixin {
                     setState(() {
                       _isLoading = true;
                     });
+                    phoneNumber.text = "+91" + phoneNumber.text;
+                    print(phoneNumber.text);
                     Map<String, String> data = {"phoneno": phoneNumber.text};
-
                     print("before post" + data.toString());
                     try {
                       callSnackBar("Checking the entered details");
@@ -155,6 +163,8 @@ class _ForgotPwdState extends State<ForgotPwd> with TickerProviderStateMixin {
                           setState(() {
                             _isLoading = false;
                           });
+                          phoneNumber.clear();
+
                           print("error with phone number");
                         }
                       } //response is not null
@@ -165,60 +175,17 @@ class _ForgotPwdState extends State<ForgotPwd> with TickerProviderStateMixin {
                         _isLoading = false;
                       });
                       callSnackBar("network problem");
+                      phoneNumber.clear();
                     } catch (error) {
                       print("error from api");
                       setState(() {
                         _isLoading = false;
                       });
                       callSnackBar(error.toString());
+                      phoneNumber.clear();
                     }
                   } //form validation
                 }, //onpressed of login via otp button
-//                           async {
-//                   print("Send OTP button is clicked");
-//                   Map<String, String> data = {"phoneno": phoneNumber.text};
-//                         try {
-//                                       response = await hp.post(
-//                       '${Short.baseUrl}/loginviaotp',
-//                       headers: headers,
-//                       body: json.encode(data));
-//                                         } on Exception catch (exception) {
-//                                           print("exeception from api");
-
-//                                           callSnackBar(
-//                                               "Phone number already exists");
-//                                         } catch (error) {
-//                                           print("error from api");
-
-//                                           callSnackBar(error.toString());
-//                                         }
-
-//                     // setState(() {
-//                     //   _isLoading=false;
-//                     // });
-//                     if(response!=null){
-//                     if (response.statusCode == 200) {
-//                       print("inside response status");
-//                       Map res = json.decode(response.body);
-//                       print(res.toString());
-//  List<String> arg = List();
-//                         arg.  add(res['msg']);
-//                         arg.add(phoneNumber.text);
-//                         print(arg.toString());
-// phoneNumber.clear();
-//                       if (res['status'] == 200) {
-//                         setState(() {
-//                           _isLoading = false;
-//                         });
-
-//                       }
-//                     } else {
-//                          callSnackBar("Check your internet Connectivity");
-//                     }
-//                   }else {
-//                          callSnackBar("Phone number already exists");
-//                       }
-//                 },
 
                 shape: RoundedRectangleBorder(
                   borderRadius: new BorderRadius.circular(50.0),
@@ -226,76 +193,35 @@ class _ForgotPwdState extends State<ForgotPwd> with TickerProviderStateMixin {
                 child: Text("SEND OTP",
                     style: TextStyle(color: Colors.white, fontSize: 22))),
           ),
-          // Row(children: <Widget>[
-          //   Expanded(
-          //     child: new Container(
-          //         margin: const EdgeInsets.only(left: 10.0, right: 20.0),
-          //         child: Divider(
-          //           color: Colors.grey,
-          //           height: 36,
-          //         )),
-          //   ),
-          //   Material(
-          //       color: Colors.white,
-          //       child: Text(
-          //         "or",
-          //         style: TextStyle(color: Colors.grey, fontSize: 19),
-          //       )),
-          //   Expanded(
-          //     child: new Container(
-          //         margin: const EdgeInsets.only(left: 20.0, right: 10.0),
-          //         child: Divider(
-          //           color: Colors.grey,
-          //           height: 36,
-          //         )),
-          //   ),
-          // ]),
-          // Center(
-          //     child: Padding(
-          //   padding:
-          //       EdgeInsets.only(top: Short.h * 0.018, bottom: Short.h * 0.018),
-          //   child: FlatButton(
-          //     onPressed: () {
-          //       print("Login via Password");
-          //       Navigator.pushReplacementNamed(context, "Login",
-          //           arguments: false);
-          //     },
-          //     child: Text(
-          //       "Login via Password",
-          //       style: TextStyle(
-          //           color: Theme.of(context).primaryColor,
-          //           fontSize: Short.h * 0.025),
-          //     ),
-          //   ),
-          // )),
-          Divider(
-            color: Colors.grey[300],
-            thickness: Short.h * 0.01,
-            height: Short.h * 0.1,
-          ),
 
-          Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Material(
-                    color: Colors.white,
-                    child: Text(
-                      "Don't have an account ?",
-                      style: TextStyle(color: Colors.grey, fontSize: 19),
-                    )),
-                FlatButton(
-                  onPressed: () {
-                    print("SignUp");
-                    Navigator.pushReplacementNamed(context, "SignUp");
-                  },
-                  child: Text(
-                    "SignUp",
-                    style: TextStyle(
-                        color: Theme.of(context).primaryColor, fontSize: 21),
-                  ),
-                ),
-              ]),
+          // Divider(
+          //   color: Colors.grey[300],
+          //   thickness: Short.h * 0.01,
+          //   height: Short.h * 0.1,
+          // ),
+
+          // Row(
+          //     crossAxisAlignment: CrossAxisAlignment.center,
+          //     mainAxisAlignment: MainAxisAlignment.center,
+          //     children: <Widget>[
+          //       Material(
+          //           color: Colors.white,
+          //           child: Text(
+          //             "Don't have an account ?",
+          //             style: TextStyle(color: Colors.grey, fontSize: 19),
+          //           )),
+          //       FlatButton(
+          //         onPressed: () {
+          //           print("SignUp");
+          //           Navigator.pushReplacementNamed(context, "SignUp");
+          //         },
+          //         child: Text(
+          //           "SignUp",
+          //           style: TextStyle(
+          //               color: Theme.of(context).primaryColor, fontSize: 21),
+          //         ),
+          //       ),
+          //     ]),
         ],
       ),
     );
@@ -314,7 +240,7 @@ class _ForgotPwdState extends State<ForgotPwd> with TickerProviderStateMixin {
             Align(
               alignment: Alignment.topCenter,
               child: Container(
-                height: Short.h * 0.3,
+                height: Short.h * 0.35,
                 color: Theme.of(context).primaryColor,
                 child: Center(
                     child: Padding(

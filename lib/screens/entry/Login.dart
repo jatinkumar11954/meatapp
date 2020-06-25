@@ -142,16 +142,22 @@ class _LoginState extends State<Login> {
                     child: _child
                         ? LoginBftrAnim(context, loginFalse, k1)
                         : Container(
-                            margin: EdgeInsets.only(top: Short.h * 0.25),
+                            margin: EdgeInsets.only(top: Short.h * 0.27),
 
                             key: k2,
-                            height: Short.h * 0.75,
+                            height: Short.h * 0.73,
                             width: Short.w,
 
                             // Define how long the animation should take.
 
                             decoration: BoxDecoration(
                                 color: Colors.white,
+                                boxShadow: [
+                                  BoxShadow(
+                                      blurRadius: 20.0,
+                                      offset: Offset(0.0, -3.5),
+                                      color: Colors.black45),
+                                ],
                                 borderRadius: BorderRadius.only(
                                     topLeft: Radius.circular(80),
                                     topRight: Radius.circular(80))),
@@ -177,15 +183,18 @@ class _LoginState extends State<Login> {
                                     Padding(
                                       padding: EdgeInsets.only(
                                           top: Short.h * 0.10,
-                                          left: Short.w * 0.07,
-                                          right: Short.w * 0.07),
+                                          left: Short.w * 0.1,
+                                          right: Short.w * 0.1),
                                       child: Material(
                                         color: Colors.white,
                                         child: TextFormField(
-                      style: TextStyle(color:Theme.of(context).primaryColor ),
+                                          style: TextStyle(
+                                              color: Theme.of(context)
+                                                  .primaryColor),
                                           decoration: InputDecoration(
-                        fillColor: Theme.of(context).accentColor,
-                                                filled: true,
+                                            fillColor:
+                                                Theme.of(context).accentColor,
+                                            filled: true,
                                             labelStyle: TextStyle(
                                                 color: Colors.grey,
                                                 fontSize: 19),
@@ -195,7 +204,7 @@ class _LoginState extends State<Login> {
                                                 color: Colors.grey,
                                                 fontSize: 19),
                                             border: OutlineInputBorder(
-                          borderSide: BorderSide.none,
+                                                borderSide: BorderSide.none,
                                                 borderRadius:
                                                     BorderRadius.circular(
                                                         Short.h * 2.5)),
@@ -210,16 +219,19 @@ class _LoginState extends State<Login> {
                                     Padding(
                                       padding: EdgeInsets.only(
                                           top: 25,
-                                          left: Short.w * 0.07,
-                                          right: Short.w * 0.07),
+                                          left: Short.w * 0.1,
+                                          right: Short.w * 0.1),
                                       child: Material(
                                         color: Colors.white,
                                         child: TextFormField(
-                      style: TextStyle(color:Theme.of(context).primaryColor ),
+                                          style: TextStyle(
+                                              color: Theme.of(context)
+                                                  .primaryColor),
                                           obscureText: showPwd,
                                           decoration: InputDecoration(
-                        fillColor: Theme.of(context).accentColor,
-                                                filled: true,
+                                            fillColor:
+                                                Theme.of(context).accentColor,
+                                            filled: true,
                                             labelStyle: TextStyle(
                                                 color: Colors.grey,
                                                 fontSize: 19),
@@ -233,7 +245,7 @@ class _LoginState extends State<Login> {
                                               onPressed: _toggle,
                                             ),
                                             border: OutlineInputBorder(
-                          borderSide: BorderSide.none,
+                                                borderSide: BorderSide.none,
                                                 borderRadius:
                                                     BorderRadius.circular(
                                                         Short.h * 2.5)),
@@ -254,8 +266,8 @@ class _LoginState extends State<Login> {
                                     padding: EdgeInsets.only(
                                         top: Short.h * 0.01,
                                         bottom: Short.h * 0.01,
-                                        left: Short.w * 0.33,
-                                        right: Short.w * 0.33),
+                                        left: Short.w * 0.29,
+                                        right: Short.w * 0.29),
                                     color: Theme.of(context).primaryColor,
                                     onPressed: () async {
                                       void a() {
@@ -410,10 +422,10 @@ class _LoginState extends State<Login> {
                               //     ),
                               //   ),
                               // )),
-                              Divider(
-                                  color: Colors.grey[300],
-                                  height: Short.h * 0.08,
-                                  thickness: 8),
+                              // Divider(
+                              //     color: Colors.grey[300],
+                              //     height: Short.h * 0.08,
+                              //     thickness: 2),
                               Center(
                                   child: Padding(
                                 padding: EdgeInsets.only(top: Short.h * 0.01),
@@ -434,33 +446,33 @@ class _LoginState extends State<Login> {
                                   ),
                                 ),
                               )),
-                              Row(children: <Widget>[
-                                Expanded(
-                                  child: new Container(
-                                      margin: const EdgeInsets.only(
-                                          left: 10.0, right: 20.0),
-                                      child: Divider(
-                                        color: Colors.grey,
-                                        height: 36,
-                                      )),
-                                ),
-                                Material(
-                                    color: Colors.white,
-                                    child: Text(
-                                      "or",
-                                      style: TextStyle(
-                                          color: Colors.grey, fontSize: 19),
-                                    )),
-                                Expanded(
-                                  child: new Container(
-                                      margin: const EdgeInsets.only(
-                                          left: 20.0, right: 10.0),
-                                      child: Divider(
-                                        color: Colors.grey,
-                                        height: 36,
-                                      )),
-                                ),
-                              ]),
+                              // Row(children: <Widget>[
+                              //   Expanded(
+                              //     child: new Container(
+                              //         margin: const EdgeInsets.only(
+                              //             left: 10.0, right: 20.0),
+                              //         child: Divider(
+                              //           color: Colors.grey,
+                              //           height: 36,
+                              //         )),
+                              //   ),
+                              //   Material(
+                              //       color: Colors.white,
+                              //       child: Text(
+                              //         "or",
+                              //         style: TextStyle(
+                              //             color: Colors.grey, fontSize: 19),
+                              //       )),
+                              //   Expanded(
+                              //     child: new Container(
+                              //         margin: const EdgeInsets.only(
+                              //             left: 20.0, right: 10.0),
+                              //         child: Divider(
+                              //           color: Colors.grey,
+                              //           height: 36,
+                              //         )),
+                              //   ),
+                              // ]),
                               Row(
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   mainAxisAlignment: MainAxisAlignment.center,

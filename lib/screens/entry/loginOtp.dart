@@ -55,10 +55,16 @@ class _LoginOtpState extends State<LoginOtp> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     const headers = {'Content-Type': 'application/json'};
     var child = Container(
-      height: Short.h * 0.75,
+      height: Short.h * 0.73,
       width: Short.w,
-      margin: EdgeInsets.only(top: Short.h * 0.25),
+      margin: EdgeInsets.only(top: Short.h * 0.27),
       decoration: BoxDecoration(
+          boxShadow: [
+            BoxShadow(
+                blurRadius: 20.0,
+                offset: Offset(0.0, -3.5),
+                color: Colors.black45),
+          ],
           color: Colors.white,
           borderRadius: BorderRadius.only(
               topLeft: Radius.circular(80), topRight: Radius.circular(80))),
@@ -87,22 +93,22 @@ class _LoginOtpState extends State<LoginOtp> with TickerProviderStateMixin {
               children: <Widget>[
                 Padding(
                   padding: EdgeInsets.only(
-                      top: Short.h * 0.15,
-                      left: Short.w * 0.08,
-                      right: Short.w * 0.08),
+                      top: Short.h * 0.1,
+                      left: Short.w * 0.1,
+                      right: Short.w * 0.1),
                   child: Material(
                     color: Colors.white,
                     child: TextFormField(
-                      style: TextStyle(color:Theme.of(context).primaryColor ),
+                      style: TextStyle(color: Theme.of(context).primaryColor),
                       decoration: InputDecoration(
                         fillColor: Theme.of(context).accentColor,
-                                                filled: true,
+                        filled: true,
                         labelStyle: TextStyle(color: Colors.grey, fontSize: 19),
                         labelText: 'Phone Number',
                         hintText: "Enter your Phone Number",
                         hintStyle: TextStyle(color: Colors.grey, fontSize: 19),
                         border: OutlineInputBorder(
-                          borderSide: BorderSide.none,
+                            borderSide: BorderSide.none,
                             borderRadius: BorderRadius.circular(Short.h * 2.5)),
                       ),
                       controller: phoneNumber,
@@ -120,8 +126,8 @@ class _LoginOtpState extends State<LoginOtp> with TickerProviderStateMixin {
                 padding: EdgeInsets.only(
                     top: Short.h * 0.01,
                     bottom: Short.h * 0.01,
-                    left: Short.w * 0.28,
-                    right: Short.w * 0.28),
+                    left: Short.w * 0.27,
+                    right: Short.w * 0.27),
                 color: Theme.of(context).primaryColor,
                 onPressed: () async {
                   print("Send OTP button is clicked");
@@ -131,12 +137,11 @@ class _LoginOtpState extends State<LoginOtp> with TickerProviderStateMixin {
                     setState(() {
                       _isLoading = true;
                     });
-                    phoneNumber.text = "+91" + phoneNumber.text;
                     print(phoneNumber.text);
                     Map<String, String> data = {"phoneno": phoneNumber.text};
                     print("before post" + data.toString());
                     try {
-                      callSnackBar("Checking the entered details");
+                      callSnackBar("Checking the entered Phone Number");
                       response = await hp.post('${Short.baseUrl}/loginviaotp',
                           headers: headers, body: json.encode(data));
 
@@ -148,9 +153,9 @@ class _LoginOtpState extends State<LoginOtp> with TickerProviderStateMixin {
                           setState(() {
                             _isLoading = false;
                           });
-                          phoneNumber.clear();
                           Navigator.pushReplacementNamed(context, "Otp",
                               arguments: phoneNumber.text);
+                          phoneNumber.clear();
                         }
                         if (response.statusCode == 400) {
                           callSnackBar("${res["msg"]}");
@@ -188,34 +193,34 @@ class _LoginOtpState extends State<LoginOtp> with TickerProviderStateMixin {
                     style: TextStyle(color: Colors.white, fontSize: 22))),
           ),
 
-          Divider(
-            color: Colors.grey[300],
-            thickness: Short.h * 0.01,
-            height: Short.h * 0.1,
-          ),
+          // Divider(
+          //   color: Colors.grey[300],
+          //   thickness: Short.h * 0.01,
+          //   height: Short.h * 0.1,
+          // ),
 
-          Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Material(
-                    color: Colors.white,
-                    child: Text(
-                      "Don't have an account ?",
-                      style: TextStyle(color: Colors.grey, fontSize: 19),
-                    )),
-                FlatButton(
-                  onPressed: () {
-                    print("SignUp");
-                    Navigator.pushReplacementNamed(context, "SignUp");
-                  },
-                  child: Text(
-                    "SignUp",
-                    style: TextStyle(
-                        color: Theme.of(context).primaryColor, fontSize: 21),
-                  ),
-                ),
-              ]),
+          // Row(
+          //     crossAxisAlignment: CrossAxisAlignment.center,
+          //     mainAxisAlignment: MainAxisAlignment.center,
+          //     children: <Widget>[
+          //       Material(
+          //           color: Colors.white,
+          //           child: Text(
+          //             "Don't have an account ?",
+          //             style: TextStyle(color: Colors.grey, fontSize: 19),
+          //           )),
+          //       FlatButton(
+          //         onPressed: () {
+          //           print("SignUp");
+          //           Navigator.pushReplacementNamed(context, "SignUp");
+          //         },
+          //         child: Text(
+          //           "SignUp",
+          //           style: TextStyle(
+          //               color: Theme.of(context).primaryColor, fontSize: 21),
+          //         ),
+          //       ),
+          //     ]),
         ],
       ),
     );
@@ -234,7 +239,7 @@ class _LoginOtpState extends State<LoginOtp> with TickerProviderStateMixin {
             Align(
               alignment: Alignment.topCenter,
               child: Container(
-                height: Short.h * 0.3,
+                height: Short.h * 0.35,
                 color: Theme.of(context).primaryColor,
                 child: Center(
                     child: Padding(
