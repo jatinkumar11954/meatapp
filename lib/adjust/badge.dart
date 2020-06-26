@@ -19,8 +19,8 @@ class Badge extends StatelessWidget {
       children: [
         child,
         Positioned(
-          right: 8,
-          top: 8,
+          right: 4,
+          top: 0.5,
           child: Container(
             padding: EdgeInsets.all(2.0),
             // color: Theme.of(context).accentColor,
@@ -36,7 +36,8 @@ class Badge extends StatelessWidget {
               value,
               textAlign: TextAlign.center,
               style: TextStyle(
-                fontSize: 10,
+                color: Colors.white,
+                fontSize: 11,
               ),
             ),
           ),

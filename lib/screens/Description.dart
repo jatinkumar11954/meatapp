@@ -103,7 +103,7 @@ class _DescriptionState extends State<Description> {
                   subtitle: Text(
                     product[ro][i].weight == null
                         ? "weigth"
-                        : product[ro][i].weight,
+                        : product[ro][i].weight.toString(),
                     style: TextStyle(
                         color: Colors.grey,
                         fontSize: h * 0.02,

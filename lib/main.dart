@@ -59,10 +59,12 @@ class MyApp extends StatelessWidget {
               textTheme: Theme.of(context).textTheme.apply(
                     fontFamily: 'Sans',
                   ),
+               
               // fontFamily: ,
               primaryColor: Color.fromRGBO(0, 175, 136, 1.0),
               accentColor: Color.fromRGBO(229, 247, 243, 1.0),
               cursorColor: Color.fromRGBO(0, 175, 136, 1.0)
+              
               // focusColor: Color.fromRGBO(229,247,243, 1.0),
               ),
           initialRoute: jwt == null ? "Login" : "Main",

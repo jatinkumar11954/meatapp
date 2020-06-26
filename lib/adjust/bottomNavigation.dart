@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:meatapp/adjust/icons.dart';
 import 'package:meatapp/adjust/short.dart';
 import 'package:meatapp/model/bottom.dart';
 import 'package:meatapp/screens/Description.dart';
@@ -140,8 +141,61 @@ Widget bottomBar(BuildContext context, int i) {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                  SvgPicture.asset(data,
-          fit: BoxFit.contain,
-          height: 20,
+          // fit: BoxFit.contain,
+          height: 30,
+          color: _getItemColor(inde),
+          ),
+                    Text(text,
+                        style: TextStyle(
+                            fontSize: 12, color: _getItemColor(inde))),
+                  ],
+                ),
+                onTap: () {
+                  value.updateINdex(inde);
+                  _selectedIndex = value.index;
+ switch (_selectedIndex) {
+          case 0:
+            {
+              print("index 0");
+              Navigator.pushReplacement(
+                  context, CustomRoute(builder: (context) => FirstScreen()));
+              break;
+            }
+          case 1:
+            {
+              Navigator.pushReplacement(
+                  c, CustomRoute(builder: (context) => CartScreen()));
+              break;
+            }
+
+          case 2:
+            {
+              Navigator.pushReplacement(
+                 c, CustomRoute(builder: (context) => Description()));
+              break;
+            }
+        }
+                },
+              ),
+            ),
+          );
+        },
+      );
+       Widget _buildSvg(BuildContext c, String data, String text, int inde) =>
+      Consumer<Bottom>(
+        builder: (context, value, child) {
+          return Container(
+            width: double.infinity,
+            height: kBottomNavigationBarHeight,
+            child: Material(
+              color: _getBgColor(inde),
+              child: InkWell(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                Icon(
+                  CustomIcon.info_circled,
+                  size: 20,
           color: _getItemColor(inde),
           ),
                     Text(text,
@@ -182,6 +236,8 @@ Widget bottomBar(BuildContext context, int i) {
       );
 
 
+
+
   return  BottomNavigationBar(
       selectedFontSize: 0,
      
@@ -191,11 +247,11 @@ Widget bottomBar(BuildContext context, int i) {
           title: SizedBox.shrink(),
         ),
         BottomNavigationBarItem(
-          icon: _buildIcon(context, "img/chicken.svg", 'Business', 1),
+          icon: _buildSvg(context, "img/deals.svg", 'Business', 1),
           title: SizedBox.shrink(),
         ),
         BottomNavigationBarItem(
-          icon: _buildIcon(context, "img/chicken.svg", 'School', 2),
+          icon: _buildIcon(context, "img/icons2.svg", 'School', 2),
           title: SizedBox.shrink(),
         ),
       ],
