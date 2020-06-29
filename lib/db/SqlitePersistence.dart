@@ -18,34 +18,34 @@ class SqlitePersistence {
       onCreate: (db, version) {
         return db.execute(
           '''CREATE TABLE $TableName(
-            id INTEGER PRIMARY KEY, 
-            imdbId INTEGER, 
-            name STRING, 
-            imageUrl STRING, 
-            year STRING, 
-            watchedOn INTEGER
-          )''',
+               id INTEGER PRIMARY KEY, 
+                title STRING, 
+                img STRING, 
+                catName STRING,
+                column INTEGER,
+                 quantity INTEGER,
+                  price INTEGER, 
+                  weight INTEGER,
+            )''',
         );
       },
       version: 1,
     );
   }
 
-  Future<List<Map<String, dynamic>>> getUniqueObjects() async {
-    final ret = await db.rawQuery(
-        'SELECT *, COUNT(*) as watchedTimes FROM $TableName group by imdbId');
-    return ret;
-  }
+  // Future<List<Map<String, dynamic>>> getUniqueObjects() async {
+  //   final ret = await db.rawQuery(
+  //       'SELECT * FROM $TableName ');
+  //   return ret;
+  // }
 
-  Future<List<Map<String, dynamic>>> findObjects(String query) async {
-    final ret = await db.rawQuery(
-        'SELECT *, COUNT(*) as watchedTimes FROM $TableName where name like ? group by imdbId',
-        ['%$query%']);
+  Future<List<Map<String, dynamic>>> getCartfromDB() async {
+    final ret = await db.rawQuery('SELECT * FROM $TableName ');
 
     return ret;
   }
 
-  void createUpdate(int key, Map<String, dynamic> object) async {
+  void createUpdate(Map<String, dynamic> object) async {
     await db.insert(TableName, object,
         conflictAlgorithm: ConflictAlgorithm.replace);
   }

@@ -17,35 +17,40 @@ class CartItem {
   final int weight;
 
   CartItem({
-    @required this.id,
-    @required this.img,
-    @required this.title,
-    @required this.catName,
-    @required this.column,
-    @required this.quantity,
-    @required this.price,
+   this.id,
+   this.img,
+   this.title,
+   this.catName,
+   this.column,
+   this.quantity,
+   this.price,
     this.weight,
   });
   @override
   CartItem fromMap(Map map) {
     return CartItem(
-        id: 1,
-        img: "img",
-        title: "title",
-        quantity: 1,
-        catName: "catName",
-        weight: 1,
-        column: 1);
+      id: map[id],
+      title: map[title],
+      img: map[img],
+      catName: map[catName],
+      column: map[column],
+      quantity: map[quantity],
+      price: map[price],
+      weight: map[weight],
+    );
   }
 
   @override
   Map<String, dynamic> toMap() {
     return {
-      'id': 1,
-      'imdbId': "imdbId",
-      'name': "name",
-      'imageUrl': "Url",
-      'year': "year",
+      "id": id,
+      " title": title,
+      "img": img,
+      "catName": catName,
+      "column": column,
+      "quantity": quantity,
+      "price": price,
+      "weight": weight
     };
   }
 }

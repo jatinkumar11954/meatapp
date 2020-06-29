@@ -14,18 +14,16 @@ class Storage {
 
   Storage(this._repository);
 
-  void addToWatched(CartItem CartItem) async {
-    await _repository.createUpdate(CartItem.id, CartItem.toMap());
+  void addToWatched(CartItem Item) async {
+    await _repository.createUpdate( Item.toMap());
   }
 
   Future<List<CartItem>> watchedCartItems(String query) async {
-    final objects = query?.isNotEmpty == true
-        ? await _repository.findObjects(query)
-        : await _repository.getUniqueObjects();
+    final objects =  await _repository.getCartfromDB() ;
     return objects.map((map) => CartItem().fromMap(map)).toList();
   }
 
-  void removeFromWatched(CartItem CartItem) async {
-    await _repository.removeObject(CartItem.id);
+  void removeFromWatched(CartItem Item) async {
+    await _repository.removeObject(Item.id);
   }
 }
