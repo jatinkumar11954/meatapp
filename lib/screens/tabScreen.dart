@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:meatapp/Api/categoryApi.dart';
@@ -90,155 +91,249 @@ class TabScreen extends StatelessWidget {
                       padding: const EdgeInsets.all(8.0),
                       child: GestureDetector(
                         child: Container(
-                          height: 300,
-                          width: w * 0.8,
+                          height: 400,
+                          width: w * 0.87,
                           decoration: BoxDecoration(boxShadow: [
                             BoxShadow(
-                              color: Colors.black12,
+                              color: Colors.black45,
                               blurRadius: 5.0, // soften the shadow
-                              spreadRadius: 1.0, //extend the shadow
+                              spreadRadius: 0.7, //extend the shadow
                               offset: Offset(
-                                5.0, // Move to right 10  horizontally
-                                5.0, // Move to bottom 10 Vertically
+                                1.0, // Move to right 10  horizontally
+                                -1.0, // Move to bottom 10 Vertically
                               ),
                             ),
                           ]),
                           child: GridTile(
-                            child: ConstrainedBox(
-                              constraints: BoxConstraints(minHeight: 180),
-                              child: Image.network(
-                                o[i].img,
-                                height: 150,
-                                width: w * 0.8,
-                                alignment: Alignment.topCenter,
-                                errorBuilder: (BuildContext contet, Object ex,
-                                    StackTrace stackTrace) {
-                                  if (stackTrace == null) return ex;
-                                  return Shimmer.fromColors(
-                                      baseColor: Colors.grey[400],
-                                      highlightColor: Colors.white,
-                                      child: Container(
-                                        height: 202,
-                                        width: w * 0.7,
-                                        color: Colors.grey,
-                                      ));
-                                },
-                                loadingBuilder: (BuildContext context,
-                                    Widget child,
-                                    ImageChunkEvent loadingProgress) {
-                                  if (loadingProgress == null) return child;
-                                  return Shimmer.fromColors(
-                                      baseColor: Colors.grey[400],
-                                      highlightColor: Colors.white,
-                                      child: Container(
-                                        height: 202,
-                                        width: w * 0.7,
-                                        color: Colors.grey,
-                                      ));
-                                },
-                              ),
+                            child: CachedNetworkImage(
+                              fit: BoxFit.fill,
+                              imageUrl: o[i].img,
+                              width: w * 0.7,
+                              placeholder: (c, s) => Shimmer.fromColors(
+                                  baseColor: Colors.grey[400],
+                                  highlightColor: Colors.white,
+                                  child: Container(
+                                    width: w * 0.7,
+                                    color: Colors.grey,
+                                  )),
                             ),
                             footer: Container(
                               color: Colors.white,
                               child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
                                   GridTileBar(
-                                      backgroundColor: Colors.white,
-                                      title: Text(o[i].item,
-                                          style:
-                                              TextStyle(color: Colors.black))),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: <Widget>[
-                                      Text(o[i].desc),
-                                      Spacer(),
-                                      o[i].quantity > 0
-                                          ? Row(
-                                              children: <Widget>[
-                                                IconButton(
-                                                    icon: Icon(
-                                                        Icons.remove_circle,
-                                                        color: Theme.of(context)
-                                                            .primaryColor),
-                                                    onPressed: () {
-                                                      if (o[i].quantity == 1) {
-                                                        cart.removeItem(
-                                                            o[i].id);
-
-                                                        print(
-                                                            cart.items.length);
-                                                      }
-
-                                                      productProvider.subQuant(
-                                                          o[i].catname, i);
-                                                      cart.reduceQuant(
-                                                          o[i].id,
-                                                          o[i].price,
-                                                          o[i].item,
-                                                          o[i].img,
-                                                          o[i].catname,
-                                                          i);
-                                                    }),
-                                                Text(o[i].quantity.toString(),
+                                    backgroundColor: Colors.white,
+                                    title: Text(
+                                      o[i].item.replaceFirst(o[i].item[0],
+                                          o[i].item[0].toUpperCase()),
+                                      style: TextStyle(
+                                          fontSize: 22, color: Colors.black),
+                                    ),
+                                    subtitle: Text(o[i].pieces.toString(),
+                                        style: TextStyle(color: Colors.black)),
+                                  ),
+                                  Divider(
+                                    color: Colors.grey,
+                                  ),
+                                  Container(
+                                    padding: EdgeInsets.fromLTRB(18, 0, 0, 14),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: <Widget>[
+                                        // Text("Magna anim labore irure non labore incididunt exercitation.",
+                                        // softWrap: true,
+                                        //     style: TextStyle(
+                                        //       color: Colors.black45,
+                                        //       fontSize: 18,
+                                        //     )),
+                                        Text(o[i].desc,
+                                            style: TextStyle(
+                                              color: Colors.black45,
+                                              fontSize: 18,
+                                            )),
+                                        Container(
+                                            margin: EdgeInsets.fromLTRB(
+                                                0, 10, 0, 14),
+                                            height: 34,
+                                            width: 150,
+                                            decoration: BoxDecoration(
+                                                color: Colors.grey[300],
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(10))),
+                                            child: Center(
+                                                child: Text("Weight: 400-500",
                                                     style: TextStyle(
-                                                        color: Colors.black,
+                                                        color: Colors.black54,
+                                                        fontSize: h * 0.02,
                                                         fontWeight:
-                                                            FontWeight.bold)),
-                                                IconButton(
-                                                    icon: Icon(Icons.add_circle,
-                                                        color: Theme.of(context)
-                                                            .primaryColor),
-                                                    onPressed: () {
-                                                      productProvider.addQuant(
-                                                          o[i].catname, i);
+                                                            FontWeight.w400)))),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: <Widget>[
+                                            Text("339 ",
+                                                style: TextStyle(
+                                                  color: Colors.black54,
+                                                  fontSize: 20,
+                                                  decoration: TextDecoration
+                                                      .lineThrough,
+                                                )),
+                                            Text(
+                                                o[i].weight == null
+                                                    ? " price"
+                                                    : "  ${o[i].price}",
+                                                style: TextStyle(
+                                                  color: Theme.of(context)
+                                                      .primaryColor,
+                                                  fontSize: 23,
+                                                )),
+                                            Spacer(),
+                                            o[i].quantity > 0
+                                                ? Row(
+                                                    children: <Widget>[
+                                                      IconButton(
+                                                          icon: Icon(
+                                                              Icons
+                                                                  .remove_circle,
+                                                              color: Theme.of(
+                                                                      context)
+                                                                  .primaryColor),
+                                                          onPressed: () {
+                                                            if (o[i].quantity ==
+                                                                1) {
+                                                              cart.removeItem(
+                                                                  o[i].id);
+
+                                                              print(cart.items
+                                                                  .length);
+                                                            }
+
+                                                            productProvider
+                                                                .subQuant(
+                                                                    o[i].catname,
+                                                                    i);
+                                                            cart.reduceQuant(
+                                                                o[i].id,
+                                                                o[i].price,
+                                                                o[i].item,
+                                                                o[i].img,
+                                                                o[i].catname,
+                                                                o[i].weight,
+                                                                i);
+                                                          }),
+                                                      Text(
+                                                          o[i]
+                                                              .quantity
+                                                              .toString(),
+                                                          style: TextStyle(
+                                                              color:
+                                                                  Colors.black,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold)),
+                                                      IconButton(
+                                                          icon: Icon(
+                                                              Icons.add_circle,
+                                                              color: Theme.of(
+                                                                      context)
+                                                                  .primaryColor),
+                                                          onPressed: () {
+                                                            productProvider
+                                                                .addQuant(
+                                                                    o[i].catname,
+                                                                    i);
+                                                            cart.addItem(
+                                                                o[i].id,
+                                                                o[i].price,
+                                                                o[i].item,
+                                                                o[i].img,
+                                                                o[i].catname,
+                                                                o[i].weight,
+                                                                i);
+                                                          }),
+                                                    ],
+                                                  )
+                                                : GestureDetector(
+                                                    child: Container(
+                                                      margin: EdgeInsets.only(
+                                                          bottom: 5),
+                                                      padding:
+                                                          EdgeInsets.all(8),
+                                                      color: Colors.grey,
+                                                      child: Row(
+                                                        children: <Widget>[
+                                                          Icon(
+                                                            Icons.shopping_cart,
+                                                            color: Colors.white,
+                                                          ),
+                                                          Text(
+                                                            "Add to Cart",
+                                                            style: TextStyle(
+                                                              color:
+                                                                  Colors.white,
+                                                            ),
+                                                          )
+                                                        ],
+                                                      ),
+                                                    ),
+                                                    onTap: () {
                                                       cart.addItem(
                                                           o[i].id,
                                                           o[i].price,
                                                           o[i].item,
                                                           o[i].img,
                                                           o[i].catname,
+                                                          o[i].weight,
                                                           i);
-                                                    }),
-                                              ],
-                                            )
-                                          : IconButton(
-                                              icon: Icon(
-                                                Icons.shopping_cart,
-                                              ),
-                                              onPressed: () {
-                                                cart.addItem(
-                                                    o[i].id,
-                                                    o[i].price,
-                                                    o[i].item,
-                                                    o[i].img,
-                                                    o[i].catname,
-                                                    i);
-                                                productProvider.addQuant(
-                                                    o[i].catname, i);
+                                                      productProvider.addQuant(
+                                                          o[i].catname, i);
+                                                    },
+                                                  ),
+                                            Consumer<Products>(
+                                              builder: (ctx, produc, ch) {
+                                                return Container(
+                                                  width: 45,
+                                                  height: 40,
+                                                  margin: EdgeInsets.fromLTRB(
+                                                      8, 0, 14, 5),
+                                                  decoration: BoxDecoration(
+                                                      border: Border.all(
+                                                    color: Theme.of(context)
+                                                        .primaryColor,
+                                                  )),
+                                                  child: Center(
+                                                    child: IconButton(
+                                                      iconSize: 30,
+                                                      icon: Icon(
+                                                        o[i].fav
+                                                            ? Icons.favorite
+                                                            : Icons
+                                                                .favorite_border,
+                                                      ),
+                                                      color: Theme.of(context)
+                                                          .primaryColor,
+                                                      onPressed: () {
+                                                        produc
+                                                            .toggleFavoriteStatus(
+                                                                o[i].catname,
+                                                                i);
+                                                        ch =
+                                                            CircularProgressIndicator();
+                                                      },
+                                                    ),
+                                                  ),
+                                                );
                                               },
-                                              color:
-                                                  Theme.of(context).accentColor,
                                             ),
-                                      Consumer<Products>(
-                                        builder: (ctx, produc, ch) {
-                                          return IconButton(
-                                            icon: Icon(
-                                              o[i].fav
-                                                  ? Icons.favorite
-                                                  : Icons.favorite_border,
-                                            ),
-                                            color:
-                                                Theme.of(context).accentColor,
-                                            onPressed: () {
-                                              produc.toggleFavoriteStatus(
-                                                  o[i].catname, i);
-                                              ch = CircularProgressIndicator();
-                                            },
-                                          );
-                                        },
-                                      ),
-                                    ],
+                                          ],
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ],
                               ),
@@ -310,7 +405,11 @@ class TabScreen extends StatelessWidget {
             // Add your onPressed code here!
           },
           child: Consumer<Cart>(
-            builder: (_, cart, ch) => Badge(child: ch,value: cart.itemCount.toString(),color: Colors.black,),
+            builder: (_, cart, ch) => Badge(
+              child: ch,
+              value: cart.itemCount.toString(),
+              color: Colors.black,
+            ),
             child: IconButton(
               icon: Icon(
                 Icons.shopping_cart,

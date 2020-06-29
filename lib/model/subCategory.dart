@@ -3,8 +3,8 @@ import 'package:flutter/foundation.dart';
 import 'package:meatapp/Api/categoryApi.dart';
 
 class SubCategory with ChangeNotifier {
-  String catname, pieces;
-  int id;
+  String catname;
+  int id,pieces;
   int price,weight;
   int quantity;
   bool fav;
