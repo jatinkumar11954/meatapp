@@ -21,7 +21,7 @@ class UserProfile extends StatefulWidget {
 class UserProfileState extends State<UserProfile> {
   UserDetails user;
   bool _isLoading = false;
-  String token ;
+  String token;
   @override
   void initState() {
     // TODO: implement initState
@@ -39,17 +39,16 @@ class UserProfileState extends State<UserProfile> {
     store.remove("jwt");
 
     print("getting jwt from the device");
-     token = store.getString('jwt');
+    token = store.getString('jwt');
     if (token != null) {
       Map jwt =
           json.decode(ascii.decode(base64.decode(base64.normalize(token))));
       print(jwt["data"].toString());
       user = UserDetails.fromJson(jwt["data"]);
       // print(user.fullName);
-      
 
     }
-     setState(() {
+    setState(() {
       _isLoading = false;
     });
     // if(token==null){
@@ -57,9 +56,7 @@ class UserProfileState extends State<UserProfile> {
     //   _isLoading = true;
     // });
     // }
-   
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -80,17 +77,16 @@ class UserProfileState extends State<UserProfile> {
 
     return Scaffold(
         appBar: appbar,
-                bottomNavigationBar: bottomBar(context, 2),
-
+        bottomNavigationBar: bottomBar(context, 2),
         drawer: Draw(context),
         body: WillPopScope(
           onWillPop: () {
-                     Navigator.push(context, CustomRoute(builder: (context) => FirstScreen()));
-
-        },
-                  child: Column(
+            Navigator.push(
+                context, CustomRoute(builder: (context) => FirstScreen()));
+          },
+          child: Column(
             children: <Widget>[
-              _isLoading 
+              _isLoading
                   ? Shimmer.fromColors(
                       baseColor: Colors.grey[400],
                       highlightColor: Colors.white,
@@ -98,8 +94,9 @@ class UserProfileState extends State<UserProfile> {
                         padding: EdgeInsets.only(left: 18.0, top: 20),
                         child: ListTile(
                             title: Text("FullName",
-                                style:
-                                    TextStyle(fontSize: 30, color: Theme.of(context).primaryColor)),
+                                style: TextStyle(
+                                    fontSize: 30,
+                                    color: Theme.of(context).primaryColor)),
                             subtitle: Padding(
                               padding: const EdgeInsets.only(top: 8.0),
                               child: Column(
@@ -122,20 +119,30 @@ class UserProfileState extends State<UserProfile> {
                       padding: EdgeInsets.only(left: 18.0, top: 20),
                       child: ListTile(
                           isThreeLine: true,
-                          title: Text(user.fullName==null?"FullName":user.fullName,
-                              style:
-                                  TextStyle(fontSize: 30, color: Theme.of(context).primaryColor)),
+                          title: Text(
+                              user.fullName == null
+                                  ? "FullName"
+                                  : user.fullName,
+                              style: TextStyle(
+                                  fontSize: 30,
+                                  color: Theme.of(context).primaryColor)),
                           subtitle: Padding(
                             padding: const EdgeInsets.only(top: 8.0),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
-                                Text(user.phoneNo==null?"Phone : PhoneNumber":"Phone : ${user.phoneNo}",
+                                Text(
+                                    user.phoneNo == null
+                                        ? "Phone : PhoneNumber"
+                                        : "Phone : ${user.phoneNo}",
                                     style: TextStyle(
                                         fontSize: 19, color: Colors.black)),
                                 SizedBox(height: 8),
-                                Text(user.email==null?"Email  :  email@domain.com":"Email  :  ${user.email}",
+                                Text(
+                                    user.email == null
+                                        ? "Email  :  email@domain.com"
+                                        : "Email  :  ${user.email}",
                                     style: TextStyle(
                                         fontSize: 19, color: Colors.black))
                               ],
@@ -152,13 +159,17 @@ class UserProfileState extends State<UserProfile> {
                   children: <Widget>[
                     ListTile(
                       title: Text("Manage Profile",
-                          style: TextStyle(fontSize: 22, color: Theme.of(context).primaryColor)),
+                          style: TextStyle(
+                              fontSize: 22,
+                              color: Theme.of(context).primaryColor)),
                       subtitle: Text("Number,Name,Email,Password"),
                       leading: Icon(Icons.account_box),
                       trailing: Icon(Icons.arrow_forward_ios),
-                      onTap: 
-                      ()=>
-            Navigator.push(context, CustomRoute(builder: (context) => ManageProfile(),settings:RouteSettings(arguments:user))),
+                      onTap: () => Navigator.push(
+                          context,
+                          CustomRoute(
+                              builder: (context) => ManageProfile(),
+                              settings: RouteSettings(arguments: user))),
                     ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
@@ -167,13 +178,16 @@ class UserProfileState extends State<UserProfile> {
                     ),
                     ListTile(
                       title: Text("Manage Address",
-                          style: TextStyle(fontSize: 22, color: Theme.of(context).primaryColor)),
+                          style: TextStyle(
+                              fontSize: 22,
+                              color: Theme.of(context).primaryColor)),
                       leading: Icon(Icons.location_on),
                       trailing: Icon(Icons.arrow_forward_ios),
-                       onTap: 
-                      ()=>
-            Navigator.push(context, CustomRoute(builder: (context) => ManageAddress(),settings:RouteSettings(arguments:user))),
-                  
+                      onTap: () => Navigator.push(
+                          context,
+                          CustomRoute(
+                              builder: (context) => ManageAddress(),
+                              settings: RouteSettings(arguments: user))),
                     ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
@@ -182,7 +196,9 @@ class UserProfileState extends State<UserProfile> {
                     ),
                     ListTile(
                       title: Text("Manage Payment",
-                          style: TextStyle(fontSize: 22, color: Theme.of(context).primaryColor)),
+                          style: TextStyle(
+                              fontSize: 22,
+                              color: Theme.of(context).primaryColor)),
                       leading: Icon(Icons.payment),
                       trailing: Icon(Icons.arrow_forward_ios),
                     ),

@@ -77,7 +77,7 @@ class CartScreen extends StatelessWidget {
             child: ListView.builder(
                 itemCount: cart.itemCount,
                 itemBuilder: (_, i) {
-                  print(cart.items.values.toList()[i]);
+                  print(cart.items[i]);
 
                   return Card(
                       margin: EdgeInsets.symmetric(
@@ -89,35 +89,32 @@ class CartScreen extends StatelessWidget {
                           leading: Wrap(children: <Widget>[
                             CircleAvatar(
                               radius:
-                                  cart.items.values.toList()[i].title.length >=
-                                          15
-                                      ? 30
-                                      : 25,
+                                  cart.items[i].title.length >= 15 ? 30 : 25,
                               backgroundImage: CachedNetworkImageProvider(
-                                cart.items.values.toList()[i].img,
+                                cart.items[i].img,
                               ),
                             ),
                           ]),
                           title:
                               //  Text(
-                              //   "cart.items.values.toList()[i].title",
+                              //   "cart.items[i].title",
                               //   style: TextStyle(
                               //       color: Theme.of(context).primaryColor,
                               //       fontSize: 20),
                               // ),
-                              Text(cart.items.values.toList()[i].title,
+                              Text(cart.items[i].title,
                                   style: TextStyle(
                                       color: Theme.of(context).primaryColor,
                                       fontSize: 20)),
                           subtitle:
                               Wrap(direction: Axis.vertical, children: <Widget>[
                             Text(
-                              "${cart.items.values.toList()[i].weight.toString()}",
+                              "${cart.items[i].weight.toString()}",
                               style:
                                   TextStyle(color: Colors.black, fontSize: 15),
                             ),
                             Text(
-                              '₹${(cart.items.values.toList()[i].price * cart.items.values.toList()[i].quantity)}',
+                              '₹${(cart.items[i].price * cart.items[i].quantity)}',
                               style:
                                   TextStyle(color: Colors.black, fontSize: 15),
                             ),
@@ -128,10 +125,7 @@ class CartScreen extends StatelessWidget {
                             child: Padding(
                               padding: EdgeInsets.fromLTRB(
                                   0,
-                                  cart.items.values.toList()[i].title.length >=
-                                          15
-                                      ? 25
-                                      : 30,
+                                  cart.items[i].title.length >= 15 ? 25 : 30,
                                   0,
                                   0),
                               child: Wrap(
@@ -145,49 +139,28 @@ class CartScreen extends StatelessWidget {
                                               Theme.of(context).primaryColor),
                                       iconSize: 35,
                                       onPressed: () {
-                                        if (cart.items.values
-                                                .toList()[i]
-                                                .quantity ==
-                                            1) {
+                                        if (cart.items[i].quantity == 1) {
                                           productProvider.subQuant(
-                                              cart.items.values
-                                                  .toList()[i]
-                                                  .catName,
-                                              cart.items.values
-                                                  .toList()[i]
-                                                  .column);
-                                          cart.removeItem(
-                                              cart.items.values.toList()[i].id);
+                                              cart.items[i].catName,
+                                              cart.items[i].column);
+                                          cart.removeItem(cart.items[i].id);
 
                                           print(cart.items.length);
                                         }
                                         productProvider.subQuant(
-                                            cart.items.values
-                                                .toList()[i]
-                                                .catName,
-                                            cart.items.values
-                                                .toList()[i]
-                                                .column);
+                                            cart.items[i].catName,
+                                            cart.items[i].column);
                                         cart.reduceQuant(
-                                            cart.items.values.toList()[i].id,
-                                            cart.items.values.toList()[i].price,
-                                            cart.items.values.toList()[i].title,
-                                            cart.items.values.toList()[i].img,
-                                            cart.items.values
-                                                .toList()[i]
-                                                .catName,
-                                            cart.items.values
-                                                .toList()[i]
-                                                .weight,
-                                            cart.items.values
-                                                .toList()[i]
-                                                .column);
+                                            cart.items[i].id,
+                                            cart.items[i].price,
+                                            cart.items[i].quantity,
+                                            cart.items[i].title,
+                                            cart.items[i].img,
+                                            cart.items[i].catName,
+                                            cart.items[i].weight,
+                                            cart.items[i].column);
                                       }),
-                                  Text(
-                                      cart.items.values
-                                          .toList()[i]
-                                          .quantity
-                                          .toString(),
+                                  Text(cart.items[i].quantity.toString(),
                                       style: TextStyle(
                                           color: Colors.black,
                                           fontSize: 25,
@@ -198,16 +171,17 @@ class CartScreen extends StatelessWidget {
                                     iconSize: 35,
                                     onPressed: () {
                                       productProvider.addQuant(
-                                          cart.items.values.toList()[i].catName,
-                                          cart.items.values.toList()[i].column);
+                                          cart.items[i].catName,
+                                          cart.items[i].column);
                                       cart.addItem(
-                                          cart.items.values.toList()[i].id,
-                                          cart.items.values.toList()[i].price,
-                                          cart.items.values.toList()[i].title,
-                                          cart.items.values.toList()[i].img,
-                                          cart.items.values.toList()[i].catName,
-                                          cart.items.values.toList()[i].weight,
-                                          cart.items.values.toList()[i].column);
+                                          cart.items[i].id,
+                                          cart.items[i].price,
+                                          cart.items[i].quantity,
+                                          cart.items[i].title,
+                                          cart.items[i].img,
+                                          cart.items[i].catName,
+                                          cart.items[i].weight,
+                                          cart.items[i].column);
                                     },
                                   ),
                                   IconButton(
@@ -215,10 +189,9 @@ class CartScreen extends StatelessWidget {
                                     iconSize: 35,
                                     onPressed: () {
                                       productProvider.removeFrmCart(
-                                          cart.items.values.toList()[i].catName,
-                                          cart.items.values.toList()[i].column);
-                                      cart.removeItem(
-                                          cart.items.values.toList()[i].id);
+                                          cart.items[i].catName,
+                                          cart.items[i].column);
+                                      cart.removeItem(cart.items[i].id);
                                     },
                                   ),
                                 ],

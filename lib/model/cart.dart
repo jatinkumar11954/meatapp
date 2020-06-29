@@ -26,15 +26,36 @@ class CartItem {
     @required this.price,
     this.weight,
   });
+  @override
+  CartItem fromMap(Map map) {
+    return CartItem(
+        id: 1,
+        img: "img",
+        title: "title",
+        quantity: 1,
+        catName: "catName",
+        weight: 1,
+        column: 1);
+  }
+
+  @override
+  Map<String, dynamic> toMap() {
+    return {
+      'id': 1,
+      'imdbId': "imdbId",
+      'name': "name",
+      'imageUrl': "Url",
+      'year': "year",
+    };
+  }
 }
 
 class Cart with ChangeNotifier {
-  Map<String, CartItem> _items = {};
-  Map<String,CartItem> string;
-  Map<String, List<String>> _itemlist = {};
-  SharedPreferences s;
-  Map<String, CartItem> get items {
-    return {..._items};
+  List<CartItem> _items = [];
+  Map<String, CartItem> string;
+
+  List<CartItem> get items {
+    return [..._items];
   }
 
   int get itemCount {
@@ -46,37 +67,35 @@ class Cart with ChangeNotifier {
 
   double get totalAmount {
     var total = 0.0;
-    _items.forEach((key, cartItem) {
+    _items.forEach((cartItem) {
       total += cartItem.price * cartItem.quantity;
     });
     return total;
   }
 
-  void addItem(int id, int price, String title, String img, String catName,
-      int weight, int column) async {
-    s = await SharedPreferences.getInstance();
-    if (_items.containsKey(id.toString())) {
+  void addItem(int id, int price, int quan, String title, String img,
+      String catName, int weight, int column) async {
+    if (_items.contains(id.toString())) {
       // change quantity...
       print("into update cart");
-      _items.update(
-        id.toString(),
-        (existingCartItem) => CartItem(
-            id: existingCartItem.id,
-            img: existingCartItem.img,
-            title: existingCartItem.title,
-            price: existingCartItem.price,
-            quantity: existingCartItem.quantity + 1,
-            catName: existingCartItem.catName,
-            weight: existingCartItem.weight,
-            column: existingCartItem.column),
-      );
-    
+
+      _items.replaceRange(_items.indexOf(_items.firstWhere((e) => e.id == id)),
+          _items.indexOf(_items.firstWhere((e) => e.id == id)), [
+        CartItem(
+            id: id,
+            img: img,
+            title: title,
+            price: price,
+            quantity: quan + 1,
+            catName: catName,
+            weight: weight,
+            column: column)
+      ]);
     } else {
       print("into add cart");
 
-      _items.putIfAbsent(
-        id.toString(),
-        () => CartItem(
+      _items.add(
+        CartItem(
             id: id,
             img: img,
             title: title,
@@ -90,23 +109,23 @@ class Cart with ChangeNotifier {
     notifyListeners();
   }
 
-  void reduceQuant(int id, int price, String title, String img, String catName,
-      int weight, int column) {
-    if (_items.containsKey(id.toString())) {
+  void reduceQuant(int id, int price, int quan, String title, String img,
+      String catName, int weight, int column) {
+    if (_items.contains(id.toString())) {
       // change quantity...
       print("into update cart");
-      _items.update(
-        id.toString(),
-        (existingCartItem) => CartItem(
-            id: existingCartItem.id,
-            img: existingCartItem.img,
-            title: existingCartItem.title,
-            price: existingCartItem.price,
-            quantity: existingCartItem.quantity - 1,
-            catName: existingCartItem.catName,
-            weight: existingCartItem.weight,
-            column: existingCartItem.column),
-      );
+      _items.replaceRange(_items.indexOf(_items.firstWhere((e) => e.id == id)),
+          _items.indexOf(_items.firstWhere((e) => e.id == id)), [
+        CartItem(
+            id: id,
+            img: img,
+            title: title,
+            price: price,
+            quantity: quan - 1,
+            catName: catName,
+            weight: weight,
+            column: column)
+      ]);
     }
     notifyListeners();
   }
@@ -117,7 +136,7 @@ class Cart with ChangeNotifier {
   }
 
   void clear() {
-    _items = {};
+    _items = [];
     notifyListeners();
   }
 }

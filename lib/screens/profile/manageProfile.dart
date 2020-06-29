@@ -22,15 +22,16 @@ class _ManageProfileState extends State<ManageProfile> {
   final GlobalKey<ScaffoldState> _scaffoldkey = new GlobalKey<ScaffoldState>();
   bool _isLoading = false;
   void callSnackBar(String msg, int sec) {
-    print(msg+"snack msg");
+    print(msg + "snack msg");
     final Snack = new snack.SnackBar(
       content: new Text(msg),
       duration: new Duration(seconds: sec),
     );
     _scaffoldkey.currentState.showSnackBar(Snack);
   }
-bool changeName=false;
-bool changeEmail=false;
+
+  bool changeName = false;
+  bool changeEmail = false;
   hp.Response response;
   static const headers = {'Content-Type': 'application/json'};
   GlobalKey<FormState> _formKey = GlobalKey<FormState>(debugLabel: "key1");
@@ -45,9 +46,9 @@ bool changeEmail=false;
 
     super.initState();
   }
- String varname;
-  String varemail;
 
+  String varname;
+  String varemail;
 
   void dispose() {
     super.dispose();
@@ -169,14 +170,14 @@ bool changeEmail=false;
                                 print(newvalue);
                                 setState(() {
                                   varname = newvalue;
-                                  changeName=true;
+                                  changeName = true;
                                   print("name changes$varname");
 
                                   // nameTap = false;
                                 });
                               },
                             )
-                          : Text(!changeName?"${user.fullName}":"$varname"),
+                          : Text(!changeName ? "${user.fullName}" : "$varname"),
                       leading: Icon(Icons.account_circle),
                       trailing: Visibility(
                         visible: !nameTap,
@@ -195,7 +196,6 @@ bool changeEmail=false;
                           ),
                           icon: Icon(Icons.cancel),
                           onPressed: () {
-                            
                             setState(() {
                               varname = user.fullName;
                               nameTap = false;
@@ -229,7 +229,7 @@ bool changeEmail=false;
                                         tooltip: "to save the email",
                                         icon: Icon(Icons.check_circle),
                                         onPressed: () {
-                                               // _formKey.currentState.save();
+                                          // _formKey.currentState.save();
                                           setState(() {
                                             varemail = email.text;
                                             print("inside check $varemail");
@@ -252,18 +252,19 @@ bool changeEmail=false;
                                 // borderSide: BorderSide(color: Colors.green, width: 2),
                                 // ),
                               ),
-                               onChanged: (newvalue) {
+                              onChanged: (newvalue) {
                                 print(newvalue);
                                 setState(() {
                                   varemail = newvalue;
-                                  changeEmail=true;
+                                  changeEmail = true;
                                   print("name changes$varemail");
 
                                   // nameTap = false;
                                 });
                               },
                             )
-                          : Text(!changeEmail?"${user.email}":"${varemail}"),
+                          : Text(
+                              !changeEmail ? "${user.email}" : "${varemail}"),
                       leading: Icon(Icons.account_circle),
                       trailing: Visibility(
                         visible: !emailTap,
@@ -344,98 +345,98 @@ bool changeEmail=false;
                           color: Theme.of(context).primaryColor,
                           onPressed: () async {
                             print("SIGN UP button is clicked");
-                             if(changeName || changeEmail){
-                            if (_formKey.currentState.validate()) {
-                             
+                            if (changeName || changeEmail) {
+                              if (_formKey.currentState.validate()) {
                                 print("anu one in teur");
-                              print("Form is validated");
+                                print("Form is validated");
 
-                              setState(() {
-                                _isLoading = true;
-                              });
-                              Map<String, dynamic> data = {
-                                "fullname":
-                                    // "jatin",
-                                    varname,
-                                "email":
-                                    // "test@gmail.com",
-                                    varemail,
-                                "phoneno":
-                                    // "6556121480",
-                                    user.phoneNo,
+                                setState(() {
+                                  _isLoading = true;
+                                });
+                                Map<String, dynamic> data = {
+                                  "fullname":
+                                      // "jatin",
+                                      varname,
+                                  "email":
+                                      // "test@gmail.com",
+                                      varemail,
+                                  "phoneno":
+                                      // "6556121480",
+                                      user.phoneNo,
 
-                                // "152346"
-                              };
-                              setState(() {
-                                _isLoading = true;
-                              });
-                              print("before post" + data.toString());
+                                  // "152346"
+                                };
+                                setState(() {
+                                  _isLoading = true;
+                                });
+                                print("before post" + data.toString());
 
-                              try {
-                                callSnackBar("Validating...", 1);
-                                response = await hp.post(
-                                    "${Short.baseUrl}/updateprofile",
-                                    body: json.encode(data),
-                                    headers: headers);
-                                print(response.toString());
-                                if (response != null) {
-                                  Map res = json.decode(response.body);
-                                  if (response.statusCode == 200) {
-                                    print("inside response status");
+                                try {
+                                  callSnackBar("Validating...", 1);
+                                  response = await hp.post(
+                                      "${Short.baseUrl}/updateprofile",
+                                      body: json.encode(data),
+                                      headers: headers);
+                                  print(response.toString());
+                                  if (response != null) {
+                                    Map res = json.decode(response.body);
+                                    if (response.statusCode == 200) {
+                                      print("inside response status");
 
-                                    setState(() {
-                                      _isLoading = false;
-                                    });
-    await Future.delayed(Duration(milliseconds: 3000));
-                                       Navigator.pushReplacement(
-                                                      context,
-                                                      CustomRoute(
-                                                          builder: (context) =>
-                                                              UserProfile()
-                                                           ,settings:RouteSettings(arguments:user)
-                                                          ));
-                                  }
-                                  if (response.statusCode == 400) {
-                                    // callSnackBar("${res["msg"]}");
-                                    callSnackBar(
-                                        "User with these details already exists",
-                                        2);
+                                      setState(() {
+                                        _isLoading = false;
+                                      });
+                                      await Future.delayed(
+                                          Duration(milliseconds: 3000));
+                                      Navigator.pushReplacement(
+                                          context,
+                                          CustomRoute(
+                                              builder: (context) =>
+                                                  UserProfile(),
+                                              settings: RouteSettings(
+                                                  arguments: user)));
+                                    }
+                                    if (response.statusCode == 400) {
+                                      // callSnackBar("${res["msg"]}");
+                                      callSnackBar(
+                                          "User with these details already exists",
+                                          2);
 
-                                    print(
-                                        "User with these details already exists");
-                                  }
-                                } //response is not null
-                                // else {
-                                //   //response is null
-                                //   callSnackBar(
-                                //       "network problem");
-                                //   print(
-                                //       "response is null");
-                                // }
+                                      print(
+                                          "User with these details already exists");
+                                    }
+                                  } //response is not null
+                                  // else {
+                                  //   //response is null
+                                  //   callSnackBar(
+                                  //       "network problem");
+                                  //   print(
+                                  //       "response is null");
+                                  // }
 
-                              } //try
-                              on Exception catch (exception) {
-                                print("exeception from api");
+                                } //try
+                                on Exception catch (exception) {
+                                  print("exeception from api");
 
-                                callSnackBar(
-                                    "User with these details already exists",
-                                    2);
-                              } catch (error) {
-                                print("error from api");
+                                  callSnackBar(
+                                      "User with these details already exists",
+                                      2);
+                                } catch (error) {
+                                  print("error from api");
 
-                                callSnackBar(error.toString(), 3);
-                              } //catch
+                                  callSnackBar(error.toString(), 3);
+                                } //catch
 
-                              // setState(() {
-                              //   _isLoading=false;
-                              // });
-                            } 
-                            
-                            //form validation
-                          }
-                          else{
+                                // setState(() {
+                                //   _isLoading=false;
+                                // });
+                              }
+
+                              //form validation
+                            } else {
                               callSnackBar("No changes were made", 3);
-                            }},
+                            }
+                          },
                           shape: RoundedRectangleBorder(
                             borderRadius: new BorderRadius.circular(50.0),
                           ),

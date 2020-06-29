@@ -220,6 +220,7 @@ class TabScreen extends StatelessWidget {
                                                             cart.reduceQuant(
                                                                 o[i].id,
                                                                 o[i].price,
+                                                                o[i].quantity,
                                                                 o[i].item,
                                                                 o[i].img,
                                                                 o[i].catname,
@@ -250,6 +251,7 @@ class TabScreen extends StatelessWidget {
                                                             cart.addItem(
                                                                 o[i].id,
                                                                 o[i].price,
+                                                                o[i].quantity,
                                                                 o[i].item,
                                                                 o[i].img,
                                                                 o[i].catname,
@@ -285,6 +287,7 @@ class TabScreen extends StatelessWidget {
                                                       cart.addItem(
                                                           o[i].id,
                                                           o[i].price,
+                                                          o[i].quantity,
                                                           o[i].item,
                                                           o[i].img,
                                                           o[i].catname,

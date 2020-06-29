@@ -31,7 +31,7 @@ class _EditAddressState extends State<EditAddress> {
   final GlobalKey<ScaffoldState> _scaffoldkey = new GlobalKey<ScaffoldState>();
 
   void callSnackBar(String msg) {
-    print(msg+"snack msg");
+    print(msg + "snack msg");
     final Snack = new snack.SnackBar(
       content: new Text(msg),
       duration: new Duration(seconds: 3),
@@ -78,15 +78,15 @@ class _EditAddressState extends State<EditAddress> {
     var w = Short.w;
 
     return Scaffold(
-      key:_scaffoldkey,
+      key: _scaffoldkey,
       backgroundColor: Colors.white,
       appBar: appbar,
       bottomNavigationBar: bottomBar(context, 2),
       drawer: Draw(context),
       body: WillPopScope(
         onWillPop: () {
-                             Navigator.push(context, CustomRoute(builder: (context) => UserProfile()));
-
+          Navigator.push(
+              context, CustomRoute(builder: (context) => UserProfile()));
         },
         child: SingleChildScrollView(
           child: Container(
@@ -105,7 +105,8 @@ class _EditAddressState extends State<EditAddress> {
                         child: TextFormField(
                           decoration: InputDecoration(
                             labelStyle: TextStyle(
-                                color: Theme.of(context).primaryColor, fontSize: 19),
+                                color: Theme.of(context).primaryColor,
+                                fontSize: 19),
                             labelText: 'Flat No',
                             // hintText: "Flat No",
                             // hintStyle: TextStyle(
@@ -130,7 +131,8 @@ class _EditAddressState extends State<EditAddress> {
                         child: TextFormField(
                           decoration: InputDecoration(
                             labelStyle: TextStyle(
-                                color: Theme.of(context).primaryColor, fontSize: 19),
+                                color: Theme.of(context).primaryColor,
+                                fontSize: 19),
                             labelText: 'Street',
                             // hintText: "Enter your Email pincode",
                             // hintStyle: TextStyle(
@@ -155,7 +157,8 @@ class _EditAddressState extends State<EditAddress> {
                         child: TextFormField(
                           decoration: InputDecoration(
                             labelStyle: TextStyle(
-                                color: Theme.of(context).primaryColor, fontSize: 19),
+                                color: Theme.of(context).primaryColor,
+                                fontSize: 19),
                             labelText: 'Area',
                             // hintText: "Enter your Mobile Number",
                             // hintStyle: TextStyle(
@@ -180,7 +183,8 @@ class _EditAddressState extends State<EditAddress> {
                         child: TextFormField(
                           decoration: InputDecoration(
                             labelStyle: TextStyle(
-                                color: Theme.of(context).primaryColor, fontSize: 19),
+                                color: Theme.of(context).primaryColor,
+                                fontSize: 19),
                             labelText: 'Pin Code',
                             // hintText: "Enter your Mobile Number",
                             // hintStyle: TextStyle(
@@ -213,11 +217,14 @@ class _EditAddressState extends State<EditAddress> {
                               _isLoading = true;
                             });
                             print(user.address);
-                            user.address = flatNo.text +","+
-                                area.text +","+
-                                street.text +","+
+                            user.address = flatNo.text +
+                                "," +
+                                area.text +
+                                "," +
+                                street.text +
+                                "," +
                                 pincode.text;
-                                                            print(user.phoneNo.toString());
+                            print(user.phoneNo.toString());
 
                             Map<String, dynamic> data = {
                               "phoneno": user.phoneNo,
@@ -244,22 +251,19 @@ class _EditAddressState extends State<EditAddress> {
                                   setState(() {
                                     _isLoading = false;
                                   });
-                                        await Future.delayed(Duration(
-                                                      milliseconds: 3000));
-                                                  Navigator.pushReplacement(
-                                                      context,
-                                                      CustomRoute(
-                                                          builder: (context) =>
-                                                              UserProfile()
-                                                           ,settings:RouteSettings(arguments:user)
-                                                          ));
-                                 
+                                  await Future.delayed(
+                                      Duration(milliseconds: 3000));
+                                  Navigator.pushReplacement(
+                                      context,
+                                      CustomRoute(
+                                          builder: (context) => UserProfile(),
+                                          settings:
+                                              RouteSettings(arguments: user)));
                                 }
                                 if (response.statusCode == 400) {
                                   // callSnackBar("${res["msg"]}");
-                                  callSnackBar(
-                                      "error while editing");
-                                        setState(() {
+                                  callSnackBar("error while editing");
+                                  setState(() {
                                     _isLoading = false;
                                   });
 

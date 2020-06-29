@@ -22,7 +22,7 @@ class _ChangePasswordState extends State<ChangePassword> {
   final GlobalKey<ScaffoldState> _scaffoldkey = new GlobalKey<ScaffoldState>();
 
   void callSnackBar(String msg, int sec) {
-    print(msg+"snack msg");
+    print(msg + "snack msg");
     final Snack = new snack.SnackBar(
       content: new Text(msg),
       duration: new Duration(seconds: sec),
@@ -272,9 +272,11 @@ class _ChangePasswordState extends State<ChangePassword> {
                                                       context,
                                                       CustomRoute(
                                                           builder: (context) =>
-                                                              ManageProfile()
-                                                           ,settings:RouteSettings(arguments:user)
-                                                          ));
+                                                              ManageProfile(),
+                                                          settings:
+                                                              RouteSettings(
+                                                                  arguments:
+                                                                      user)));
 
                                                   // Navigator.pushReplacementNamed(
                                                   //     context, "Main",

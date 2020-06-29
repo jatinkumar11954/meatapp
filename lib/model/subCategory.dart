@@ -4,8 +4,8 @@ import 'package:meatapp/Api/categoryApi.dart';
 
 class SubCategory with ChangeNotifier {
   String catname;
-  int id,pieces;
-  int price,weight;
+  int id, pieces;
+  int price, weight;
   int quantity;
   bool fav;
   String item, desc, img;
@@ -69,16 +69,14 @@ class Products with ChangeNotifier {
     });
     _items[ro][c].quantity -= 1;
 
-
     notifyListeners();
   }
-  
+
   void removeFrmCart(String r, int c) {
     int ro = catList.indexWhere((ele) {
       return ele.categoryName == r;
     });
-    _items[ro][c].quantity=0;
-
+    _items[ro][c].quantity = 0;
 
     notifyListeners();
   }

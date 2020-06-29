@@ -56,8 +56,7 @@ class _DescriptionState extends State<Description> {
             top: 10,
             child: SizedBox(
               width: w * 0.83,
-              child: 
-              Text("Desc"),
+              child: Text("Desc"),
               // Text(product[ro][i].item), testing uncomment
             )),
       ]),
@@ -76,10 +75,8 @@ class _DescriptionState extends State<Description> {
         key: _scaffoldKey,
         appBar: appbar,
         drawer: Draw(context),
-        bottomNavigationBar: bottomBar(context, 2),//testing remove afterwards
-        body: 
-        ListView(
-          
+        bottomNavigationBar: bottomBar(context, 2), //testing remove afterwards
+        body: ListView(
           children: <Widget>[
             Center(
               child: Hero(
@@ -149,24 +146,26 @@ class _DescriptionState extends State<Description> {
             ),
             Divider(thickness: 4),
             SizedBox(height: 30),
-            isLogin? Container(): Center(
-              child: SizedBox(
-                width: w * 0.95,
-                child: RaisedButton(
-                    color: Theme.of(context).primaryColor,
-                    onPressed: () => print("login button clicked"),
-                    child: Row(
-                      children: <Widget>[
-                        Icon(Icons.arrow_forward, color: Colors.white),
-                        Text(" LOGIN/SIGN UP TO CHECKOUT",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: h * 0.02,
-                            )),
-                      ],
-                    )),
-              ),
-            )
+            isLogin
+                ? Container()
+                : Center(
+                    child: SizedBox(
+                      width: w * 0.95,
+                      child: RaisedButton(
+                          color: Theme.of(context).primaryColor,
+                          onPressed: () => print("login button clicked"),
+                          child: Row(
+                            children: <Widget>[
+                              Icon(Icons.arrow_forward, color: Colors.white),
+                              Text(" LOGIN/SIGN UP TO CHECKOUT",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: h * 0.02,
+                                  )),
+                            ],
+                          )),
+                    ),
+                  )
           ],
         ));
   }

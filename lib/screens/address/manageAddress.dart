@@ -88,9 +88,9 @@ class _ManageAddressState extends State<ManageAddress> {
                                                 context,
                                                 CustomRoute(
                                                     builder: (context) =>
-                                                       EditAddress()
-                                                    ,settings:RouteSettings(arguments:user)
-                                                    ));
+                                                        EditAddress(),
+                                                    settings: RouteSettings(
+                                                        arguments: user)));
                                           },
                                         ),
                                       ),
@@ -120,7 +120,7 @@ class _ManageAddressState extends State<ManageAddress> {
                   ],
                 ),
                 Padding(
-                  padding:  EdgeInsets.only(top:h*0.5),
+                  padding: EdgeInsets.only(top: h * 0.5),
                   child: Container(
                     width: w * 0.82,
                     child: RaisedButton(
