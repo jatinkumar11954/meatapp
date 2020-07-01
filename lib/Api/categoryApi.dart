@@ -1,4 +1,7 @@
 import 'dart:convert';
+import 'package:meatapp/db/SqlitePersistence.dart';
+import 'package:meatapp/db/Storage.dart';
+import 'package:meatapp/model/cart.dart';
 import 'package:meatapp/model/subCategory.dart';
 
 import 'package:flutter/material.dart';
@@ -11,10 +14,21 @@ const headers = {'Content-Type': 'application/json'};
 List<Category> catList;
 List<SubCategory> subCatList;
 List<Scroll> scrollList;
+List<CartItem> _it;
+
+Storage _repo;
+Storage get repo => _repo;
 
 List<List<SubCategory>> tab = List<List<SubCategory>>();
 Future<List<Category>> getCategories(
-    GlobalKey<ScaffoldState> scaffoldkey) async {
+    GlobalKey<ScaffoldState> scaffoldkey,dynamic cart) async {
+  _repo = await Storage.createFrom(
+    future: SqlitePersistence.create(),
+  );
+  print("after create form" + _repo.toString());
+  _it = await _repo.retriveCart();
+  cart.setData(_it);
+
   try {
     response = await hp.get("${Short.baseUrl}/getcategory", headers: headers);
     subResponse =
@@ -24,16 +38,16 @@ Future<List<Category>> getCategories(
       Map catJson = json.decode(response.body);
       Map subCatJson = json.decode(subResponse.body);
       if (response.statusCode == 200) {
-        print("inside response status");
+        // print("inside response status");
         catList = (catJson['data'] as List)
             .map((item) => new Category.fromJson(item))
             .toList();
-        print("this is category length ${catList.length}");
+        // print("this is category length ${catList.length}");
         for (int t = 0; t < catList.length; t++) print(catList[t].categoryName);
         subCatList = (subCatJson['data'] as List)
             .map((item) => new SubCategory.fromJson(item))
             .toList();
-        print("this is category length ${subCatList.length}");
+        // print("this is category length ${subCatList.length}");
         for (int t = 0; t < subCatList.length; t++) print(subCatList[t].item);
         subCatList.sort(((a, b) => a.catname.compareTo(b.catname)));
         getSubCategory();
@@ -60,14 +74,14 @@ getSubCategory() {
 
   for (int i = 0; i < catList.length; i++) {
     for (int j = 0; j < subCatList.length; j++) {
-      print("this is j  $j");
+      // print("this is j  $j");
 
       if (catList[i].categoryName == subCatList[j].catname) {
         if (tab.length == 0) {
-          print("one sub added into tab");
+          // print("one sub added into tab");
           tab.add([subCatList[j]]);
         } else if (tab.length <= catList.length) {
-          print("into tab length else if");
+          // print("into tab length else if");
           for (int k = 0; k < tab.length && tab.length < catList.length; k++) {
             if (tab[k][0].catname != subCatList[j].catname) {
               whole = true;
@@ -79,7 +93,7 @@ getSubCategory() {
             tab.add([subCatList[j]]);
           }
         }
-        print("this in the else if of adding subcatergory");
+        // print("this in the else if of adding subcatergory");
       }
     }
   }
@@ -103,18 +117,15 @@ getSubCategory() {
       // print("inside  for j ");
 
       if (tab[i][0].catname == subCatList[j].catname) {
-        print("cat names are same");
-
         for (int l = 0; l < tab[i].length; l++) {
           if (tab[i][l].id == subCatList[j].id) {
-            print("$l value inc");
+            // print("$l value inc");
 
             inc = l;
           }
         }
-        print(inc.toString());
         if (tab[i][inc].id != subCatList[j].id) {
-          print("inside  for inc ");
+          // print("inside  for inc ");
 
           tab[i].insert(inc + 1, subCatList[j]);
         }
@@ -123,12 +134,12 @@ getSubCategory() {
   }
   print("after tab has added");
 
-  for (int i = 0; i < tab.length; i++) {
-    for (int j = 0; j < tab[i].length; j++) {
-      print("${tab.length} $i $j");
-      print(tab[i][j].catname);
-    }
-  }
+  // for (int i = 0; i < tab.length; i++) {
+  //   for (int j = 0; j < tab[i].length; j++) {
+  //     print("${tab.length} $i $j");
+  //     print(tab[i][j].catname);
+  //   }
+  // }
   return tab;
 }
 

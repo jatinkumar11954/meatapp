@@ -1,12 +1,10 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:meatapp/adjust/icons.dart';
-import 'package:meatapp/adjust/short.dart';
 import 'package:meatapp/model/bottom.dart';
 import 'package:meatapp/screens/Description.dart';
 import 'package:meatapp/screens/FirestScreen.dart';
 import 'package:meatapp/screens/cart_screen.dart';
-import 'package:meatapp/screens/profile/UserProfile.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'custom_route.dart';

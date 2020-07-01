@@ -13,11 +13,27 @@ class SqlitePersistence {
       SqlitePersistence._(await database());
 
   static Future<Database> database() async {
+    print("database is opende");
+    //   return openDatabase(
+    //   join(await getDatabasesPath(), DatabaseName),
+    //   onCreate: (db, version) {
+    //     return db.execute(
+    //       '''CREATE TABLE $MoviesWatchedTableName(
+    //         id INTEGER PRIMARY KEY,
+    //         imdbId INTEGER,
+    //         name STRING,
+    //         imageUrl STRING,
+    //         year STRING,
+    //         watchedOn INTEGER
+    //       )''',
+    //     );
+    //   },
+    //   version: 1,
+    // );
     return openDatabase(
       join(await getDatabasesPath(), DatabaseName),
       onCreate: (db, version) {
-        return db.execute(
-          '''CREATE TABLE $TableName(
+        return db.execute('''CREATE TABLE $TableName(
                id INTEGER PRIMARY KEY, 
                 title STRING, 
                 img STRING, 
@@ -25,9 +41,8 @@ class SqlitePersistence {
                 column INTEGER,
                  quantity INTEGER,
                   price INTEGER, 
-                  weight INTEGER,
-            )''',
-        );
+                  weight INTEGER
+            )''');
       },
       version: 1,
     );
@@ -40,14 +55,31 @@ class SqlitePersistence {
   // }
 
   Future<List<Map<String, dynamic>>> getCartfromDB() async {
+    print("calling getcart inside db");
     final ret = await db.rawQuery('SELECT * FROM $TableName ');
 
     return ret;
   }
 
   void createUpdate(Map<String, dynamic> object) async {
+    print("inside create update" + object["title"]);
     await db.insert(TableName, object,
         conflictAlgorithm: ConflictAlgorithm.replace);
+  }
+
+  void deletefrmTable(int cartId) async {
+    await db.rawDelete("DELETE FROM $TableName WHERE id==$cartId");
+  }
+
+  void updateTable(int cartQuantity, int cartId) async {
+    print("updating the table inside sql");
+    await db.rawUpdate('''UPDATE $TableName
+SET quantity = $cartQuantity
+WHERE id==$cartId''');
+  }
+
+  Future<void> clearTable() async {
+    await db.delete(TableName);
   }
 
   Future<void> removeObject(int key) async {

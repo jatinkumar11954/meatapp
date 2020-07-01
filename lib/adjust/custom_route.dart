@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/navigator.dart';
 
 class CustomRoute<T> extends MaterialPageRoute<T> {
   CustomRoute({

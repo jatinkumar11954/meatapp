@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -102,6 +103,7 @@ Widget Carousel(BuildContext context, GlobalKey<ScaffoldState> scaffoldkey) {
             pauseAutoPlayOnTouch: Duration(seconds: 5),
             height: MediaQuery.of(context).size.height / 4,
             items: carousel.data.map((i) {
+
               return Builder(
                 builder: (BuildContext context) {
                   return Container(
@@ -109,22 +111,21 @@ Widget Carousel(BuildContext context, GlobalKey<ScaffoldState> scaffoldkey) {
                       margin: EdgeInsets.symmetric(horizontal: 10.0),
                       decoration: BoxDecoration(color: Colors.grey[300]),
                       child: GestureDetector(
-                          child: Image.network(
-                            i.img,
+                          child: CachedNetworkImage(
+                            imageUrl: 
+                            "http://via.placeholder.com/350x200",//testing
+                            // i.img,
                             fit: BoxFit.fill,
-                            loadingBuilder: (BuildContext context, Widget child,
-                                ImageChunkEvent loadingProgress) {
-                              if (loadingProgress == null) return child;
-                              return Shimmer.fromColors(
-                                  baseColor: Colors.grey[400],
-                                  highlightColor: Colors.white,
-                                  child: Container(
-                                     width: MediaQuery.of(context).size.width*0.7,
-                                              height: MediaQuery.of(context).size.width*0.7,
-                                    color: Colors.grey,
-                                  ));
-                            },
-                            height: MediaQuery.of(context).size.width,
+                            placeholder: (context, url) => Shimmer.fromColors(
+                                baseColor: Colors.grey[400],
+                                highlightColor: Colors.white,
+                                child: Container(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.7,
+                                  height:
+                                      MediaQuery.of(context).size.width * 0.7,
+                                  color: Colors.grey,
+                                )),
                           ),
                           onTap: () {
                             // callSnackBar("clicked"+ i+"image",2);
@@ -144,9 +145,8 @@ Widget Carousel(BuildContext context, GlobalKey<ScaffoldState> scaffoldkey) {
                 highlightColor: Colors.white,
                 child: Center(
                   child: Container(
-                    width: MediaQuery.of(context).size.width*0.75,
-                                                height: MediaQuery.of(context).size.width*0.5,
-
+                    width: MediaQuery.of(context).size.width * 0.75,
+                    height: MediaQuery.of(context).size.width * 0.5,
                     color: Colors.grey,
                   ),
                 )));
@@ -171,10 +171,10 @@ Widget LoginBftrAnim(BuildContext context, Function loginFalse, UniqueKey k1) {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Padding(
-                padding:  EdgeInsets.only(
-            bottom: Short.h * 0.015,
-            top: Short.h * 0.05,
-          ),
+                padding: EdgeInsets.only(
+                  bottom: Short.h * 0.015,
+                  top: Short.h * 0.05,
+                ),
                 child: Center(
                     child: FlatButton(
                   onPressed: loginFalse,
@@ -187,31 +187,31 @@ Widget LoginBftrAnim(BuildContext context, Function loginFalse, UniqueKey k1) {
                 )),
               ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                // Expanded(
-                //   child: new Container(
-                //       margin: const EdgeInsets.only(left: 10.0, right: 20.0),
-                //       child: Divider(
-                //         color: Colors.grey,
-                //         height: 36,
-                //       )),
-                // ),
-                Material(
-                    color: Colors.white,
-                    child: Text(
-                      "or",
-                      style: TextStyle(color: Colors.grey, fontSize: 19),
-                    )),
-                // Expanded(
-                //   child: new Container(
-                //       margin: const EdgeInsets.only(left: 20.0, right: 10.0),
-                //       child: Divider(
-                //         color: Colors.grey,
-                //         height: 36,
-                //       )),
-                // ),
-              ]),
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    // Expanded(
+                    //   child: new Container(
+                    //       margin: const EdgeInsets.only(left: 10.0, right: 20.0),
+                    //       child: Divider(
+                    //         color: Colors.grey,
+                    //         height: 36,
+                    //       )),
+                    // ),
+                    Material(
+                        color: Colors.white,
+                        child: Text(
+                          "or",
+                          style: TextStyle(color: Colors.grey, fontSize: 19),
+                        )),
+                    // Expanded(
+                    //   child: new Container(
+                    //       margin: const EdgeInsets.only(left: 20.0, right: 10.0),
+                    //       child: Divider(
+                    //         color: Colors.grey,
+                    //         height: 36,
+                    //       )),
+                    // ),
+                  ]),
               Center(
                   child: Padding(
                 padding: EdgeInsets.only(
@@ -232,9 +232,12 @@ Widget LoginBftrAnim(BuildContext context, Function loginFalse, UniqueKey k1) {
               Padding(
                 padding: EdgeInsets.only(
                     top: Short.h * 0.02, bottom: Short.h * 0.03),
-                child:
-                    Container(
-                       margin: const EdgeInsets.only(left: 20.0, right: 20.0),child: Divider(color: Colors.grey[300],thickness: 2, height: Short.h * 0.005)),
+                child: Container(
+                    margin: const EdgeInsets.only(left: 20.0, right: 20.0),
+                    child: Divider(
+                        color: Colors.grey[300],
+                        thickness: 2,
+                        height: Short.h * 0.005)),
               ),
               Row(
                   crossAxisAlignment: CrossAxisAlignment.center,

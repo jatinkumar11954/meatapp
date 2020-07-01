@@ -152,6 +152,7 @@ class _DescriptionState extends State<Description> {
                     child: SizedBox(
                       width: w * 0.95,
                       child: RaisedButton(
+                        
                           color: Theme.of(context).primaryColor,
                           onPressed: () => print("login button clicked"),
                           child: Row(

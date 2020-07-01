@@ -65,6 +65,7 @@ class _FirstScreenState extends State<FirstScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final cart = Provider.of<Cart>(context,listen: false);
 //         var i = ModalRoute.of(context).settings.arguments;
 // print(i.toString());
     Short().init(context);
@@ -112,50 +113,13 @@ class _FirstScreenState extends State<FirstScreen> {
         slivers: <Widget>[
           SliverList(
               delegate: SliverChildListDelegate([
-            Padding(
-              padding: EdgeInsets.only(left: 18.0, top: 4, bottom: 5),
-              child: Row(
-                children: <Widget>[
-                  Icon(
-                    Icons.location_on,
-                    color: Theme.of(context).primaryColor,
-                    size: 35,
-                  ),
-                  DropdownButton<String>(
-                    iconEnabledColor: Colors.grey,
-                    underline: Container(),
-                    items: _dropList
-                        .map((drop) => DropdownMenuItem<String>(
-                              child: Text(
-                                drop,
-                                style: TextStyle(
-                                  color: Colors.black,
-                                ),
-                              ),
-                              value: drop,
-                            ))
-                        .toList(),
-                    onChanged: (String value) {
-                      setState(() => _selected = value);
-                    },
-                    hint: Text(
-                      _selected,
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 18,
-                          fontWeight: FontWeight.w500),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            CachedNetworkImage(
-              imageUrl: 'http://via.placeholder.com/350x200',
-              placeholder: (context, url) => const CircularProgressIndicator(),
-              errorWidget: (context, url, error) => const Icon(Icons.error),
-              fadeOutDuration: const Duration(seconds: 1),
-              fadeInDuration: const Duration(seconds: 3),
-            ),
+            // CachedNetworkImage(
+            //   imageUrl: 'http://via.placeholder.com/350x200',
+            //   placeholder: (context, url) => const CircularProgressIndicator(),
+            //   errorWidget: (context, url, error) => const Icon(Icons.error),
+            //   fadeOutDuration: const Duration(seconds: 1),
+            //   fadeInDuration: const Duration(seconds: 3),
+            // ),
             Carousel(context, firstscreen),
             SizedBox(height: h * 0.05),
             Center(
@@ -174,7 +138,7 @@ class _FirstScreenState extends State<FirstScreen> {
             ),
           ])),
           FutureBuilder<List<Category>>(
-              future: getCategories(firstscreen),
+              future: getCategories(firstscreen,cart),
               builder: (context, category) {
                 if (category.hasData) {
                   print("category has data");
@@ -211,34 +175,32 @@ class _FirstScreenState extends State<FirstScreen> {
                                         child: GridTile(
                                           child: Hero(
                                             tag: i,
-                                            child: Image.network(
-                                              category.data[i].img,
+                                            child: CachedNetworkImage(
+                                              imageUrl:
+                                              "http://via.placeholder.com/350x200",
+                                              //  category.data[i].img,
                                               fit: BoxFit.fill,
-                                              loadingBuilder:
-                                                  (BuildContext context,
-                                                      Widget child,
-                                                      ImageChunkEvent
-                                                          loadingProgress) {
-                                                if (loadingProgress == null)
-                                                  return child;
-                                                return Shimmer.fromColors(
-                                                    loop: 2,
-                                                    baseColor: Colors.grey[400],
-                                                    highlightColor:
-                                                        Colors.white12,
-                                                    child: Container(
-                                                      height: h * 0.20,
-                                                      width: w * 0.45,
-                                                      color: Colors.grey,
-                                                    ));
-                                                // Center(
-                                                //           child: CircularProgressIndicator(
-                                                //               // value: loadingProgress.expectedTotalBytes != null
-                                                //               //     ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes
-                                                //               //     : null,
-                                                //               ),
-                                                //         );
-                                              },
+                                              placeholder: (context, url) =>
+                                                  Shimmer.fromColors(
+                                                      loop: 2,
+                                                      baseColor:
+                                                          Colors.grey[400],
+                                                      highlightColor:
+                                                          Colors.white12,
+                                                      child: Container(
+                                                        height: h * 0.20,
+                                                        width: w * 0.45,
+                                                        color: Colors.grey,
+                                                      )),
+                                              errorWidget: (_, str, dynamic) =>
+                                                  Center(
+                                                child: Icon(Icons.error),
+                                              ),
+
+                                              //               // value: loadingProgress.expectedTotalBytes != null
+                                              //               //     ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes
+                                              //               //     : null,
+                                              //
                                             ),
                                           ),
                                         ),
@@ -299,21 +261,34 @@ class _FirstScreenState extends State<FirstScreen> {
               [
                 //  SizedBox(height:h*0.0001),
                 SizedBox(
-                    width: w,
-                    child: Image.network(
-                      "http://carigarifurniture.com/product_images/h/img_6539__14221_thumb.jpg",
-                      loadingBuilder: (BuildContext context, Widget child,
-                          ImageChunkEvent loadingProgress) {
-                        if (loadingProgress == null) return child;
-                        return Center(
-                          child: CircularProgressIndicator(
-                              // value: loadingProgress.expectedTotalBytes != null
-                              //     ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes
-                              //     : null,
-                              ),
-                        );
-                      },
-                    ))
+                  width: w,
+                  child: CachedNetworkImage(
+                      imageUrl:
+                                                                    "http://via.placeholder.com/350x200",
+
+                          // "http://carigarifurniture.com/product_images/h/img_6539__14221_thumb.jpg",//testing
+                      placeholder: (context, url) => Center(
+                            child: CircularProgressIndicator(
+                                // value: loadingProgress.expectedTotalBytes != null
+                                //     ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes
+                                //     : null,
+                                ),
+                          )),
+                  // Image.network(
+                  //   "http://carigarifurniture.com/product_images/h/img_6539__14221_thumb.jpg",
+                  //   loadingBuilder: (BuildContext context, Widget child,
+                  //       ImageChunkEvent loadingProgress) {
+                  //     if (loadingProgress == null) return child;
+                  //     return Center(
+                  //       child: CircularProgressIndicator(
+                  //           // value: loadingProgress.expectedTotalBytes != null
+                  //           //     ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes
+                  //           //     : null,
+                  //           ),
+                  //     );
+                  //   },
+                  // )
+                )
               ],
             ),
           ),
@@ -330,7 +305,7 @@ class _FirstScreenState extends State<FirstScreen> {
                 context, CustomRoute(builder: (c) => CartScreen())),
             child: Badge(
               child: ch,
-              value: cart.itemCount.toString(),
+              value: cart?.itemCount.toString(),
               color: Colors.black,
             ),
           ),

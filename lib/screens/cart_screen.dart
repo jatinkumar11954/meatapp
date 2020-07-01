@@ -24,15 +24,8 @@ class CartScreen extends StatelessWidget {
     3: "Chicken65",
   };
 
-  void test() async {
-    SharedPreferences s = await SharedPreferences.getInstance();
-    List<String> sL = s.getStringList("cart");
-    print(sL.toString());
-  }
-
   @override
   Widget build(BuildContext context) {
-    test();
     final cart = Provider.of<Cart>(context);
     final productProvider = Provider.of<Products>(context);
     return Scaffold(
@@ -77,7 +70,7 @@ class CartScreen extends StatelessWidget {
             child: ListView.builder(
                 itemCount: cart.itemCount,
                 itemBuilder: (_, i) {
-                  print(cart.items[i]);
+                  // print(cart.items[i]);
 
                   return Card(
                       margin: EdgeInsets.symmetric(
@@ -91,7 +84,9 @@ class CartScreen extends StatelessWidget {
                               radius:
                                   cart.items[i].title.length >= 15 ? 30 : 25,
                               backgroundImage: CachedNetworkImageProvider(
-                                cart.items[i].img,
+                                                                              "http://via.placeholder.com/350x200",//testing
+
+                                // cart.items[i].img,
                               ),
                             ),
                           ]),
@@ -143,22 +138,23 @@ class CartScreen extends StatelessWidget {
                                           productProvider.subQuant(
                                               cart.items[i].catName,
                                               cart.items[i].column);
-                                          cart.removeItem(cart.items[i].id);
+                                          cart.removeItem(cart.items[i]);
 
                                           print(cart.items.length);
                                         }
                                         productProvider.subQuant(
                                             cart.items[i].catName,
                                             cart.items[i].column);
-                                        cart.reduceQuant(
-                                            cart.items[i].id,
-                                            cart.items[i].price,
-                                            cart.items[i].quantity,
-                                            cart.items[i].title,
-                                            cart.items[i].img,
-                                            cart.items[i].catName,
-                                            cart.items[i].weight,
-                                            cart.items[i].column);
+                                                cart.reduceQuant(CartItem(
+                                          id: cart.items[i].id,
+                                          price: cart.items[i].price,
+                                          quantity: cart.items[i].quantity,
+                                          title: cart.items[i].title,
+                                          img: cart.items[i].img,
+                                          catName: cart.items[i].catName,
+                                          weight: cart.items[i].weight,
+                                          column: cart.items[i].column));
+                                 
                                       }),
                                   Text(cart.items[i].quantity.toString(),
                                       style: TextStyle(
@@ -173,15 +169,15 @@ class CartScreen extends StatelessWidget {
                                       productProvider.addQuant(
                                           cart.items[i].catName,
                                           cart.items[i].column);
-                                      cart.addItem(
-                                          cart.items[i].id,
-                                          cart.items[i].price,
-                                          cart.items[i].quantity,
-                                          cart.items[i].title,
-                                          cart.items[i].img,
-                                          cart.items[i].catName,
-                                          cart.items[i].weight,
-                                          cart.items[i].column);
+                                      cart.addItem(CartItem(
+                                          id: cart.items[i].id,
+                                          price: cart.items[i].price,
+                                          quantity: cart.items[i].quantity,
+                                          title: cart.items[i].title,
+                                          img: cart.items[i].img,
+                                          catName: cart.items[i].catName,
+                                          weight: cart.items[i].weight,
+                                          column: cart.items[i].column));
                                     },
                                   ),
                                   IconButton(
@@ -191,7 +187,8 @@ class CartScreen extends StatelessWidget {
                                       productProvider.removeFrmCart(
                                           cart.items[i].catName,
                                           cart.items[i].column);
-                                      cart.removeItem(cart.items[i].id);
+                                      // cart.removeAll();///testing
+                                      cart.removeItem(cart.items[i]);
                                     },
                                   ),
                                 ],

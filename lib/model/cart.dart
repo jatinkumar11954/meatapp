@@ -2,9 +2,17 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:intl/intl.dart';
+import 'package:meatapp/Api/categoryApi.dart';
+import 'package:meatapp/db/Storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class CartItem {
+abstract class MapConvertible {
+  Map<dynamic, dynamic> toMap();
+
+  MapConvertible fromMap(Map<dynamic, dynamic> map);
+}
+
+class CartItem extends MapConvertible {
   final int id;
 
   final String title;
@@ -12,39 +20,54 @@ class CartItem {
 
   final String catName;
   final int column;
-  final int quantity;
+  int quantity;
   final int price;
   final int weight;
 
   CartItem({
-   this.id,
-   this.img,
-   this.title,
-   this.catName,
-   this.column,
-   this.quantity,
-   this.price,
+    this.id,
+    this.img,
+    this.title,
+    this.catName,
+    this.column,
+    this.quantity,
+    this.price,
     this.weight,
   });
   @override
-  CartItem fromMap(Map map) {
+  CartItem fromMap(Map<dynamic, dynamic> map) {
     return CartItem(
-      id: map[id],
-      title: map[title],
-      img: map[img],
-      catName: map[catName],
-      column: map[column],
-      quantity: map[quantity],
-      price: map[price],
-      weight: map[weight],
+      id: map["id"],
+      title: map["title"],
+      img: map["img"],
+      catName: map["catName"],
+      column: map["column"],
+      quantity: map["quantity"],
+      price: map["price"],
+      weight: map["weight"],
     );
   }
+
+  // @override
+  // Map<String, dynamic> toMap(CartItem obj) {
+  //   print("inside toMap of cart ITem class "+obj.title);
+  //   return {
+  //     "id": obj.id,
+  //     "title": obj.title,
+  //     "img": obj.img,
+  //     "catName": obj.catName,
+  //     "column": obj.column,
+  //     "quantity": obj.quantity,
+  //     "price": obj.price,
+  //     "weight": obj.weight
+  //   };
+  // }
 
   @override
   Map<String, dynamic> toMap() {
     return {
       "id": id,
-      " title": title,
+      "title": title,
       "img": img,
       "catName": catName,
       "column": column,
@@ -57,86 +80,125 @@ class CartItem {
 
 class Cart with ChangeNotifier {
   List<CartItem> _items = [];
-  Map<String, CartItem> string;
 
   List<CartItem> get items {
     return [..._items];
   }
 
+  setData(List<CartItem> i) {
+    print("inside set data of cart");
+    i == null ? _items = [] : _items.addAll(i);
+    notifyListeners();
+  }
+
   int get itemCount {
-    // print("this is item length ${_items.length}");
-    //     print("this is item length ${_items.length}");
+    if (_items == null) return 0;
 
     return _items.length;
   }
 
   double get totalAmount {
     var total = 0.0;
+    if (_items == null) return total;
+
     _items.forEach((cartItem) {
       total += cartItem.price * cartItem.quantity;
     });
     return total;
   }
 
-  void addItem(int id, int price, int quan, String title, String img,
-      String catName, int weight, int column) async {
-    if (_items.contains(id.toString())) {
-      // change quantity...
-      print("into update cart");
+  void refresh() {
+    notifyListeners();
+  }
 
-      _items.replaceRange(_items.indexOf(_items.firstWhere((e) => e.id == id)),
-          _items.indexOf(_items.firstWhere((e) => e.id == id)), [
-        CartItem(
-            id: id,
-            img: img,
-            title: title,
-            price: price,
-            quantity: quan + 1,
-            catName: catName,
-            weight: weight,
-            column: column)
-      ]);
+  bool isItem(CartItem _item) {
+    bool _bool = false;
+    if (_items.isNotEmpty) {
+      _items.forEach((e) {
+        if (e.title == _item.title)
+          _bool = true;
+        else
+          _bool = false;
+      });
+      return _bool;
+    }
+  }
+
+  int indexOF(CartItem _item) {
+    if (_items.isNotEmpty) {
+      int ind = _items.indexWhere((e) {
+        return e.title == _item.title;
+      });
+
+      if (ind != -1) return ind;
+    }
+  }
+
+  void addItem(CartItem item) async {
+    if (_items.isNotEmpty) {
+      if (isItem(item)) {
+        print("increasing the quantity cart");
+
+        _items[indexOF(item)].quantity = item.quantity + 1;
+
+        repo.addToCart(_items[_items.indexWhere((e) {
+        return e.title == item.title;
+      })]);
+      } else {
+        print("else if item is not prest in else");
+        bool _checkAdd = false;
+
+        _items.forEach((e) {
+          if (e.title == item.title) {
+            _checkAdd = true;
+          }
+        });
+        if (_checkAdd) {
+          print("updating the db and quant incng");
+          _items[indexOF(item)].quantity = item.quantity + 1;
+          repo.updateCart(item);
+        } else {
+          _items.add(item);
+         repo.addToCart(_items[_items.indexWhere((e) {
+        return e.title == item.title;
+      })]);
+        }
+      }
     } else {
-      print("into add cart");
+      print("into add cart if null");
 
-      _items.add(
-        CartItem(
-            id: id,
-            img: img,
-            title: title,
-            price: price,
-            quantity: 1,
-            catName: catName,
-            weight: weight,
-            column: column),
-      );
+      _items.add(item);
+      repo.addToCart(_items[_items?.indexOf(item)]);
     }
     notifyListeners();
   }
 
-  void reduceQuant(int id, int price, int quan, String title, String img,
-      String catName, int weight, int column) {
-    if (_items.contains(id.toString())) {
-      // change quantity...
-      print("into update cart");
-      _items.replaceRange(_items.indexOf(_items.firstWhere((e) => e.id == id)),
-          _items.indexOf(_items.firstWhere((e) => e.id == id)), [
-        CartItem(
-            id: id,
-            img: img,
-            title: title,
-            price: price,
-            quantity: quan - 1,
-            catName: catName,
-            weight: weight,
-            column: column)
-      ]);
+  void reduceQuant(CartItem item) {
+    bool _checkSub = false;
+    if (_items.isNotEmpty) {
+      if (_items[indexOF(item)].quantity == 1) {
+        print("quantity is 1");
+        _checkSub = true;
+      }
+
+      _checkSub
+          ? removeItem(item)
+          : _items[indexOF(item)].quantity = item.quantity - 1;
     }
+    repo.addToCart(_items[_items?.indexOf(item)]);
+
     notifyListeners();
   }
 
-  void removeItem(int productId) {
-    _items.remove(productId.toString());
+  void removeItem(CartItem item) {
+    _items.remove(item);
+    repo.deleteFromCart(item);
+
+    notifyListeners();
+  }
+
+  void removeAll() async {
+    // await repo.removeAllfromTable();
     notifyListeners();
   }
 

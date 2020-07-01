@@ -21,7 +21,7 @@ class TabScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final product = Provider.of<Products>(context, listen: false).items;
     final productProvider = Provider.of<Products>(context);
-    final cart = Provider.of<Cart>(context);
+    final cart = Provider.of<Cart>(context, listen: false);
 
     final GlobalKey<ScaffoldState> _scaffoldKey =
         new GlobalKey<ScaffoldState>();
@@ -107,7 +107,10 @@ class TabScreen extends StatelessWidget {
                           child: GridTile(
                             child: CachedNetworkImage(
                               fit: BoxFit.fill,
-                              imageUrl: o[i].img,
+                              imageUrl:
+                                                                            "http://via.placeholder.com/350x200",//testing
+
+                              //  o[i].img,
                               width: w * 0.7,
                               placeholder: (c, s) => Shimmer.fromColors(
                                   baseColor: Colors.grey[400],
@@ -206,26 +209,42 @@ class TabScreen extends StatelessWidget {
                                                           onPressed: () {
                                                             if (o[i].quantity ==
                                                                 1) {
-                                                              cart.removeItem(
-                                                                  o[i].id);
+                                                              cart.removeItem(CartItem(
+                                                                  id: o[i].id,
+                                                                  price: o[i]
+                                                                      .price,
+                                                                  quantity: o[i]
+                                                                      .quantity,
+                                                                  title:
+                                                                      o[i].item,
+                                                                  img: o[i].img,
+                                                                  catName: o[i]
+                                                                      .catname,
+                                                                  weight: o[i]
+                                                                      .weight,
+                                                                  column: i));
 
-                                                              print(cart.items
-                                                                  .length);
+                                                              // print(cart.items
+                                                              //     .length);
                                                             }
-
+                                                             cart.reduceQuant(CartItem(
+                                                                  id: o[i].id,
+                                                                  price: o[i]
+                                                                      .price,
+                                                                  quantity: o[i]
+                                                                      .quantity,
+                                                                  title:
+                                                                      o[i].item,
+                                                                  img: o[i].img,
+                                                                  catName: o[i]
+                                                                      .catname,
+                                                                  weight: o[i]
+                                                                      .weight,
+                                                                  column: i));
                                                             productProvider
                                                                 .subQuant(
                                                                     o[i].catname,
                                                                     i);
-                                                            cart.reduceQuant(
-                                                                o[i].id,
-                                                                o[i].price,
-                                                                o[i].quantity,
-                                                                o[i].item,
-                                                                o[i].img,
-                                                                o[i].catname,
-                                                                o[i].weight,
-                                                                i);
                                                           }),
                                                       Text(
                                                           o[i]
@@ -244,19 +263,25 @@ class TabScreen extends StatelessWidget {
                                                                       context)
                                                                   .primaryColor),
                                                           onPressed: () {
+                                                              cart.addItem(CartItem(
+                                                                id: o[i].id,
+                                                                price:
+                                                                    o[i].price,
+                                                                quantity: o[i]
+                                                                    .quantity,
+                                                                title:
+                                                                    o[i].item,
+                                                                img: o[i].img,
+                                                                catName: o[i]
+                                                                    .catname,
+                                                                weight:
+                                                                    o[i].weight,
+                                                                column: i));
                                                             productProvider
                                                                 .addQuant(
                                                                     o[i].catname,
                                                                     i);
-                                                            cart.addItem(
-                                                                o[i].id,
-                                                                o[i].price,
-                                                                o[i].quantity,
-                                                                o[i].item,
-                                                                o[i].img,
-                                                                o[i].catname,
-                                                                o[i].weight,
-                                                                i);
+                                                          
                                                           }),
                                                     ],
                                                   )
@@ -284,15 +309,16 @@ class TabScreen extends StatelessWidget {
                                                       ),
                                                     ),
                                                     onTap: () {
-                                                      cart.addItem(
-                                                          o[i].id,
-                                                          o[i].price,
-                                                          o[i].quantity,
-                                                          o[i].item,
-                                                          o[i].img,
-                                                          o[i].catname,
-                                                          o[i].weight,
-                                                          i);
+                                                      cart.addItem(CartItem(
+                                                          id: o[i].id,
+                                                          price: o[i].price,
+                                                          quantity:
+                                                              1,
+                                                          title: o[i].item,
+                                                          img: o[i].img,
+                                                          catName: o[i].catname,
+                                                          weight: o[i].weight,
+                                                          column: i));
                                                       productProvider.addQuant(
                                                           o[i].catname, i);
                                                     },
