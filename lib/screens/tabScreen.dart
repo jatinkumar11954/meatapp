@@ -24,6 +24,21 @@ class TabScreen extends StatelessWidget {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
+    final _selectedItemColor = Colors.white;
+    final _unselectedItemColor = Theme.of(context).primaryColor;
+    final _selectedBgColor = Theme.of(context).primaryColor;
+    final _unselectedBgColor = Colors.white;
+    int _selectedIndex = Provider.of<Bottom>(context).index == null
+        ? 0
+        : Provider.of<Bottom>(context).index;
+
+    Color _getBgColor(int index) =>
+        _selectedIndex == index ? _selectedBgColor : _unselectedBgColor;
+
+    Color _getItemColor(int index) =>
+        _selectedIndex == index ? _selectedItemColor : _unselectedItemColor;
+
+   
     final product = Provider.of<Products>(context, listen: false).items;
     final productProvider = Provider.of<Products>(context);
 
@@ -87,20 +102,21 @@ class TabScreen extends StatelessWidget {
           drawer: Draw(context),
           body: Center(
             child: TabBarView(
-                children: product.map((o) { return SwipeGestureRecognizer(
+                children: product.map((o) {
+              return SwipeGestureRecognizer(
                 onSwipeLeft: () {
                   print("left");
-                 DefaultTabController.of(context).index < catList.length-1
-                      ? DefaultTabController.of(context).animateTo(
-                          DefaultTabController.of(context).index + 1)
+                  DefaultTabController.of(context).index < catList.length - 1
+                      ? DefaultTabController.of(context)
+                          .animateTo(DefaultTabController.of(context).index + 1)
                       : print("less than catlist-1 =3");
                 },
                 onSwipeRight: () {
                   print("ri8");
                   print(DefaultTabController.of(context).index);
                   DefaultTabController.of(context).index > 0
-                      ? DefaultTabController.of(context).animateTo(
-                          DefaultTabController.of(context).index - 1)
+                      ? DefaultTabController.of(context)
+                          .animateTo(DefaultTabController.of(context).index - 1)
                       : print("greater then 0");
                 },
                 child: Padding(
@@ -144,8 +160,7 @@ class TabScreen extends StatelessWidget {
                                 footer: Container(
                                   color: Colors.white,
                                   child: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.start,
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: <Widget>[
@@ -159,8 +174,8 @@ class TabScreen extends StatelessWidget {
                                               color: Colors.black),
                                         ),
                                         subtitle: Text(o[i].pieces.toString(),
-                                            style: TextStyle(
-                                                color: Colors.black)),
+                                            style:
+                                                TextStyle(color: Colors.black)),
                                       ),
                                       Divider(
                                         color: Colors.grey,
@@ -192,16 +207,17 @@ class TabScreen extends StatelessWidget {
                                                 width: 150,
                                                 decoration: BoxDecoration(
                                                     color: Colors.grey[300],
-                                                    borderRadius: BorderRadius.all(
-                                                        Radius.circular(10))),
+                                                    borderRadius:
+                                                        BorderRadius.all(
+                                                            Radius.circular(
+                                                                10))),
                                                 child: Center(
                                                     child: Text(
                                                         "Weight: 400-500",
                                                         style: TextStyle(
-                                                            color: Colors
-                                                                .black54,
-                                                            fontSize:
-                                                                h * 0.02,
+                                                            color:
+                                                                Colors.black54,
+                                                            fontSize: h * 0.02,
                                                             fontWeight:
                                                                 FontWeight
                                                                     .w400)))),
@@ -214,9 +230,8 @@ class TabScreen extends StatelessWidget {
                                                     style: TextStyle(
                                                       color: Colors.black54,
                                                       fontSize: 20,
-                                                      decoration:
-                                                          TextDecoration
-                                                              .lineThrough,
+                                                      decoration: TextDecoration
+                                                          .lineThrough,
                                                     )),
                                                 Text(
                                                     o[i].weight == null
@@ -244,19 +259,23 @@ class TabScreen extends StatelessWidget {
                                                                   cart.removeItem(CartItem(
                                                                       id: o[i]
                                                                           .id,
-                                                                      price: o[i]
+                                                                      price: o[
+                                                                              i]
                                                                           .price,
-                                                                      quantity:
-                                                                          o[i]
-                                                                              .quantity,
-                                                                      title: o[i]
+                                                                      quantity: o[
+                                                                              i]
+                                                                          .quantity,
+                                                                      title: o[
+                                                                              i]
                                                                           .item,
-                                                                      img: o[i]
+                                                                      img: o[
+                                                                              i]
                                                                           .img,
-                                                                      catName:
-                                                                          o[i]
-                                                                              .catname,
-                                                                      weight: o[i]
+                                                                      catName: o[
+                                                                              i]
+                                                                          .catname,
+                                                                      weight: o[
+                                                                              i]
                                                                           .weight,
                                                                       column:
                                                                           i));
@@ -265,10 +284,8 @@ class TabScreen extends StatelessWidget {
                                                                   //     .length);
                                                                 }
                                                                 cart.reduceQuant(CartItem(
-                                                                    id: o[i]
-                                                                        .id,
-                                                                    price: o[
-                                                                            i]
+                                                                    id: o[i].id,
+                                                                    price: o[i]
                                                                         .price,
                                                                     quantity: o[
                                                                             i]
@@ -276,17 +293,15 @@ class TabScreen extends StatelessWidget {
                                                                     title: o[
                                                                             i]
                                                                         .item,
-                                                                    img: o[
-                                                                            i]
-                                                                        .img,
+                                                                    img:
+                                                                        o[i]
+                                                                            .img,
                                                                     catName: o[
                                                                             i]
                                                                         .catname,
-                                                                    weight: o[
-                                                                            i]
+                                                                    weight: o[i]
                                                                         .weight,
-                                                                    column:
-                                                                        i));
+                                                                    column: i));
                                                                 productProvider
                                                                     .subQuant(
                                                                         o[i].catname,
@@ -311,10 +326,8 @@ class TabScreen extends StatelessWidget {
                                                                       .primaryColor),
                                                               onPressed: () {
                                                                 cart.addItem(CartItem(
-                                                                    id: o[i]
-                                                                        .id,
-                                                                    price: o[
-                                                                            i]
+                                                                    id: o[i].id,
+                                                                    price: o[i]
                                                                         .price,
                                                                     quantity: o[
                                                                             i]
@@ -322,17 +335,15 @@ class TabScreen extends StatelessWidget {
                                                                     title: o[
                                                                             i]
                                                                         .item,
-                                                                    img: o[
-                                                                            i]
-                                                                        .img,
+                                                                    img:
+                                                                        o[i]
+                                                                            .img,
                                                                     catName: o[
                                                                             i]
                                                                         .catname,
-                                                                    weight: o[
-                                                                            i]
+                                                                    weight: o[i]
                                                                         .weight,
-                                                                    column:
-                                                                        i));
+                                                                    column: i));
                                                                 productProvider
                                                                     .addQuant(
                                                                         o[i].catname,
@@ -346,12 +357,10 @@ class TabScreen extends StatelessWidget {
                                                               EdgeInsets.only(
                                                                   bottom: 5),
                                                           padding:
-                                                              EdgeInsets.all(
-                                                                  8),
+                                                              EdgeInsets.all(8),
                                                           color: Colors.grey,
                                                           child: Row(
-                                                            children: <
-                                                                Widget>[
+                                                            children: <Widget>[
                                                               Icon(
                                                                 Icons
                                                                     .shopping_cart,
@@ -370,22 +379,17 @@ class TabScreen extends StatelessWidget {
                                                           ),
                                                         ),
                                                         onTap: () {
-                                                          cart.addItem(
-                                                              CartItem(
-                                                                  id: o[i].id,
-                                                                  price: o[i]
-                                                                      .price,
-                                                                  quantity: 1,
-                                                                  title: o[i]
-                                                                      .item,
-                                                                  img: o[i]
-                                                                      .img,
-                                                                  catName: o[
-                                                                          i]
-                                                                      .catname,
-                                                                  weight: o[i]
-                                                                      .weight,
-                                                                  column: i));
+                                                          cart.addItem(CartItem(
+                                                              id: o[i].id,
+                                                              price: o[i].price,
+                                                              quantity: 1,
+                                                              title: o[i].item,
+                                                              img: o[i].img,
+                                                              catName:
+                                                                  o[i].catname,
+                                                              weight:
+                                                                  o[i].weight,
+                                                              column: i));
                                                           productProvider
                                                               .addQuant(
                                                                   o[i].catname,
@@ -400,31 +404,28 @@ class TabScreen extends StatelessWidget {
                                                       margin:
                                                           EdgeInsets.fromLTRB(
                                                               8, 0, 14, 5),
-                                                      decoration:
-                                                          BoxDecoration(
-                                                              border:
-                                                                  Border.all(
-                                                        color:
-                                                            Theme.of(context)
-                                                                .primaryColor,
+                                                      decoration: BoxDecoration(
+                                                          border: Border.all(
+                                                        color: Theme.of(context)
+                                                            .primaryColor,
                                                       )),
                                                       child: Center(
                                                         child: IconButton(
                                                           iconSize: 30,
                                                           icon: Icon(
                                                             o[i].fav
-                                                                ? Icons
-                                                                    .favorite
+                                                                ? Icons.favorite
                                                                 : Icons
                                                                     .favorite_border,
                                                           ),
-                                                          color: Theme.of(
-                                                                  context)
-                                                              .primaryColor,
+                                                          color:
+                                                              Theme.of(context)
+                                                                  .primaryColor,
                                                           onPressed: () {
-                                                            produc.toggleFavoriteStatus(
-                                                                o[i].catname,
-                                                                i);
+                                                            produc
+                                                                .toggleFavoriteStatus(
+                                                                    o[i].catname,
+                                                                    i);
                                                             ch =
                                                                 CircularProgressIndicator();
                                                           },
@@ -450,56 +451,46 @@ class TabScreen extends StatelessWidget {
               );
             }).toList()),
           ),
-          //     new Container(
-          //       color: Colors.yellow,
-          //     ),
+         
+          bottomNavigationBar: TabBar(
+              labelPadding: EdgeInsets.all(0),
+              labelColor: Theme.of(context).primaryColor,
+              // selectedFontSize: 0,
+              indicatorSize: TabBarIndicatorSize.tab,
+              isScrollable: true,
+              // elevation: 20,
+              tabs: catList.map((p) {
+                // print(soty.o.value);
+                Map<String, Object> iconData = {
+                  "${catList[0].categoryName}": CustomIcon.Eggs,
+                  "${catList[1].categoryName}": CustomIcon.Chicken,
+                  "${catList[2].categoryName}": CustomIcon.Mutton,
+                  "${catList[3].categoryName}": CustomIcon.SeaFood
+                };
 
-          //     // new Container(color: Colors.orange,),
-          //     new Container(
-          //       color: Colors.lightGreen,
-          //     ),
-          //     new Container(
-          //       color: Colors.red,
-          //     ),
-          //   ],
-          // ),
-          bottomNavigationBar: 
-          new TabBar(
-            // isScrollable: true,
-            // controller: DefaultTabController.of(context),
-            tabs: catList.map((p) {
-              // print(soty.o.value);
-              Map<String, Object> iconData = {
-                "${catList[0].categoryName}": CustomIcon.Eggs,
-                "${catList[1].categoryName}": CustomIcon.Chicken,
-                "${catList[2].categoryName}": CustomIcon.Mutton,
-                "${catList[3].categoryName}": CustomIcon.SeaFood
-              };
-
-              return Container(
-                  width: double.infinity,
-                  decoration: BoxDecoration(
+                return Container(
+                    decoration: BoxDecoration(
                       border: Border.all(
-                    width: 1,
-                  )),
-                  // color: Colors.white,
-                  child: Tab(
-                    text: "${p.categoryName}",
-                    icon: Icon(
-                      iconData[p.categoryName],
-                      size: 20,
-                      // color: Colors.green,
+                        width: 1,
+                        color: Theme.of(context).primaryColor,
+                      ),
+                      color: Colors.white,
                     ),
-                  ));
-            }).toList(),
+                    width: w * 0.25,
+                    child: Tab(
+                      text: "${p.categoryName}",
+                      icon: Icon(
+                        iconData[p.categoryName],
+                        color: Theme.of(context).primaryColor,
+                        size: 20,
+                      ),
+                    ));
+              }).toList()
           
-            labelColor: Theme.of(context).primaryColor,
 
-            unselectedLabelColor: Colors.black,
-            indicatorSize: TabBarIndicatorSize.tab,
-            indicatorColor: Colors.grey,
-            indicatorWeight: 1,
-          ),
+              ),
+
+
           backgroundColor: Colors.white,
 
           floatingActionButton: FloatingActionButton(
