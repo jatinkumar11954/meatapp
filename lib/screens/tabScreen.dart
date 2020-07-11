@@ -28,9 +28,9 @@ class TabScreen extends StatelessWidget {
     final _unselectedItemColor = Theme.of(context).primaryColor;
     final _selectedBgColor = Theme.of(context).primaryColor;
     final _unselectedBgColor = Colors.white;
-    int _selectedIndex = Provider.of<Bottom>(context).index == null
+    int _selectedIndex = Provider.of<Bottom>(context).tabIndex == null
         ? 0
-        : Provider.of<Bottom>(context).index;
+        : Provider.of<Bottom>(context).tabIndex;
 
     Color _getBgColor(int index) =>
         _selectedIndex == index ? _selectedBgColor : _unselectedBgColor;
@@ -38,7 +38,6 @@ class TabScreen extends StatelessWidget {
     Color _getItemColor(int index) =>
         _selectedIndex == index ? _selectedItemColor : _unselectedItemColor;
 
-   
     final product = Provider.of<Products>(context, listen: false).items;
     final productProvider = Provider.of<Products>(context);
 
@@ -85,6 +84,8 @@ class TabScreen extends StatelessWidget {
       //   height: Short.h * 4.5,
       // ),
     );
+    final tabProvider = Provider.of<Bottom>(context, listen: false);
+
     print(Short.h.toString());
     print(Short.w.toString());
     var h = Short.h - appbar.preferredSize.height;
@@ -108,16 +109,18 @@ class TabScreen extends StatelessWidget {
                   print("left");
                   DefaultTabController.of(context).index < catList.length - 1
                       ? DefaultTabController.of(context)
-                          .animateTo(DefaultTabController.of(context).index + 1)
+                          .animateTo(DefaultTabController.of(context).index + 1,duration:Duration(milliseconds: 700),curve:Curves.easeIn)
                       : print("less than catlist-1 =3");
+                  tabProvider.updateTab(DefaultTabController.of(context).index);
                 },
                 onSwipeRight: () {
                   print("ri8");
                   print(DefaultTabController.of(context).index);
                   DefaultTabController.of(context).index > 0
                       ? DefaultTabController.of(context)
-                          .animateTo(DefaultTabController.of(context).index - 1)
+                          .animateTo(DefaultTabController.of(context).index - 1,duration:Duration(milliseconds:700),curve:Curves.decelerate)
                       : print("greater then 0");
+                  tabProvider.updateTab(DefaultTabController.of(context).index);
                 },
                 child: Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -451,14 +454,18 @@ class TabScreen extends StatelessWidget {
               );
             }).toList()),
           ),
-         
           bottomNavigationBar: TabBar(
               labelPadding: EdgeInsets.all(0),
-              labelColor: Theme.of(context).primaryColor,
+              labelColor: Colors.white,
+              dragStartBehavior: DragStartBehavior.start,
               // selectedFontSize: 0,
               indicatorSize: TabBarIndicatorSize.tab,
               isScrollable: true,
+              unselectedLabelColor: Theme.of(context).primaryColor,
               // elevation: 20,
+              onTap: (value) {
+                tabProvider.updateTab(DefaultTabController.of(context).index);
+              },
               tabs: catList.map((p) {
                 // print(soty.o.value);
                 Map<String, Object> iconData = {
@@ -467,32 +474,38 @@ class TabScreen extends StatelessWidget {
                   "${catList[2].categoryName}": CustomIcon.Mutton,
                   "${catList[3].categoryName}": CustomIcon.SeaFood
                 };
+                Color bgColor = Colors.white;
+                Color fgColor = Theme.of(context).primaryColor;
 
+                if (p == catList[tabProvider.tabIndex ?? 0]) {
+                  bgColor = Theme.of(context).primaryColor;
+                } else {
+                  bgColor = Colors.white;
+                }
+                if (p == catList[tabProvider.tabIndex ?? 0]) {
+                  fgColor = Colors.white;
+                } else {
+                  fgColor = Theme.of(context).primaryColor;
+                }
                 return Container(
                     decoration: BoxDecoration(
                       border: Border.all(
                         width: 1,
                         color: Theme.of(context).primaryColor,
                       ),
-                      color: Colors.white,
+                      color: bgColor,
                     ),
                     width: w * 0.25,
                     child: Tab(
                       text: "${p.categoryName}",
                       icon: Icon(
                         iconData[p.categoryName],
-                        color: Theme.of(context).primaryColor,
+                        color: fgColor,
                         size: 20,
                       ),
                     ));
-              }).toList()
-          
-
-              ),
-
-
+              }).toList()),
           backgroundColor: Colors.white,
-
           floatingActionButton: FloatingActionButton(
             elevation: 4.0,
             onPressed: () {
