@@ -295,7 +295,7 @@ class _OtpState extends State<Otp> with TickerProviderStateMixin {
                     child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Image.asset(
-                    "img/freshMeat.png",
+                    "img/logo.png",
                     alignment: Alignment.bottomCenter,
                   ),
                 )),

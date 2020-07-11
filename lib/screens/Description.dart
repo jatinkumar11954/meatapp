@@ -75,17 +75,20 @@ class _DescriptionState extends State<Description> {
         key: _scaffoldKey,
         appBar: appbar,
         drawer: Draw(context),
-        bottomNavigationBar: bottomBar(context, 2), //testing remove afterwards
+        bottomNavigationBar: isLogin?bottomBar(context, 2):SizedBox(), //testing remove afterwards
         body: ListView(
           children: <Widget>[
             Center(
-              child: Hero(
-                tag: i,
-                child: Image.network(
-                  product[ro][i].img,
-                  fit: BoxFit.fill,
-                  width: w * 0.98,
-                  height: h * 0.4,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Hero(
+                  tag: i,
+                  child: Image.network(
+                    product[ro][i].img,
+                    fit: BoxFit.fill,
+                    width: w * 0.98,
+                    height: h * 0.4,
+                  ),
                 ),
               ),
             ),
@@ -146,16 +149,23 @@ class _DescriptionState extends State<Description> {
             ),
             Divider(thickness: 4),
             SizedBox(height: 30),
-            isLogin
-                ? Container()
-                : Center(
-                    child: SizedBox(
-                      width: w * 0.95,
-                      child: RaisedButton(
-                        
-                          color: Theme.of(context).primaryColor,
+           
+                  SizedBox(height: 60,)
+          ],
+        ),
+        floatingActionButton:   isLogin
+                ? Container(): Container(
+            width: w * 0.91,
+            height: 
+            40.0,
+            color: Theme.of(context).primaryColor,
+            child: new RawMaterialButton(
+                shape: new CircleBorder(),
+                elevation: 0.0,
+                // child: Theme.of(context).primaryColor,
                           onPressed: () => print("login button clicked"),
                           child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: <Widget>[
                               Icon(Icons.arrow_forward, color: Colors.white),
                               Text(" LOGIN/SIGN UP TO CHECKOUT",
@@ -164,10 +174,7 @@ class _DescriptionState extends State<Description> {
                                     fontSize: h * 0.02,
                                   )),
                             ],
-                          )),
-                    ),
-                  )
-          ],
-        ));
+                          )))
+        );
   }
 }

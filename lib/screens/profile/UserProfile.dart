@@ -36,7 +36,6 @@ class UserProfileState extends State<UserProfile> {
     await Future.delayed(Duration(milliseconds: 500));
 
     SharedPreferences store = await SharedPreferences.getInstance();
-    store.remove("jwt");
 
     print("getting jwt from the device");
     token = store.getString('jwt');

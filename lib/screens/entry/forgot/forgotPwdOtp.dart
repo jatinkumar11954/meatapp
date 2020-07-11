@@ -296,7 +296,7 @@ class _ForgotPwdOtpState extends State<ForgotPwdOtp>
                     child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Image.asset(
-                    "img/freshMeat.png",
+                    "img/logo.png",
                     alignment: Alignment.bottomCenter,
                   ),
                 )),

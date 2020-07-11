@@ -8,6 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class MapConvertible {
   Map<dynamic, dynamic> toMap();
+  Map<dynamic, dynamic> toOrder();
 
   MapConvertible fromMap(Map<dynamic, dynamic> map);
 }
@@ -71,6 +72,19 @@ class CartItem extends MapConvertible {
       "img": img,
       "catName": catName,
       "column": column,
+      "quantity": quantity,
+      "price": price,
+      "weight": weight
+    };
+  }
+
+  @override
+  Map<String, dynamic> toOrder() {
+    return {
+      "id": id,
+      "title": title,
+      "catName": catName,
+      // "column": column,
       "quantity": quantity,
       "price": price,
       "weight": weight
@@ -142,8 +156,8 @@ class Cart with ChangeNotifier {
         _items[indexOF(item)].quantity = item.quantity + 1;
 
         repo.addToCart(_items[_items.indexWhere((e) {
-        return e.title == item.title;
-      })]);
+          return e.title == item.title;
+        })]);
       } else {
         print("else if item is not prest in else");
         bool _checkAdd = false;
@@ -159,9 +173,9 @@ class Cart with ChangeNotifier {
           repo.updateCart(item);
         } else {
           _items.add(item);
-         repo.addToCart(_items[_items.indexWhere((e) {
-        return e.title == item.title;
-      })]);
+          repo.addToCart(_items[_items.indexWhere((e) {
+            return e.title == item.title;
+          })]);
         }
       }
     } else {
@@ -176,23 +190,27 @@ class Cart with ChangeNotifier {
   void reduceQuant(CartItem item) {
     bool _checkSub = false;
     if (_items.isNotEmpty) {
+              print(_items[_items.indexWhere((element) => element.id==item.id)].quantity);
+
       if (_items[indexOF(item)].quantity == 1) {
-        print("quantity is 1");
+        print("check sub is true");
         _checkSub = true;
       }
+      print("this is the quantuty");
+      print(_items[_items.indexWhere((element) => element.id==item.id)].quantity);
+    repo.addToCart(items[_items?.indexWhere((element) => element.id==item.id)]);
 
       _checkSub
           ? removeItem(item)
-          : _items[indexOF(item)].quantity = item.quantity - 1;
+          : _items[_items.indexWhere((element) => element.id==item.id)].quantity = item.quantity - 1;
     }
-    repo.addToCart(_items[_items?.indexOf(item)]);
 
     notifyListeners();
   }
 
   void removeItem(CartItem item) {
-    _items.remove(item);
     repo.deleteFromCart(item);
+    _items.remove(_items[indexOF(item)]);
 
     notifyListeners();
   }

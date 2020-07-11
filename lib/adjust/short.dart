@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class Short {
   static double h, w;
-  static var baseUrl = "http://3.6.231.159:3000/user";
+  static var baseUrl = "http://15.206.247.189:3000/user";
   // cd /var/www/html/apis/freshMeat-api
   static var img = {
     0: "http://carigarifurniture.com/product_images/w/133365e0_a1b8_4f6d_89b5_d71cf79c27ef__92495_thumb.jpg",

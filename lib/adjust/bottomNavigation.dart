@@ -6,6 +6,7 @@ import 'package:meatapp/screens/Description.dart';
 import 'package:meatapp/screens/FirestScreen.dart';
 import 'package:meatapp/screens/cart_screen.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:meatapp/screens/profile/UserProfile.dart';
 import 'package:provider/provider.dart';
 import 'custom_route.dart';
 import 'package:meatapp/main.dart';
@@ -116,10 +117,9 @@ Widget bottomBar(BuildContext context, int i) {
   final _unselectedItemColor = Theme.of(context).primaryColor;
   final _selectedBgColor = Theme.of(context).primaryColor;
   final _unselectedBgColor = Colors.white;
-    int _selectedIndex= Provider.of<Bottom>(context).index==null?0:Provider.of<Bottom>(context).index;
-
-   
-
+  int _selectedIndex = Provider.of<Bottom>(context).index == null
+      ? 0
+      : Provider.of<Bottom>(context).index;
 
   Color _getBgColor(int index) =>
       _selectedIndex == index ? _selectedBgColor : _unselectedBgColor;
@@ -138,11 +138,12 @@ Widget bottomBar(BuildContext context, int i) {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                 SvgPicture.asset(data,
-          // fit: BoxFit.contain,
-          height: 30,
-          color: _getItemColor(inde),
-          ),
+                    SvgPicture.asset(
+                      data,
+                      // fit: BoxFit.contain,
+                      height: 30,
+                      color: _getItemColor(inde),
+                    ),
                     Text(text,
                         style: TextStyle(
                             fontSize: 12, color: _getItemColor(inde))),
@@ -151,38 +152,44 @@ Widget bottomBar(BuildContext context, int i) {
                 onTap: () {
                   value.updateINdex(inde);
                   _selectedIndex = value.index;
- switch (_selectedIndex) {
-          case 0:
-            {
-              print("index 0");
-              Navigator.pushReplacement(
-                  context, CustomRoute(builder: (context) => FirstScreen()));
-              break;
-            }
-          case 1:
-            {
-              Navigator.pushReplacement(
-                  c, CustomRoute(builder: (context) => CartScreen()));
-              break;
-            }
+                  switch (_selectedIndex) {
+                    case 0:
+                      {
+                        print("index 0");
+                        Navigator.pushReplacement(context,
+                            CustomRoute(builder: (context) => FirstScreen()));
+                        break;
+                      }
+                    case 1:
+                      {
+                        Navigator.pushReplacement(
+                            c, CustomRoute(builder: (context) => CartScreen()));
+                        break;
+                      }
 
-          case 2:
-            {
-              Navigator.pushReplacement(
-                 c, CustomRoute(builder: (context) => Description()));
-              break;
-            }
-        }
+                    case 2:
+                      {
+                        Navigator.pushReplacement(c,
+                            CustomRoute(builder: (context) => Description()));
+                        break;
+                      }
+                  }
                 },
               ),
             ),
           );
         },
       );
-       Widget _buildSvg(BuildContext c, String data, String text, int inde) =>
+  Widget _buildSvg(BuildContext c, Object data, String text, int inde) =>
       Consumer<Bottom>(
         builder: (context, value, child) {
           return Container(
+            decoration: BoxDecoration(boxShadow: [
+              BoxShadow(
+                  blurRadius: 8.0,
+                  offset: Offset(5.0, 0.0),
+                  color: Colors.black45),
+            ]),
             width: double.infinity,
             height: kBottomNavigationBarHeight,
             child: Material(
@@ -191,11 +198,11 @@ Widget bottomBar(BuildContext context, int i) {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                Icon(
-                  CustomIcon.info_circled,
-                  size: 20,
-          color: _getItemColor(inde),
-          ),
+                    Icon(
+                      data,
+                      size: 20,
+                      color: _getItemColor(inde),
+                    ),
                     Text(text,
                         style: TextStyle(
                             fontSize: 12, color: _getItemColor(inde))),
@@ -204,28 +211,28 @@ Widget bottomBar(BuildContext context, int i) {
                 onTap: () {
                   value.updateINdex(inde);
                   _selectedIndex = value.index;
- switch (_selectedIndex) {
-          case 0:
-            {
-              print("index 0");
-              Navigator.pushReplacement(
-                  context, CustomRoute(builder: (context) => FirstScreen()));
-              break;
-            }
-          case 1:
-            {
-              Navigator.pushReplacement(
-                  c, CustomRoute(builder: (context) => CartScreen()));
-              break;
-            }
+                  switch (_selectedIndex) {
+                    case 0:
+                      {
+                        print("index 0");
+                        Navigator.pushReplacement(context,
+                            CustomRoute(builder: (context) => FirstScreen()));
+                        break;
+                      }
+                    case 1:
+                      {
+                        Navigator.pushReplacement(
+                            c, CustomRoute(builder: (context) => CartScreen()));
+                        break;
+                      }
 
-          case 2:
-            {
-              Navigator.pushReplacement(
-                 c, CustomRoute(builder: (context) => Description()));
-              break;
-            }
-        }
+                    case 2:
+                      {
+                        Navigator.pushReplacement(c,
+                            CustomRoute(builder: (context) => UserProfile()));
+                        break;
+                      }
+                  }
                 },
               ),
             ),
@@ -233,29 +240,25 @@ Widget bottomBar(BuildContext context, int i) {
         },
       );
 
-
-
-
-  return  BottomNavigationBar(
-      selectedFontSize: 0,
-     
-      items: <BottomNavigationBarItem>[
-        BottomNavigationBarItem(
-          icon: _buildIcon(context, "img/chicken.svg", 'Home', 0),
-          title: SizedBox.shrink(),
-        ),
-        BottomNavigationBarItem(
-          icon: _buildSvg(context, "img/deals.svg", 'Business', 1),
-          title: SizedBox.shrink(),
-        ),
-        BottomNavigationBarItem(
-          icon: _buildIcon(context, "img/icons2.svg", 'School', 2),
-          title: SizedBox.shrink(),
-        ),
-      ],
-      currentIndex: _selectedIndex,
-      selectedItemColor: _selectedItemColor,
-      unselectedItemColor: _unselectedItemColor,
-   
+  return BottomNavigationBar(
+    selectedFontSize: 0,
+    elevation: 20,
+    items: <BottomNavigationBarItem>[
+      BottomNavigationBarItem(
+        icon: _buildSvg(context, CustomIcon.info_home, 'Home', 0),
+        title: SizedBox.shrink(),
+      ),
+      BottomNavigationBarItem(
+        icon: _buildSvg(context, CustomIcon.info_circled, 'Orders', 1),
+        title: SizedBox.shrink(),
+      ),
+      BottomNavigationBarItem(
+        icon: _buildSvg(context, CustomIcon.info_account, 'Account', 2),
+        title: SizedBox.shrink(),
+      ),
+    ],
+    currentIndex: _selectedIndex,
+    selectedItemColor: _selectedItemColor,
+    unselectedItemColor: _unselectedItemColor,
   );
 }

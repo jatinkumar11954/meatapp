@@ -20,6 +20,7 @@ class Storage {
 
     print("inside addtocart  of repo " + Item.title);
     await _repository.createUpdate(Item.toMap());
+    
   }
 
   Future<List<CartItem>> retriveCart() async {

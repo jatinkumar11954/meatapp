@@ -23,7 +23,17 @@ class CustomIcon {
   CustomIcon._();
 
   static const _kFontFam = 'ItalicI';
+    static const _font = 'icons';
+
   static const _kFontPkg = null;
 
   static const IconData info_circled = IconData(0xe800, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData info_home = IconData(0xe800, fontFamily:"CircularHome", fontPackage: _kFontPkg);
+  static const IconData info_account = IconData(0xe801, fontFamily:"CircularAccount", fontPackage: _kFontPkg);
+
+  static const IconData Mutton = IconData(0xe800, fontFamily: _font, fontPackage: _kFontPkg);
+  static const IconData Chicken = IconData(0xea84, fontFamily: _font, fontPackage: _kFontPkg);
+  static const IconData SeaFood = IconData(0xea91, fontFamily: _font, fontPackage: _kFontPkg);
+  static const IconData Eggs = IconData(0xf7fb, fontFamily: _font, fontPackage: _kFontPkg);
+
 }

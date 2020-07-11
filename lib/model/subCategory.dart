@@ -59,6 +59,7 @@ class Products with ChangeNotifier {
     int ro = catList.indexWhere((ele) {
       return ele.categoryName == r;
     });
+    
     _items[ro][c].quantity += 1;
     notifyListeners();
   }

@@ -24,14 +24,14 @@ Future<void> main() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
 
   jwt = await prefs.getString("jwt");
-//  login=  jwt != null? true: false;
+ login=  jwt != null? true: false;
   var g = Geolocator()..forceAndroidLocationManager;
   g.getCurrentPosition(desiredAccuracy: LocationAccuracy.best);
 // place();
   // SharedPreferences store = await SharedPreferences.getInstance();
   // store.("jwt");
 
-  print('jwt ${jwt}');
+  // print('jwt ${jwt}');
   runApp(MyApp());
 }
 // void main() => runApp(MyApp());
@@ -68,11 +68,11 @@ class MyApp extends StatelessWidget {
               
               // focusColor: Color.fromRGBO(229,247,243, 1.0),
               ),
-          initialRoute: jwt == null ? "Login" : "Main",
+         initialRoute: jwt == null ? "Login" : "Main",//testing
           //         initialRoute: !login ? "Login" : "Main",//testinh for login screen
 
-          //  initialRoute: jwt != null ? "Login" : "Main",
-          home: Login(),
+          //  initialRoute: "Main",
+          // home: Login(),
           routes: <String, WidgetBuilder>{
             'Login': (BuildContext context) => new Login(),
             'LoginOtp': (BuildContext context) => new LoginOtp(),

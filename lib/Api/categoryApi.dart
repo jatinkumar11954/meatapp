@@ -21,7 +21,7 @@ Storage get repo => _repo;
 
 List<List<SubCategory>> tab = List<List<SubCategory>>();
 Future<List<Category>> getCategories(
-    GlobalKey<ScaffoldState> scaffoldkey,dynamic cart) async {
+    GlobalKey<ScaffoldState> scaffoldkey, dynamic cart) async {
   _repo = await Storage.createFrom(
     future: SqlitePersistence.create(),
   );
@@ -97,6 +97,7 @@ getSubCategory() {
       }
     }
   }
+
   // for (int i = 0; i < tab.length; i++) {
   //   for (int j = 0; j < tab[i].length; j++) {
   //     print("${tab.length} $i $j");
@@ -131,8 +132,15 @@ getSubCategory() {
         }
       }
     }
-  }
-  print("after tab has added");
+  } 
+  _it!=null
+      ? _it.forEach((element) {
+          int ro = catList.indexWhere((ele) {
+            return ele.categoryName == element.catName;
+          });
+          tab[ro][element.column].quantity = element.quantity;
+        })
+      : print("after tab has added");
 
   // for (int i = 0; i < tab.length; i++) {
   //   for (int j = 0; j < tab[i].length; j++) {

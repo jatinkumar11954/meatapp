@@ -1,5 +1,3 @@
-import 'package:flappy_search_bar/flappy_search_bar.dart';
-import 'package:flappy_search_bar/search_bar_style.dart';
 import 'package:flutter/material.dart';
 import 'package:meatapp/adjust/badge.dart';
 import 'package:meatapp/adjust/bottomNavigation.dart';
@@ -11,8 +9,8 @@ import 'package:meatapp/adjust/short.dart';
 import 'package:meatapp/adjust/custom_route.dart';
 import 'package:meatapp/Api/categoryApi.dart';
 import 'package:meatapp/model/cart.dart';
+import 'package:meatapp/model/search.dart';
 import 'package:meatapp/screens/cart_screen.dart';
-import 'package:meatapp/screens/profile/UserProfile.dart';
 import 'package:meatapp/screens/tabScreen.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
@@ -33,39 +31,21 @@ void callSnackBar(String msg, GlobalKey<ScaffoldState> _scaffoldkey) {
   _scaffoldkey.currentState.showSnackBar(Snack);
 }
 
-class Post {
-  final String title;
-  final String description;
-
-  Post(this.title, this.description);
-}
-
 class _FirstScreenState extends State<FirstScreen> {
   ScrollController _controller;
   final GlobalKey<ScaffoldState> firstscreen = new GlobalKey<ScaffoldState>();
 
-  bool isVisible = true;
-  List<String> _dropList = ['Mallapur', "Gachibawli", "Sec-Bad"];
-  String _selected = "Select Location";
+  bool searchProduct = false;
+
   @override
   void initState() {
     _controller = ScrollController();
     super.initState();
   }
 
-  Future<List<Post>> search(String search) async {
-    await Future.delayed(Duration(seconds: 2));
-    return List.generate(search.length, (int index) {
-      return Post(
-        "Title : $search $index",
-        "Description :$search $index",
-      );
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    final cart = Provider.of<Cart>(context,listen: false);
+    final cart = Provider.of<Cart>(context, listen: false);
 //         var i = ModalRoute.of(context).settings.arguments;
 // print(i.toString());
     Short().init(context);
@@ -81,7 +61,11 @@ class _FirstScreenState extends State<FirstScreen> {
           //   fit: BoxFit.fill,
           //   height: Short.h * 4.5,
           // ),
-          // Icon(Icons.search)
+          //
+          IconButton(
+              icon: Icon(Icons.search),
+              onPressed: () =>
+                  showSearch(context: context, delegate: ProductSearch()))
         ],
       ),
     );
@@ -90,23 +74,13 @@ class _FirstScreenState extends State<FirstScreen> {
     var h = Short.h - appbar.preferredSize.height;
     var w = Short.w;
 
-    int visible() {
-      setState(() {
-        print("visible false");
-        isVisible = false;
-      });
-      return 2;
-    }
-
     print(isLogin.toString());
-    final SearchBarController<Post> _searchBarController =
-        SearchBarController();
 
     return Scaffold(
       key: firstscreen, resizeToAvoidBottomPadding: false,
       appBar: appbar,
-      // bottomNavigationBar: isLogin ? bottomBar(context, 0) : SizedBox(),
-      bottomNavigationBar: bottomBar(context, 0),
+      bottomNavigationBar: isLogin ? bottomBar(context, 0) : SizedBox(),
+      // bottomNavigationBar: bottomBar(context, 0),
       drawer: Draw(context),
       body: CustomScrollView(
         scrollDirection: Axis.vertical,
@@ -120,7 +94,43 @@ class _FirstScreenState extends State<FirstScreen> {
             //   fadeOutDuration: const Duration(seconds: 1),
             //   fadeInDuration: const Duration(seconds: 3),
             // ),
-            Carousel(context, firstscreen),
+            SizedBox(height: 20),
+
+            Material(
+              child: GestureDetector(
+                child: Center(
+                  child: Container(
+                      width: w * 0.86,
+                      height: 50,
+                      // margin: EdgeInsets.fromLTRB(15, 2, 15, 8),
+                      decoration: BoxDecoration(border: Border.all(width: 1)),
+                      child: Row(
+                        // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          SizedBox(width: 10),
+                          Icon(Icons.search),
+                          SizedBox(width: 10),
+                          Hero(
+                            tag: "storesearch",
+                            child: Text(
+                              'StoreSearch',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  // Theme.of(context).primaryColor,
+                                  fontSize: 19),
+                            ),
+                          ),
+                          Spacer()
+                        ],
+                      )),
+                ),
+                onTap: () =>
+                    showSearch(context: context, delegate: StoreSearch()),
+              ),
+            ),
+            SizedBox(height: 20),
+
+            Carousel(context, firstscreen), //testing
             SizedBox(height: h * 0.05),
             Center(
               child: SizedBox(
@@ -138,7 +148,7 @@ class _FirstScreenState extends State<FirstScreen> {
             ),
           ])),
           FutureBuilder<List<Category>>(
-              future: getCategories(firstscreen,cart),
+              future: getCategories(firstscreen, cart),
               builder: (context, category) {
                 if (category.hasData) {
                   print("category has data");
@@ -163,28 +173,28 @@ class _FirstScreenState extends State<FirstScreen> {
                               child: Column(
                                 children: <Widget>[
                                   Container(
-                                    height: h * 0.20,
-                                    width: w * 0.45,
-                                    child: Card(
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                      elevation: 4.0,
-                                      child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(10),
-                                        child: GridTile(
-                                          child: Hero(
-                                            tag: i,
+                                      height: h * 0.20,
+                                      width: w * 0.45,
+                                      child: Card(
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(10),
+                                        ),
+                                        elevation: 4.0,
+                                        child: ClipRRect(
+                                          borderRadius: BorderRadius.circular(10),
+                                          child: GridTile(
+                                            // child:
+                                            //  Hero(
+                                            //   tag: i,
                                             child: CachedNetworkImage(
                                               imageUrl:
-                                              "http://via.placeholder.com/350x200",
+                                                  "http://via.placeholder.com/350x200",
                                               //  category.data[i].img,
                                               fit: BoxFit.fill,
                                               placeholder: (context, url) =>
                                                   Shimmer.fromColors(
                                                       loop: 2,
-                                                      baseColor:
-                                                          Colors.grey[400],
+                                                      baseColor: Colors.grey[400],
                                                       highlightColor:
                                                           Colors.white12,
                                                       child: Container(
@@ -202,11 +212,11 @@ class _FirstScreenState extends State<FirstScreen> {
                                               //               //     : null,
                                               //
                                             ),
+                                            // ),
                                           ),
                                         ),
                                       ),
                                     ),
-                                  ),
                                   Center(
                                       child: Text(
                                           category.data[i].categoryName
@@ -263,10 +273,9 @@ class _FirstScreenState extends State<FirstScreen> {
                 SizedBox(
                   width: w,
                   child: CachedNetworkImage(
-                      imageUrl:
-                                                                    "http://via.placeholder.com/350x200",
+                      imageUrl: "http://via.placeholder.com/350x200",
 
-                          // "http://carigarifurniture.com/product_images/h/img_6539__14221_thumb.jpg",//testing
+                      // "http://carigarifurniture.com/product_images/h/img_6539__14221_thumb.jpg",//testing
                       placeholder: (context, url) => Center(
                             child: CircularProgressIndicator(
                                 // value: loadingProgress.expectedTotalBytes != null
