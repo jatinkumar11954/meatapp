@@ -91,8 +91,8 @@ class _ManageProfileState extends State<ManageProfile> {
             Navigator.push(
                 context,
                 CustomRoute(
-                    builder: (context) => UserProfile(),
-                    settings: RouteSettings(arguments: user)));
+                  builder: (context) => UserProfile(),
+                ));
           },
           child: SingleChildScrollView(
             child: Padding(
@@ -409,7 +409,7 @@ class _ManageProfileState extends State<ManageProfile> {
                                   // else {
                                   //   //response is null
                                   //   callSnackBar(
-                                  //       "network problem");
+                                  //       "Check your Internet Connection");
                                   //   print(
                                   //       "response is null");
                                   // }

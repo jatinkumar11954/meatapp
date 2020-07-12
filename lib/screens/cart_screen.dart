@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' as snack;
+
 import 'package:meatapp/adjust/bottomNavigation.dart';
 import 'package:meatapp/adjust/custom_route.dart';
 import 'package:meatapp/adjust/short.dart';
@@ -10,10 +12,13 @@ import 'package:meatapp/model/subCategory.dart';
 import 'package:meatapp/screens/tabScreen.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as hp;
 
 import '../model/cart.dart';
 
 class CartScreen extends StatelessWidget {
+  static const headers = {'Content-Type': 'application/json'};
+  hp.Response response;
   static const routeName = '/cart';
   var catgry = {
     0: "CHICKEN",
@@ -29,6 +34,16 @@ class CartScreen extends StatelessWidget {
     2: "ChickenLeg",
     3: "Chicken65",
   };
+  final GlobalKey<ScaffoldState> _scaffoldkey = new GlobalKey<ScaffoldState>();
+
+  void callSnackBar(String msg) {
+    print(msg + "snack msg");
+    final Snack = new snack.SnackBar(
+      content: new Text(msg),
+      duration: new Duration(seconds: 1),
+    );
+    _scaffoldkey.currentState.showSnackBar(Snack);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,6 +55,7 @@ class CartScreen extends StatelessWidget {
     List<Map<dynamic, dynamic>> a = List<Map<dynamic, dynamic>>();
 
     return Scaffold(
+        key: _scaffoldkey,
         appBar: AppBar(
           title: Text('Your Cart'),
         ),
@@ -211,28 +227,28 @@ class CartScreen extends StatelessWidget {
                             )));
                   }),
             ),
-            Padding(
-              padding: const EdgeInsets.all(18.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Text(
-                    'Total',
-                    style: TextStyle(fontSize: 20),
-                  ),
-                  Spacer(),
-                  Chip(
-                    label: Text(
-                      '₹${cart.totalAmount.toStringAsFixed(2)}',
-                      style: TextStyle(
-                        color: Theme.of(context).primaryTextTheme.title.color,
-                      ),
-                    ),
-                    backgroundColor: Theme.of(context).primaryColor,
-                  ),
-                ],
-              ),
-            ),
+            // Padding(
+            //   padding: const EdgeInsets.all(18.0),
+            //   child: Row(
+            //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //     children: <Widget>[
+            //       Text(
+            //         'Total',
+            //         style: TextStyle(fontSize: 20),
+            //       ),
+            //       Spacer(),
+            //       Chip(
+            //         label: Text(
+            //           '₹${cart.totalAmount.toStringAsFixed(2)}',
+            //           style: TextStyle(
+            //             color: Theme.of(context).primaryTextTheme.title.color,
+            //           ),
+            //         ),
+            //         backgroundColor: Theme.of(context).primaryColor,
+            //       ),
+            //     ],
+            //   ),
+            // ),
           ],
         ),
         floatingActionButton: Container(
@@ -248,74 +264,125 @@ class CartScreen extends StatelessWidget {
                           Navigator.push(
                               context,
                               CustomRoute(
-                                builder: (context) => TabScreen(),
-                                 settings: RouteSettings(arguments: 0)
-                              ));
+                                  builder: (context) => TabScreen(),
+                                  settings: RouteSettings(arguments: 0)));
                         },
                         child: Text("Add few Items",
                             style:
                                 TextStyle(fontSize: 20, color: Colors.white)),
                       )
-                    : Row(
-                        children: <Widget>[
-                          Container(
-                            width: w * 0.28,
-                            height: 50.0,
-                            color: Color.fromRGBO(8, 108, 86, 1),
-                            child: Row(
-                              children: <Widget>[
-                                SizedBox(width: 6),
-                                Icon(Icons.shopping_cart, color: Colors.white),
-                                SizedBox(width: 2),
-                                Text(
-                                    // "45555165.00",
-                                    '₹${cart.totalAmount.toStringAsFixed(1)}',
-                                    style: TextStyle(
-                                        fontSize: 15, color: Colors.white))
-                              ],
-                            ),
+                    : cart.isLoading
+                        ? CircularProgressIndicator()
+                        : Row(
+                            children: <Widget>[
+                              Container(
+                                width: w * 0.28,
+                                height: 50.0,
+                                color: Color.fromRGBO(8, 108, 86, 1),
+                                child: Row(
+                                  children: <Widget>[
+                                    SizedBox(width: 6),
+                                    Icon(Icons.shopping_cart,
+                                        color: Colors.white),
+                                    SizedBox(width: 2),
+                                    Text(
+                                        // "45555165.00",
+                                        '₹${cart.totalAmount.toStringAsFixed(1)}',
+                                        style: TextStyle(
+                                            fontSize: 15, color: Colors.white))
+                                  ],
+                                ),
+                              ),
+                              Spacer(),
+                              Text("CHECKOUT",
+                                  style: TextStyle(
+                                      fontSize: 20, color: Colors.white)),
+                              SizedBox(
+                                width: 8,
+                              ),
+                              Icon(
+                                Icons.check_circle,
+                                color: Colors.white,
+                                size: 32,
+                              ),
+                              SizedBox(
+                                width: 10,
+                              )
+                            ],
                           ),
-                          Spacer(),
-                          Text("CHECKOUT",
-                              style:
-                                  TextStyle(fontSize: 20, color: Colors.white)),
-                          SizedBox(
-                            width: 8,
-                          ),
-                          Icon(
-                            Icons.check_circle,
-                            color: Colors.white,
-                            size: 32,
-                          ),
-                          SizedBox(
-                            width: 10,
-                          )
-                        ],
-                      ),
-                onPressed: () async {
-                  cart.items.forEach((element) {
-                    a.add(element.toOrder());
-                  });
-                  print(a.toString());
-                  SharedPreferences store =
-                      await SharedPreferences.getInstance();
+                onPressed: (cart.items.isEmpty)
+                    ? () {
+                        Navigator.push(
+                            context,
+                            CustomRoute(
+                                builder: (context) => TabScreen(),
+                                settings: RouteSettings(arguments: 0)));
+                      }
+                    : () async {
+                        cart.items.forEach((element) {
+                          a.add(element.toOrder());
+                        });
+                        print(a.toString());
+                        SharedPreferences store =
+                            await SharedPreferences.getInstance();
 
-                  print("getting jwt from the device");
-                  String token = store.getString('jwt');
-                  if (token != null) {
-                    Map jwt = json.decode(
-                        ascii.decode(base64.decode(base64.normalize(token))));
-                    UserDetails user = UserDetails.fromJson(jwt["data"]);
-                    Map<dynamic, dynamic> order = Map<dynamic, dynamic>();
+                        print("getting jwt from the device");
+                        String token = store.getString('jwt');
+                        if (token != null) {
+                          Map jwt = json.decode(ascii
+                              .decode(base64.decode(base64.normalize(token))));
+                          UserDetails user = UserDetails.fromJson(jwt["data"]);
+                          Map<dynamic, dynamic> order = Map<dynamic, dynamic>();
 
-                    order = {
-                      "custId": user.custId,
-                      "order": a,
-                      "totalPrice": cart.totalAmount.toStringAsFixed(2)
-                    };
+                          order = {
+                            "cust_id": user.custId,
+                            "order": a,
+                            "totalPrice": cart.totalAmount.toStringAsFixed(2)
+                          };
+                          // try {
+                            callSnackBar("Placing Order");
+                          await  Future.delayed(Duration(milliseconds: 1000));
+                            // response = await hp.post('${Short.baseUrl}/orders',
+                            //     headers: headers, body: json.encode(order));
 
-                    print(order.toString());
-                  }
-                })));
+                            // if (response != null) {
+                              // Map res = json.decode(response.body);
+                              // if  ( response.statusCode == 200) {
+                                print("inside response status");
+                          await  callSnackBar("Order Placed Successfully 🎉🎉🎉");
+                                                                                  await    Future.delayed(Duration(milliseconds: 2000));
+
+
+                                cart.endLoading();
+                                productProvider.removeAll();
+                                cart.clear();
+                                cart.removeAll();
+
+                                Navigator.pushReplacementNamed(context, "Main");
+                              // }
+                              // if (response.statusCode == 400) {
+                              //   callSnackBar("${res["msg"]}");
+                              //   cart.endLoading()();
+
+                              //   print("error with phone number");
+                              // }
+                            } //response is not null
+
+                          
+                          // on Exception catch (e) {
+                          //   print("exception from   $e");
+                          //   cart.endLoading();
+
+                          //   callSnackBar("Check your Internet Connection");
+                          // } 
+                          // catch (error) {
+                          //   print("error from api");
+                          //   cart.endLoading();
+
+                          //   callSnackBar(error.toString());
+                          // }
+
+                        
+                      })));
   }
 }

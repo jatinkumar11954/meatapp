@@ -63,7 +63,7 @@ Future<List<Category>> getCategories(
     } //response is not null
 
   } on Exception catch (exception) {
-    callSnackBar("network problem", scaffoldkey);
+    callSnackBar("Check your Internet Connection", scaffoldkey);
   } catch (error) {
     callSnackBar(error.toString(), scaffoldkey);
   }
@@ -132,8 +132,8 @@ getSubCategory() {
         }
       }
     }
-  } 
-  _it!=null
+  }
+  _it != null
       ? _it.forEach((element) {
           int ro = catList.indexWhere((ele) {
             return ele.categoryName == element.catName;
@@ -193,7 +193,7 @@ Future<List<Scroll>> getCarousel(GlobalKey<ScaffoldState> scaffoldkey) async {
     } //response is not null
 
   } on Exception catch (exception) {
-    callSnackBar("network problem", scaffoldkey);
+    callSnackBar("Check your Internet Connection", scaffoldkey);
   } catch (error) {
     callSnackBar(error.toString(), scaffoldkey);
   }

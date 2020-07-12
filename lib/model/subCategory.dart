@@ -59,7 +59,7 @@ class Products with ChangeNotifier {
     int ro = catList.indexWhere((ele) {
       return ele.categoryName == r;
     });
-    
+
     _items[ro][c].quantity += 1;
     notifyListeners();
   }
@@ -70,6 +70,15 @@ class Products with ChangeNotifier {
     });
     _items[ro][c].quantity -= 1;
 
+    notifyListeners();
+  }
+
+  void removeAll() {
+    _items.forEach((column) {
+      column.forEach((e) {
+        e.quantity = 0;
+      });
+    });
     notifyListeners();
   }
 

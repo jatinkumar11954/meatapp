@@ -230,7 +230,7 @@ class _ForgotPwdOtpState extends State<ForgotPwdOtp>
                       setState(() {
                         _isLoading = false;
                       });
-                      callSnackBar("network problem");
+                      callSnackBar("Check your Internet Connection");
                       otpController.clear();
                     } catch (error) {
                       print("error from api");

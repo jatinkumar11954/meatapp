@@ -171,7 +171,7 @@ class _LoginOtpState extends State<LoginOtp> with TickerProviderStateMixin {
                       setState(() {
                         _isLoading = false;
                       });
-                      callSnackBar("network problem");
+                      callSnackBar("Check your Internet Connection");
                       phoneNumber.clear();
                     } catch (error) {
                       print("error from api");
@@ -224,44 +224,50 @@ class _LoginOtpState extends State<LoginOtp> with TickerProviderStateMixin {
     );
     return Scaffold(
       key: _scaffoldkey,
-      body: SingleChildScrollView(
-        child: Stack(
-          children: <Widget>[
-            Align(
-              alignment: Alignment.topCenter,
-              child: Container(
-                height: MediaQuery.of(context).size.height,
-                color: Theme.of(context).primaryColor,
+      body: WillPopScope(
+        onWillPop: () {
+          print("login via otp on wil pop");
+          Navigator.pushReplacementNamed(context, "LoginCard");
+        },
+        child: SingleChildScrollView(
+          child: Stack(
+            children: <Widget>[
+              Align(
+                alignment: Alignment.topCenter,
+                child: Container(
+                  height: MediaQuery.of(context).size.height,
+                  color: Theme.of(context).primaryColor,
+                ),
               ),
-            ),
-            Align(
-              alignment: Alignment.topCenter,
-              child: Container(
-                height: Short.h * 0.35,
-                color: Theme.of(context).primaryColor,
-                child: Center(
-                    child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Image.asset(
-                    "img/logo.png",
-                    alignment: Alignment.bottomCenter,
-                  ),
-                )),
+              Align(
+                alignment: Alignment.topCenter,
+                child: Container(
+                  height: Short.h * 0.35,
+                  color: Theme.of(context).primaryColor,
+                  child: Center(
+                      child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Image.asset(
+                      "img/logo.png",
+                      alignment: Alignment.bottomCenter,
+                    ),
+                  )),
+                ),
               ),
-            ),
-            Align(
-                alignment: Alignment.bottomCenter,
-                child: AnimatedBuilder(
-                  child: child,
-                  animation: _controller,
-                  builder: (BuildContext context, Widget child) {
-                    return SlideTransition(
-                      position: animation,
-                      child: child,
-                    );
-                  },
-                )),
-          ],
+              Align(
+                  alignment: Alignment.bottomCenter,
+                  child: AnimatedBuilder(
+                    child: child,
+                    animation: _controller,
+                    builder: (BuildContext context, Widget child) {
+                      return SlideTransition(
+                        position: animation,
+                        child: child,
+                      );
+                    },
+                  )),
+            ],
+          ),
         ),
       ),
     );

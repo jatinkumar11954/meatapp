@@ -335,8 +335,7 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
                           setState(() {
                             _isLoading = false;
                           });
-                          Navigator.pushReplacementNamed(context, "Login",
-                              arguments: false);
+                          Navigator.pushReplacementNamed(context, "Login");
                         }
                         if (response.statusCode == 400) {
                           // callSnackBar("${res["msg"]}");
@@ -351,7 +350,7 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
                       // else {
                       //   //response is null
                       //   callSnackBar(
-                      //       "network problem");
+                      //       "Check your Internet Connection");
                       //   print(
                       //       "response is null");
                       // }
@@ -397,8 +396,10 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
                     )),
                 FlatButton(
                   onPressed: () {
-                    Navigator.pushReplacementNamed(context, "Login",
-                        arguments: false);
+                    Navigator.pushReplacementNamed(
+                      context,
+                      "Login",
+                    );
                     print("login");
                   },
                   child: Text(
@@ -413,44 +414,49 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
     );
     return Scaffold(
       key: _scaffoldkey,
-      body: SingleChildScrollView(
-        child: Stack(
-          children: <Widget>[
-            Align(
-              alignment: Alignment.topCenter,
-              child: Container(
-                height: MediaQuery.of(context).size.height,
-                color: Theme.of(context).primaryColor,
+      body: WillPopScope(
+        onWillPop: () {
+          Navigator.pushReplacementNamed(context, "LoginCard");
+        },
+        child: SingleChildScrollView(
+          child: Stack(
+            children: <Widget>[
+              Align(
+                alignment: Alignment.topCenter,
+                child: Container(
+                  height: MediaQuery.of(context).size.height,
+                  color: Theme.of(context).primaryColor,
+                ),
               ),
-            ),
-            Align(
-              alignment: Alignment.topCenter, //229,247,243,
-              child: Container(
-                height: Short.h * 0.35,
-                color: Theme.of(context).primaryColor,
-                child: Center(
-                    child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Image.asset(
-                    "img/logo.png",
-                    alignment: Alignment.bottomCenter,
-                  ),
-                )),
+              Align(
+                alignment: Alignment.topCenter, //229,247,243,
+                child: Container(
+                  height: Short.h * 0.35,
+                  color: Theme.of(context).primaryColor,
+                  child: Center(
+                      child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Image.asset(
+                      "img/logo.png",
+                      alignment: Alignment.bottomCenter,
+                    ),
+                  )),
+                ),
               ),
-            ),
-            Align(
-                alignment: Alignment.bottomCenter,
-                child: AnimatedBuilder(
-                  child: child,
-                  animation: _controller,
-                  builder: (BuildContext context, Widget child) {
-                    return SlideTransition(
-                      position: animation,
-                      child: child,
-                    );
-                  },
-                )),
-          ],
+              Align(
+                  alignment: Alignment.bottomCenter,
+                  child: AnimatedBuilder(
+                    child: child,
+                    animation: _controller,
+                    builder: (BuildContext context, Widget child) {
+                      return SlideTransition(
+                        position: animation,
+                        child: child,
+                      );
+                    },
+                  )),
+            ],
+          ),
         ),
       ),
     );

@@ -86,6 +86,17 @@ Widget Draw(BuildContext context) {
               // ...
             },
           ),
+          ListTile(
+            leading: new Icon(
+              Icons.phone_in_talk,
+              color: Theme.of(context).primaryColor,
+            ),
+            title: Text('Logout', style: TextStyle(color: Colors.grey)),
+            onTap: () {
+              // Update the state of the app.
+              // ...
+            },
+          ),
         ],
       ),
     ),
@@ -103,7 +114,6 @@ Widget Carousel(BuildContext context, GlobalKey<ScaffoldState> scaffoldkey) {
             pauseAutoPlayOnTouch: Duration(seconds: 5),
             height: MediaQuery.of(context).size.height / 4,
             items: carousel.data.map((i) {
-
               return Builder(
                 builder: (BuildContext context) {
                   return Container(
@@ -112,8 +122,8 @@ Widget Carousel(BuildContext context, GlobalKey<ScaffoldState> scaffoldkey) {
                       decoration: BoxDecoration(color: Colors.grey[300]),
                       child: GestureDetector(
                           child: CachedNetworkImage(
-                            imageUrl: 
-                            "http://via.placeholder.com/350x200",//testing
+                            imageUrl:
+                                "http://via.placeholder.com/350x200", //testing
                             // i.img,
                             fit: BoxFit.fill,
                             placeholder: (context, url) => Shimmer.fromColors(
@@ -139,23 +149,19 @@ Widget Carousel(BuildContext context, GlobalKey<ScaffoldState> scaffoldkey) {
         }
         return Shimmer.fromColors(
             baseColor: Colors.grey[300],
-            highlightColor: Colors.white,
-            child: Shimmer.fromColors(
-                baseColor: Colors.grey[400],
-                highlightColor: Colors.white,
-                child: Center(
-                  child: Container(
-                    width: MediaQuery.of(context).size.width * 0.75,
-                    height: MediaQuery.of(context).size.width * 0.5,
-                    color: Colors.grey,
-                  ),
-                )));
+            highlightColor: Colors.white24,
+            child: Center(
+              child: Container(
+                width: MediaQuery.of(context).size.width * 0.75,
+                height: MediaQuery.of(context).size.width * 0.5,
+                color: Colors.grey,
+              ),
+            ));
       });
 }
 
-Widget LoginBftrAnim(BuildContext context, Function loginFalse, UniqueKey k1) {
+Widget LoginBftrAnim(BuildContext context) {
   return Container(
-    key: k1,
     height: Short.h * 0.75,
     margin: EdgeInsets.only(top: Short.h * 0.16),
     width: Short.w,
@@ -177,7 +183,9 @@ Widget LoginBftrAnim(BuildContext context, Function loginFalse, UniqueKey k1) {
                 ),
                 child: Center(
                     child: FlatButton(
-                  onPressed: loginFalse,
+                  onPressed: () {
+                    Navigator.pushReplacementNamed(context, "Login");
+                  },
                   child: Text(
                     "Login via Email / Phone",
                     style: TextStyle(

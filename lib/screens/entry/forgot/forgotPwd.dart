@@ -172,7 +172,7 @@ class _ForgotPwdState extends State<ForgotPwd> with TickerProviderStateMixin {
                       setState(() {
                         _isLoading = false;
                       });
-                      callSnackBar("network problem");
+                      callSnackBar("Check your Internet Connection");
                       phoneNumber.clear();
                     } catch (error) {
                       print("error from api");

@@ -297,7 +297,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                                               // else {
                                               //   //response is null
                                               //   callSnackBar(
-                                              //       "network problem");
+                                              //       "Check your Internet Connection");
                                               //   print(
                                               //       "response is null");
                                               // }
@@ -306,7 +306,8 @@ class _ChangePasswordState extends State<ChangePassword> {
                                                   "exception from  $exception");
 
                                               callSnackBar(
-                                                  "network problem", 2);
+                                                  "Check your Internet Connection",
+                                                  2);
                                             } catch (error) {
                                               print("error from api");
                                               setState(() {

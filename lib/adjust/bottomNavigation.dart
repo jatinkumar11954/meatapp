@@ -161,7 +161,7 @@ Widget bottomBar(BuildContext context, int i) {
                       }
                     case 1:
                       {
-                        Navigator.pushReplacement(
+                        Navigator.push(
                             c, CustomRoute(builder: (context) => CartScreen()));
                         break;
                       }
@@ -169,7 +169,7 @@ Widget bottomBar(BuildContext context, int i) {
                     case 2:
                       {
                         Navigator.pushReplacement(c,
-                            CustomRoute(builder: (context) => Description()));
+                            CustomRoute(builder: (context) => UserProfile()));
                         break;
                       }
                   }
@@ -220,7 +220,7 @@ Widget bottomBar(BuildContext context, int i) {
                       }
                     case 1:
                       {
-                        Navigator.pushReplacement(
+                        Navigator.push(
                             c, CustomRoute(builder: (context) => CartScreen()));
                         break;
                       }

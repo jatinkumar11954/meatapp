@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:meatapp/screens/Description.dart';
 import 'package:meatapp/screens/FirestScreen.dart';
+import 'package:meatapp/screens/entry/LoginCard.dart';
 import 'package:meatapp/screens/entry/Otp.dart';
 import 'package:meatapp/screens/entry/Login.dart';
 import 'package:meatapp/screens/entry/loginOtp.dart';
@@ -18,12 +19,16 @@ import 'screens/tabScreen.dart' as f;
 String jwt;
 bool login = false;
 bool get isLogin => login;
+setLogin() {
+  login = true;
+}
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SharedPreferences prefs = await SharedPreferences.getInstance();
 
   jwt = await prefs.getString("jwt");
- login=  jwt != null? true: false;
+  login = jwt != null ? true : false;
   var g = Geolocator()..forceAndroidLocationManager;
   g.getCurrentPosition(desiredAccuracy: LocationAccuracy.best);
 // place();
@@ -39,7 +44,6 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-
     return MultiProvider(
       providers: [
         ChangeNotifierProvider.value(
@@ -59,21 +63,22 @@ class MyApp extends StatelessWidget {
               textTheme: Theme.of(context).textTheme.apply(
                     fontFamily: 'Sans',
                   ),
-               
+
               // fontFamily: ,
               primaryColor: Color.fromRGBO(0, 175, 136, 1.0),
               accentColor: Color.fromRGBO(229, 247, 243, 1.0),
               cursorColor: Color.fromRGBO(0, 175, 136, 1.0)
-              
+
               // focusColor: Color.fromRGBO(229,247,243, 1.0),
               ),
-         initialRoute: jwt == null ? "Login" : "Main",//testing
+          initialRoute: jwt == null ? "LoginCard" : "Main", //testing
           //         initialRoute: !login ? "Login" : "Main",//testinh for login screen
 
           //  initialRoute: "Main",
           // home: Login(),
           routes: <String, WidgetBuilder>{
             'Login': (BuildContext context) => new Login(),
+            'LoginCard': (BuildContext context) => new LoginCard(),
             'LoginOtp': (BuildContext context) => new LoginOtp(),
             'Otp': (BuildContext context) => new Otp(),
             'Main': (BuildContext context) => new FirstScreen(),

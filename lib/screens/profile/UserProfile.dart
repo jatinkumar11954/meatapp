@@ -80,7 +80,7 @@ class UserProfileState extends State<UserProfile> {
         drawer: Draw(context),
         body: WillPopScope(
           onWillPop: () {
-            Navigator.push(
+            Navigator.pushReplacement(
                 context, CustomRoute(builder: (context) => FirstScreen()));
           },
           child: Column(

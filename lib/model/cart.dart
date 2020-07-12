@@ -1,4 +1,3 @@
-
 import 'package:flutter/foundation.dart';
 import 'package:meatapp/Api/categoryApi.dart';
 
@@ -77,13 +76,13 @@ class CartItem extends MapConvertible {
   @override
   Map<String, dynamic> toOrder() {
     return {
-      "id": id,
+      // "id": id,
       "title": title,
-      "catName": catName,
+      "categoryname": catName,
       // "column": column,
       "quantity": quantity,
       "price": price,
-      "weight": weight
+      // "weight": weight
     };
   }
 }
@@ -93,6 +92,16 @@ class Cart with ChangeNotifier {
 
   List<CartItem> get items {
     return [..._items];
+  }
+
+  bool get isLoading => _isLoading;
+  bool _isLoading = false;
+  startLoading() {
+    _isLoading = true;
+  }
+
+  endLoading() {
+    _isLoading = false;
   }
 
   setData(List<CartItem> i) {
@@ -186,19 +195,23 @@ class Cart with ChangeNotifier {
   void reduceQuant(CartItem item) {
     bool _checkSub = false;
     if (_items.isNotEmpty) {
-              print(_items[_items.indexWhere((element) => element.id==item.id)].quantity);
+      print(_items[_items.indexWhere((element) => element.id == item.id)]
+          .quantity);
 
       if (_items[indexOF(item)].quantity == 1) {
         print("check sub is true");
         _checkSub = true;
       }
       print("this is the quantuty");
-      print(_items[_items.indexWhere((element) => element.id==item.id)].quantity);
-    repo.addToCart(items[_items?.indexWhere((element) => element.id==item.id)]);
+      print(_items[_items.indexWhere((element) => element.id == item.id)]
+          .quantity);
+      repo.addToCart(
+          items[_items?.indexWhere((element) => element.id == item.id)]);
 
       _checkSub
           ? removeItem(item)
-          : _items[_items.indexWhere((element) => element.id==item.id)].quantity = item.quantity - 1;
+          : _items[_items.indexWhere((element) => element.id == item.id)]
+              .quantity = item.quantity - 1;
     }
 
     notifyListeners();
@@ -212,7 +225,7 @@ class Cart with ChangeNotifier {
   }
 
   void removeAll() async {
-    // await repo.removeAllfromTable();
+    await repo.removeAllfromTable();
     notifyListeners();
   }
 
