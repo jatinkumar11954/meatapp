@@ -56,8 +56,13 @@ class _DescriptionState extends State<Description> {
             top: 10,
             child: SizedBox(
               width: w * 0.83,
-              child: Text("Desc"),
-              // Text(product[ro][i].item), testing uncomment
+              child:
+                  // Text("Desc"),.replaceFirst(o[i].item[0],
+                  Text(product[ro][i].item.replaceFirst(
+                      product[ro][i].item[0],
+                      product[ro][i]
+                          .item[0]
+                          .toUpperCase())), //testing uncomment
             )),
       ]),
 
@@ -75,7 +80,9 @@ class _DescriptionState extends State<Description> {
         key: _scaffoldKey,
         appBar: appbar,
         drawer: Draw(context),
-        bottomNavigationBar: isLogin?bottomBar(context, 2):SizedBox(), //testing remove afterwards
+        bottomNavigationBar: isLogin
+            ? bottomBar(context, 2)
+            : SizedBox(), //testing remove afterwards
         body: ListView(
           children: <Widget>[
             Center(
@@ -149,32 +156,32 @@ class _DescriptionState extends State<Description> {
             ),
             Divider(thickness: 4),
             SizedBox(height: 30),
-           
-                  SizedBox(height: 60,)
+            SizedBox(
+              height: 60,
+            )
           ],
         ),
-        floatingActionButton:   isLogin
-                ? Container(): Container(
-            width: w * 0.91,
-            height: 
-            40.0,
-            color: Theme.of(context).primaryColor,
-            child: new RawMaterialButton(
-                shape: new CircleBorder(),
-                elevation: 0.0,
-                // child: Theme.of(context).primaryColor,
-                          onPressed: () => print("login button clicked"),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: <Widget>[
-                              Icon(Icons.arrow_forward, color: Colors.white),
-                              Text(" LOGIN/SIGN UP TO CHECKOUT",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: h * 0.02,
-                                  )),
-                            ],
-                          )))
-        );
+        floatingActionButton: isLogin
+            ? Container()
+            : Container(
+                width: w * 0.91,
+                height: 40.0,
+                color: Theme.of(context).primaryColor,
+                child: new RawMaterialButton(
+                    shape: new CircleBorder(),
+                    elevation: 0.0,
+                    // child: Theme.of(context).primaryColor,
+                    onPressed: () => print("login button clicked"),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        Icon(Icons.arrow_forward, color: Colors.white),
+                        Text(" LOGIN/SIGN UP TO CHECKOUT",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: h * 0.02,
+                            )),
+                      ],
+                    ))));
   }
 }

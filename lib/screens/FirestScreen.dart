@@ -8,6 +8,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:meatapp/adjust/short.dart';
 import 'package:meatapp/adjust/custom_route.dart';
 import 'package:meatapp/Api/categoryApi.dart';
+import 'package:meatapp/model/bottom.dart';
 import 'package:meatapp/model/cart.dart';
 import 'package:meatapp/model/search.dart';
 import 'package:meatapp/screens/cart_screen.dart';
@@ -162,7 +163,8 @@ class _FirstScreenState extends State<FirstScreen> {
                             child: GestureDetector(
                               onTap: () {
                                 print("navigating");
-
+                                Provider.of<Bottom>(context, listen: false)
+                                    .updateTab(i);
                                 Navigator.push(
                                     context,
                                     CustomRoute(
@@ -173,50 +175,50 @@ class _FirstScreenState extends State<FirstScreen> {
                               child: Column(
                                 children: <Widget>[
                                   Container(
-                                      height: h * 0.20,
-                                      width: w * 0.45,
-                                      child: Card(
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(10),
-                                        ),
-                                        elevation: 4.0,
-                                        child: ClipRRect(
-                                          borderRadius: BorderRadius.circular(10),
-                                          child: GridTile(
-                                            // child:
-                                            //  Hero(
-                                            //   tag: i,
-                                            child: CachedNetworkImage(
-                                              imageUrl:
-                                                  "http://via.placeholder.com/350x200",
-                                              //  category.data[i].img,
-                                              fit: BoxFit.fill,
-                                              placeholder: (context, url) =>
-                                                  Shimmer.fromColors(
-                                                      loop: 2,
-                                                      baseColor: Colors.grey[400],
-                                                      highlightColor:
-                                                          Colors.white12,
-                                                      child: Container(
-                                                        height: h * 0.20,
-                                                        width: w * 0.45,
-                                                        color: Colors.grey,
-                                                      )),
-                                              errorWidget: (_, str, dynamic) =>
-                                                  Center(
-                                                child: Icon(Icons.error),
-                                              ),
-
-                                              //               // value: loadingProgress.expectedTotalBytes != null
-                                              //               //     ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes
-                                              //               //     : null,
-                                              //
+                                    height: h * 0.20,
+                                    width: w * 0.45,
+                                    child: Card(
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      elevation: 4.0,
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(10),
+                                        child: GridTile(
+                                          // child:
+                                          //  Hero(
+                                          //   tag: i,
+                                          child: CachedNetworkImage(
+                                            imageUrl:
+                                                "http://via.placeholder.com/350x200",
+                                            //  category.data[i].img,
+                                            fit: BoxFit.fill,
+                                            placeholder: (context, url) =>
+                                                Shimmer.fromColors(
+                                                    loop: 2,
+                                                    baseColor: Colors.grey[400],
+                                                    highlightColor:
+                                                        Colors.white12,
+                                                    child: Container(
+                                                      height: h * 0.20,
+                                                      width: w * 0.45,
+                                                      color: Colors.grey,
+                                                    )),
+                                            errorWidget: (_, str, dynamic) =>
+                                                Center(
+                                              child: Icon(Icons.error),
                                             ),
-                                            // ),
+
+                                            //               // value: loadingProgress.expectedTotalBytes != null
+                                            //               //     ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes
+                                            //               //     : null,
+                                            //
                                           ),
+                                          // ),
                                         ),
                                       ),
                                     ),
+                                  ),
                                   Center(
                                       child: Text(
                                           category.data[i].categoryName
