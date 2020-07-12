@@ -301,7 +301,7 @@ class CartScreen extends StatelessWidget {
                       await SharedPreferences.getInstance();
 
                   print("getting jwt from the device");
-                  String token = await store.getString('jwt');
+                  String token = store.getString('jwt');
                   if (token != null) {
                     Map jwt = json.decode(
                         ascii.decode(base64.decode(base64.normalize(token))));

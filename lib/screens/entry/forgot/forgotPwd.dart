@@ -30,8 +30,6 @@ class _ForgotPwdState extends State<ForgotPwd> with TickerProviderStateMixin {
   }
 
   void initState() {
-    // TODO: implement initState
-
     phoneNumber = new TextEditingController();
 
     super.initState();
@@ -169,8 +167,8 @@ class _ForgotPwdState extends State<ForgotPwd> with TickerProviderStateMixin {
                         }
                       } //response is not null
 
-                    } on Exception catch (exception) {
-                      print("exeception from api");
+                    } on Exception catch (e) {
+                      print("exception from   $e");
                       setState(() {
                         _isLoading = false;
                       });

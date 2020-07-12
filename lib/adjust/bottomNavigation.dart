@@ -9,7 +9,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:meatapp/screens/profile/UserProfile.dart';
 import 'package:provider/provider.dart';
 import 'custom_route.dart';
-import 'package:meatapp/main.dart';
 
 Widget bottomBar(BuildContext context, int i) {
   print(i.toString());

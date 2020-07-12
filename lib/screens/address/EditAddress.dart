@@ -10,7 +10,6 @@ import 'package:meatapp/adjust/short.dart';
 import 'package:meatapp/adjust/widget.dart';
 import 'package:meatapp/details/userDetails.dart';
 import 'package:meatapp/screens/profile/UserProfile.dart';
-import 'package:meatapp/screens/profile/manageProfile.dart';
 
 class EditAddress extends StatefulWidget {
   @override
@@ -280,8 +279,8 @@ class _EditAddressState extends State<EditAddress> {
                               // }
 
                             } //try
-                            on Exception catch (exception) {
-                              print("exeception from api");
+                            on Exception catch (e) {
+                              print("exceptionapi $e");
 
                               callSnackBar(
                                   "User with these details already exists");

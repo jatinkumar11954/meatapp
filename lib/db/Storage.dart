@@ -30,11 +30,11 @@ class Storage {
     print("object retrieved " + objects[0]["title"]);
     return objects.map((map) => CartItem().fromMap(map)).toList();
   }
-  void deleteFromCart(CartItem Item)async{
+  Future<void> deleteFromCart(CartItem Item)async{
         await _repository.deletefrmTable(Item.id);
 
   }
-   void updateCart(CartItem Item)async{
+ Future<void> updateCart(CartItem Item)async{
         await _repository.updateTable(Item.quantity, Item.id);
 
   }

@@ -4,7 +4,6 @@ import 'package:meatapp/Api/categoryApi.dart';
 import 'package:meatapp/adjust/custom_route.dart';
 import 'package:meatapp/model/subCategory.dart';
 import 'package:meatapp/screens/Description.dart';
-import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
 class ProductSearch extends SearchDelegate<String> {
@@ -14,7 +13,6 @@ class ProductSearch extends SearchDelegate<String> {
         );
   @override
   Widget buildLeading(BuildContext context) {
-    // TODO: implement buildLeading
     return IconButton(
       tooltip: 'Back',
       icon: AnimatedIcon(
@@ -30,7 +28,6 @@ class ProductSearch extends SearchDelegate<String> {
 
   @override
   List<Widget> buildActions(BuildContext context) {
-    // TODO: implement buildActions
     return [
       IconButton(
         tooltip: 'Clear',
@@ -45,8 +42,7 @@ class ProductSearch extends SearchDelegate<String> {
 
   @override
   Widget buildResults(BuildContext context) {
-    // TODO: implement buildResults
-    // throw UnimplementedError();
+
     return Container();
   }
 
@@ -54,8 +50,7 @@ class ProductSearch extends SearchDelegate<String> {
   Widget buildSuggestions(BuildContext context) {
     final res = subCatList
         .where((e) => e.item.toLowerCase().contains(query.toLowerCase()));
-    // TODO: implement buildSuggestions
-    // throw UnimplementedError();
+
     return query.isNotEmpty
         ? Padding(
             padding: const EdgeInsets.all(15.0),
@@ -259,16 +254,13 @@ class ProductSearch extends SearchDelegate<String> {
 }
 
     class StoreSearch extends SearchDelegate<String> {
-    // @override
-   // // TODO: implement searchFieldLabel
-  // String get searchFieldLabel => super.searchFieldLabel;
+
    StoreSearch()
         : super(
             searchFieldLabel: "StoreSearch",
          );
   @override
   Widget buildLeading(BuildContext context) {
-    // TODO: implement buildLeading
     return Hero(
       tag: "Storesearch",
       child: Material(
@@ -289,7 +281,6 @@ class ProductSearch extends SearchDelegate<String> {
 
   @override
   List<Widget> buildActions(BuildContext context) {
-    // TODO: implement buildActions
     return [
       IconButton(
         tooltip: 'Clear',
@@ -304,8 +295,7 @@ class ProductSearch extends SearchDelegate<String> {
 
   @override
   Widget buildResults(BuildContext context) {
-    // TODO: implement buildResults
-    // throw UnimplementedError();
+ 
     return Container();
   }
 
@@ -315,9 +305,7 @@ class ProductSearch extends SearchDelegate<String> {
         ? List<SubCategory>()
         : subCatList
             .where((e) => e.item.toLowerCase().contains(query.toLowerCase()));
-    // TODO: implement buildSuggestions
-    // throw UnimplementedError();
-    return query.isNotEmpty
+     return query.isNotEmpty
         ? Padding(
             padding: const EdgeInsets.all(15.0),
             child: ListView.builder(

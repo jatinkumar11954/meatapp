@@ -1,6 +1,5 @@
 import 'package:geolocator/geolocator.dart';
 import 'package:meatapp/adjust/short.dart';
-import 'package:meatapp/screens/entry/Login.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart' as snack;
 import 'package:meatapp/location/locator.dart';
@@ -359,7 +358,7 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
 
                     } //try
                     on Exception catch (exception) {
-                      print("exeception from api");
+                      print("exception from  $exception");
                       setState(() {
                         _isLoading = false;
                       });

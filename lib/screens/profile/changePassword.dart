@@ -9,7 +9,6 @@ import 'package:meatapp/adjust/custom_route.dart';
 import 'package:meatapp/adjust/short.dart';
 import 'package:meatapp/adjust/widget.dart';
 import 'package:meatapp/details/userDetails.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import 'manageProfile.dart';
 
@@ -303,7 +302,8 @@ class _ChangePasswordState extends State<ChangePassword> {
                                               //       "response is null");
                                               // }
                                             } on Exception catch (exception) {
-                                              print("exeception from api");
+                                              print(
+                                                  "exception from  $exception");
 
                                               callSnackBar(
                                                   "network problem", 2);

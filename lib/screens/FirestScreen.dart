@@ -33,16 +33,9 @@ void callSnackBar(String msg, GlobalKey<ScaffoldState> _scaffoldkey) {
 }
 
 class _FirstScreenState extends State<FirstScreen> {
-  ScrollController _controller;
   final GlobalKey<ScaffoldState> firstscreen = new GlobalKey<ScaffoldState>();
 
   bool searchProduct = false;
-
-  @override
-  void initState() {
-    _controller = ScrollController();
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {

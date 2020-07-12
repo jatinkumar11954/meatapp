@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart' as snack;
-import 'package:meatapp/main.dart';
 import 'package:meatapp/adjust/short.dart';
 import 'package:meatapp/adjust/widget.dart';
 import 'package:http/http.dart' as hp;
@@ -270,10 +269,6 @@ class _LoginState extends State<Login> {
                                         right: Short.w * 0.29),
                                     color: Theme.of(context).primaryColor,
                                     onPressed: () async {
-                                      void a() {
-                                        print("A");
-                                      }
-
                                       print("Login button is clicked");
                                       if (_formKey.currentState.validate()) {
                                         print("Form is validated");
@@ -350,8 +345,8 @@ class _LoginState extends State<Login> {
                                             }
                                           } //response is not null
 
-                                        } on Exception catch (exception) {
-                                          print("exeception from api");
+                                        } on Exception catch (e) {
+                                          print("exception from   $e");
                                           setState(() {
                                             _isLoading = false;
                                           });

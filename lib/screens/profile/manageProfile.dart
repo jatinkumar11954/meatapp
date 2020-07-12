@@ -313,7 +313,7 @@ class _ManageProfileState extends State<ManageProfile> {
                           style: TextStyle(
                               fontSize: 20,
                               color: Theme.of(context).primaryColor)),
-                      subtitle: Text("${pwd}",
+                      subtitle: Text("$pwd",
                           style: TextStyle(
                             fontSize: 20,
                           )),
@@ -416,7 +416,7 @@ class _ManageProfileState extends State<ManageProfile> {
 
                                 } //try
                                 on Exception catch (exception) {
-                                  print("exeception from api");
+                                  print("exeception from  $exception");
 
                                   callSnackBar(
                                       "User with these details already exists",

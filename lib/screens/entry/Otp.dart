@@ -38,7 +38,6 @@ class _OtpState extends State<Otp> with TickerProviderStateMixin {
   AnimationController _controller;
   Animation<Offset> animation;
   void initState() {
-    // TODO: implement initState
 
     onTapRecognizer = TapGestureRecognizer()
       ..onTap = () {
@@ -118,7 +117,7 @@ class _OtpState extends State<Otp> with TickerProviderStateMixin {
             padding: const EdgeInsets.all(8.0),
             child: Center(
               child: Text(
-                "+91-${i}", //1 is for phone number
+                "+91-$i", //1 is for phone number
 
                 style: TextStyle(
                     color: Theme.of(context).primaryColor,
@@ -227,7 +226,7 @@ class _OtpState extends State<Otp> with TickerProviderStateMixin {
                       } //response is not null
 
                     } on Exception catch (exception) {
-                      print("exeception from api");
+                      print("exception from  $exception");
                       setState(() {
                         _isLoading = false;
                       });

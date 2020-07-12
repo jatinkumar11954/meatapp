@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:meatapp/location/locator.dart';
 import 'package:meatapp/screens/Description.dart';
 import 'package:meatapp/screens/FirestScreen.dart';
 import 'package:meatapp/screens/entry/Otp.dart';

@@ -39,8 +39,6 @@ class _ForgotPwdOtpState extends State<ForgotPwdOtp>
   AnimationController _controller;
   Animation<Offset> animation;
   void initState() {
-    // TODO: implement initState
-
     onTapRecognizer = TapGestureRecognizer()
       ..onTap = () {
         Navigator.pop(context);
@@ -119,7 +117,7 @@ class _ForgotPwdOtpState extends State<ForgotPwdOtp>
             padding: const EdgeInsets.all(8.0),
             child: Center(
               child: Text(
-                "+91-${i}", //1 is for phone number
+                "+91-$i", //1 is for phone number
 
                 style: TextStyle(
                     color: Theme.of(context).primaryColor,
@@ -227,8 +225,8 @@ class _ForgotPwdOtpState extends State<ForgotPwdOtp>
                         }
                       } //response is not null
 
-                    } on Exception catch (exception) {
-                      print("exeception from api");
+                    } on Exception catch (e) {
+                      print("exception from   $e");
                       setState(() {
                         _isLoading = false;
                       });

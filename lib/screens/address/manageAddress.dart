@@ -7,7 +7,6 @@ import 'package:meatapp/adjust/widget.dart';
 import 'package:meatapp/details/userDetails.dart';
 import 'EditAddress.dart';
 
-import 'EditAddress.dart';
 
 class ManageAddress extends StatefulWidget {
   @override
