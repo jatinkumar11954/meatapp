@@ -10,8 +10,8 @@
         <!-- <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> -->
     <application
         android:name="io.flutter.app.FlutterApplication"
-        android:label="meatapp"
-        android:icon="@mipmap/ic_launcher">
+        android:label="FreshMeat"
+        android:icon="@mipmap/logo">
              <meta-data android:name="com.google.android.geo.API_KEY"
                android:value="AIzaSyAIxO8i9FyEYT1QOwJN79wzBE28eS4XXgY"/>
         <activity

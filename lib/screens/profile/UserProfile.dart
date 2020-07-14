@@ -6,7 +6,9 @@ import 'package:meatapp/adjust/custom_route.dart';
 import 'package:meatapp/adjust/short.dart';
 import 'package:meatapp/adjust/widget.dart';
 import 'package:meatapp/details/userDetails.dart';
+import 'package:meatapp/model/bottom.dart';
 import 'package:meatapp/screens/address/manageAddress.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -73,13 +75,14 @@ class UserProfileState extends State<UserProfile> {
     print(Short.w.toString());
     var h = Short.h - appbar.preferredSize.height;
     var w = Short.w;
-
+    final bottom = Provider.of<Bottom>(context);
     return Scaffold(
         appBar: appbar,
         bottomNavigationBar: bottomBar(context, 2),
         drawer: Draw(context),
         body: WillPopScope(
           onWillPop: () {
+            bottom.updateINdex(0);
             Navigator.pushReplacement(
                 context, CustomRoute(builder: (context) => FirstScreen()));
           },

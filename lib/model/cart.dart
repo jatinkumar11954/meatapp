@@ -106,7 +106,7 @@ class Cart with ChangeNotifier {
 
   setData(List<CartItem> i) {
     print("inside set data of cart");
-    i == null ? _items = [] : _items.addAll(i);
+    i == null ? _items = [] : _items=i;
     notifyListeners();
   }
 

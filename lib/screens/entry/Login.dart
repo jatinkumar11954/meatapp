@@ -274,7 +274,7 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                                       Map jwt = json.decode(ascii.decode(
                                           base64.decode(base64.normalize(
                                               res['token'].split(".")[1]))));
-
+                                      String t;
                                       storeLocal() async {
                                         SharedPreferences store =
                                             await SharedPreferences
@@ -286,6 +286,9 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                                             res['token']
                                                 .split(".")[1]
                                                 .toString());
+                                         t = await store.getString('jwt');
+                                         setLogin();
+                                      setUser(t);
                                       }
 
                                       setState(() {
@@ -298,7 +301,8 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                                       print(jwt.toString());
                                       email.clear();
                                       pwd.clear();
-                                      setLogin();
+                                      
+                                      
                                       Navigator.pushReplacementNamed(
                                           context, "Main",
                                           arguments: jwt);

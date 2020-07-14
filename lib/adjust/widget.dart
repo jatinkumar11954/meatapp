@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -5,10 +7,31 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:meatapp/Api/categoryApi.dart';
 import 'package:meatapp/adjust/shimmer.dart';
 import 'package:meatapp/adjust/short.dart';
+import 'package:meatapp/details/userDetails.dart';
 import 'package:meatapp/main.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shimmer/shimmer.dart';
 
 Widget Draw(BuildContext context) {
+  UserDetails user;
+
+  void getUser() async {
+    SharedPreferences store = await SharedPreferences.getInstance();
+    print("getting jwt from the device");
+    String token = store.getString('jwt');
+    if (token != null) {
+      Map jwt =
+          json.decode(ascii.decode(base64.decode(base64.normalize(token))));
+      user = UserDetails.fromJson(jwt["data"]);
+      print(jwt["data"].toString());
+
+
+    }
+  }
+
+  isLogin ? getUser() : null;
+  // print(user.address);      
+
   return Drawer(
     child: SafeArea(
       child: ListView(
@@ -34,7 +57,7 @@ Widget Draw(BuildContext context) {
                 color: Colors.white,
                 onPressed: () => Navigator.pop(context),
               ),
-              title: Text(isLogin ? 'Login' : "Profile",
+              title: Text(isLogin ? "${userdetails.fullName??"Profile"}" : 'Login',
                   style: TextStyle(color: Colors.white)),
               onTap: () {
                 // Update the state of the app.
@@ -86,17 +109,47 @@ Widget Draw(BuildContext context) {
               // ...
             },
           ),
-          ListTile(
-            leading: new Icon(
-              Icons.phone_in_talk,
-              color: Theme.of(context).primaryColor,
-            ),
-            title: Text('Logout', style: TextStyle(color: Colors.grey)),
-            onTap: () {
-              // Update the state of the app.
-              // ...
-            },
-          ),
+          isLogin
+              ? ListTile(
+                  leading: new Icon(
+                    Icons.phone_in_talk,
+                    color: Theme.of(context).primaryColor,
+                  ),
+                  title: Text('Logout', style: TextStyle(color: Colors.grey)),
+                  onTap: ()  {
+                   
+                     showDialog(
+                context: context,
+                builder: (context) => AlertDialog(
+                  // insetPadding:  EdgeInsets.all(20),
+                  titlePadding: EdgeInsets.fromLTRB(40, 30, 40, 10),
+                  contentPadding: EdgeInsets.fromLTRB(40, 5, 40, 0),
+                  backgroundColor: Color.fromRGBO(46, 54, 67, 1),
+                  title: Text('Logout from FreshMeat?',
+                      style: TextStyle(color: Colors.white)),
+                  content: Text('Your Credentials will be vanished!',
+                      style: TextStyle(color: Colors.white)),
+                  actions: <Widget>[
+                    FlatButton(
+                      onPressed: () => Navigator.of(context).pop(false),
+                      child: Text('No'),
+                    ),
+                    FlatButton(
+                      onPressed: () async{ SharedPreferences ap =
+                        await SharedPreferences.getInstance();
+                    ap.clear();
+                                             Navigator.pushReplacementNamed(context, "LoginCard");},
+
+                      child: Text('Logout'),
+                    ),
+                  ],
+                ),
+              ) ??
+              false;
+
+                  },
+                )
+              : SizedBox(),
         ],
       ),
     ),

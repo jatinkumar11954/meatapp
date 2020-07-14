@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:meatapp/screens/Description.dart';
@@ -10,6 +12,7 @@ import 'package:meatapp/screens/profile/UserProfile.dart';
 import 'package:meatapp/screens/profile/manageProfile.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'details/userDetails.dart';
 import 'model/bottom.dart';
 import 'model/cart.dart';
 import 'model/subCategory.dart';
@@ -19,15 +22,34 @@ import 'screens/tabScreen.dart' as f;
 String jwt;
 bool login = false;
 bool get isLogin => login;
+UserDetails _user;
+UserDetails get userdetails => _user;
 setLogin() {
   login = true;
+}
+otpLogin() {
+  login = false;
+}
+
+Map token;
+
+setUser(String j) {
+  token = json.decode(ascii.decode(base64.decode(base64.normalize(j))));
+  _user = UserDetails.fromJson(token["data"]);
 }
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SharedPreferences prefs = await SharedPreferences.getInstance();
-
   jwt = await prefs.getString("jwt");
+  jwt != null
+      ? {
+          token =
+              json.decode(ascii.decode(base64.decode(base64.normalize(jwt)))),
+          _user = UserDetails.fromJson(token["data"])
+        }
+      : {};
+
   login = jwt != null ? true : false;
   var g = Geolocator()..forceAndroidLocationManager;
   g.getCurrentPosition(desiredAccuracy: LocationAccuracy.best);

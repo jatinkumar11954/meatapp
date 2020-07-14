@@ -9,14 +9,18 @@ import 'package:meatapp/adjust/custom_route.dart';
 import 'package:meatapp/adjust/short.dart';
 import 'package:meatapp/adjust/widget.dart';
 import 'package:meatapp/details/userDetails.dart';
+import 'package:meatapp/main.dart';
 import 'package:meatapp/screens/profile/UserProfile.dart';
 
 class EditAddress extends StatefulWidget {
+  String type;
+  EditAddress({this.type});
   @override
   _EditAddressState createState() => _EditAddressState();
 }
 
 class _EditAddressState extends State<EditAddress> {
+
   TextEditingController flatNo;
   TextEditingController street;
   TextEditingController area;
@@ -66,7 +70,9 @@ class _EditAddressState extends State<EditAddress> {
       title: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text("Edit Address"),
+                    Text("${widget.type.length>4?widget.type.replaceRange(3, 4, " N") .replaceFirst(widget.type[0], widget.type[0].toUpperCase()):widget.type.replaceFirst(widget.type[0], widget.type[0].toUpperCase())} Address"),
+
+          // Text("${widget.type.replaceFirst(widget.type[0], widget.type[0].toUpperCase())} Address"),
         ],
       ),
     );
@@ -215,19 +221,20 @@ class _EditAddressState extends State<EditAddress> {
                             setState(() {
                               _isLoading = true;
                             });
-                            print(user.address);
-                            user.address = flatNo.text +
+                            // print(user.address);
+                          String address = flatNo.text +
                                 "," +
                                 area.text +
                                 "," +
                                 street.text +
                                 "," +
                                 pincode.text;
-                            print(user.phoneNo.toString());
-
+                            // print(user.phoneNo.toString());
+// 
                             Map<String, dynamic> data = {
-                              "phoneno": user.phoneNo,
-                              "address": user.address,
+                              // "phoneno": user.phoneNo,
+                              "cust_id":userdetails.custId,
+                              "newaddress": address,
                             };
                             setState(() {
                               _isLoading = true;
@@ -237,7 +244,7 @@ class _EditAddressState extends State<EditAddress> {
                             try {
                               callSnackBar("Connecting...");
                               response = await hp.post(
-                                  "${Short.baseUrl}/updateaddress",
+                                  "${Short.baseUrl}/${widget.type}address",
                                   body: json.encode(data),
                                   headers: headers);
                               print(response.toString());
@@ -257,7 +264,7 @@ class _EditAddressState extends State<EditAddress> {
                                       CustomRoute(
                                           builder: (context) => UserProfile(),
                                           settings:
-                                              RouteSettings(arguments: user)));
+                                              RouteSettings(arguments: userdetails)));
                                 }
                                 if (response.statusCode == 400) {
                                   // callSnackBar("${res["msg"]}");

@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:meatapp/Api/categoryApi.dart';
+import 'package:meatapp/adjust/badge.dart';
 import 'package:meatapp/adjust/bottomNavigation.dart';
+import 'package:meatapp/adjust/custom_route.dart';
 import 'package:meatapp/adjust/short.dart';
 import 'package:meatapp/adjust/widget.dart';
 import 'package:meatapp/main.dart';
+import 'package:meatapp/model/bottom.dart';
+import 'package:meatapp/model/cart.dart';
 import 'package:meatapp/model/subCategory.dart';
 import 'package:provider/provider.dart';
+
+import 'cart_screen.dart';
 
 class Description extends StatefulWidget {
   String catName;
@@ -18,6 +24,11 @@ class Description extends StatefulWidget {
 class _DescriptionState extends State<Description> {
   @override
   Widget build(BuildContext context) {
+    final productProvider = Provider.of<Products>(context);
+
+    final cart = Provider.of<Cart>(context, listen: false);
+    final bottom = Provider.of<Bottom>(context, listen: false);
+
     final product = Provider.of<Products>(context, listen: false).items;
 
     final GlobalKey<ScaffoldState> _scaffoldKey =
@@ -57,7 +68,7 @@ class _DescriptionState extends State<Description> {
             child: SizedBox(
               width: w * 0.83,
               child:
-                  // Text("Desc"),.replaceFirst(o[i].item[0],
+                  // Text("Desc"),.replaceFirst(product[ro][i].item[0],
                   Text(product[ro][i].item.replaceFirst(
                       product[ro][i].item[0],
                       product[ro][i]
@@ -80,9 +91,9 @@ class _DescriptionState extends State<Description> {
         key: _scaffoldKey,
         appBar: appbar,
         drawer: Draw(context),
-        bottomNavigationBar: isLogin
-            ? bottomBar(context, 2)
-            : SizedBox(), //testing remove afterwards
+        // bottomNavigationBar: isLogin
+        //     ? bottomBar(context, 2)
+        //     : SizedBox(), //testing remove afterwards
         body: ListView(
           children: <Widget>[
             Center(
@@ -155,6 +166,118 @@ class _DescriptionState extends State<Description> {
               ),
             ),
             Divider(thickness: 4),
+            product[ro][i].quantity > 0
+                ? Container(
+                    width: w * 0.5,
+                    height: 60,
+                    margin: EdgeInsets.fromLTRB(25, 25, w * 0.5, 25),
+                    // padding:
+                    //     EdgeInsets.all(
+                    //         2),
+                    decoration: BoxDecoration(
+                        border: Border.all(
+                            width: 2, color: Theme.of(context).primaryColor)),
+
+                    child: Center(
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          IconButton(
+                              icon: Icon(Icons.remove_circle,
+                                  size: 40,
+                                  color: Theme.of(context).primaryColor),
+                              onPressed: () {
+                                if (product[ro][i].quantity == 1) {
+                                  cart.removeItem(CartItem(
+                                      id: product[ro][i].id,
+                                      price: product[ro][i].price,
+                                      quantity: product[ro][i].quantity,
+                                      title: product[ro][i].item,
+                                      img: product[ro][i].img,
+                                      catName: product[ro][i].catname,
+                                      weight: product[ro][i].weight,
+                                      column: i));
+
+                                  // print(cart.items
+                                  //     .length);
+                                }
+                                cart.reduceQuant(CartItem(
+                                    id: product[ro][i].id,
+                                    price: product[ro][i].price,
+                                    quantity: product[ro][i].quantity,
+                                    title: product[ro][i].item,
+                                    img: product[ro][i].img,
+                                    catName: product[ro][i].catname,
+                                    weight: product[ro][i].weight,
+                                    column: i));
+                                productProvider.subQuant(
+                                    product[ro][i].catname, i);
+                              }),
+                          SizedBox(
+                            width: 15,
+                          ),
+                          Text(product[ro][i].quantity.toString(),
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold)),
+                          SizedBox(
+                            width: 5,
+                          ),
+                          IconButton(
+                              icon: Icon(Icons.add_circle,
+                                  size: 40,
+                                  color: Theme.of(context).primaryColor),
+                              onPressed: () {
+                                cart.addItem(CartItem(
+                                    id: product[ro][i].id,
+                                    price: product[ro][i].price,
+                                    quantity: product[ro][i].quantity,
+                                    title: product[ro][i].item,
+                                    img: product[ro][i].img,
+                                    catName: product[ro][i].catname,
+                                    weight: product[ro][i].weight,
+                                    column: i));
+                                productProvider.addQuant(
+                                    product[ro][i].catname, i);
+                              }),
+                        ],
+                      ),
+                    ),
+                  )
+                : GestureDetector(
+                    child: Container(
+                      width: w * 0.5,
+                      margin: EdgeInsets.fromLTRB(25, 25, w * 0.5, 25),
+                      padding: EdgeInsets.all(18),
+                      color: Colors.grey,
+                      child: Row(
+                        children: <Widget>[
+                          Icon(
+                            Icons.shopping_cart,
+                            color: Colors.white,
+                          ),
+                          Text(
+                            "Add to Cart",
+                            style: TextStyle(color: Colors.white, fontSize: 20),
+                          )
+                        ],
+                      ),
+                    ),
+                    onTap: () {
+                      cart.addItem(CartItem(
+                          id: product[ro][i].id,
+                          price: product[ro][i].price,
+                          quantity: 1,
+                          title: product[ro][i].item,
+                          img: product[ro][i].img,
+                          catName: product[ro][i].catname,
+                          weight: product[ro][i].weight,
+                          column: i));
+                      productProvider.addQuant(product[ro][i].catname, i);
+                    },
+                  ),
             SizedBox(height: 30),
             SizedBox(
               height: 60,
@@ -162,24 +285,54 @@ class _DescriptionState extends State<Description> {
           ],
         ),
         floatingActionButton: isLogin
-            ? Container()
+            ? FloatingActionButton(
+                elevation: 4.0,
+                onPressed: () {
+                  bottom.updateINdex(1);
+                  Navigator.push(
+                      context, CustomRoute(builder: (c) => CartScreen()));
+                },
+                child: Consumer<Cart>(
+                  builder: (_, cart, ch) => Badge(
+                    child: ch,
+                    value: cart?.itemCount.toString(),
+                    color: Colors.black,
+                  ),
+                  child: IconButton(
+                    icon: Icon(
+                      Icons.shopping_cart,
+                      color: Colors.white,
+                    ),
+                    onPressed: () {
+                      print("cartscreen");
+                      bottom.updateINdex(1);
+
+                      Navigator.push(
+                          context, CustomRoute(builder: (c) => CartScreen()));
+                    },
+                  ),
+                ),
+                backgroundColor: Theme.of(context).primaryColor,
+              )
             : Container(
                 width: w * 0.91,
-                height: 40.0,
+                height: 45.0,
                 color: Theme.of(context).primaryColor,
                 child: new RawMaterialButton(
                     shape: new CircleBorder(),
                     elevation: 0.0,
                     // child: Theme.of(context).primaryColor,
-                    onPressed: () => print("login button clicked"),
+                    onPressed: () =>
+                        Navigator.pushReplacementNamed(context, "Login"),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
                         Icon(Icons.arrow_forward, color: Colors.white),
                         Text(" LOGIN/SIGN UP TO CHECKOUT",
+                            softWrap: true,
                             style: TextStyle(
                               color: Colors.white,
-                              fontSize: h * 0.02,
+                              fontSize: 18,
                             )),
                       ],
                     ))));

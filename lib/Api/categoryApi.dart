@@ -186,7 +186,7 @@ Future<List<Scroll>> getCarousel(GlobalKey<ScaffoldState> scaffoldkey) async {
         return scrollList;
       }
       if (scrollResponse.statusCode == 400) {
-        callSnackBar("${scrollJson["msg"]}", scaffoldkey);
+        callSnackBar(" error ${scrollJson["msg"]}", scaffoldkey);
 
         print("carousel api bad req");
       }
@@ -195,7 +195,7 @@ Future<List<Scroll>> getCarousel(GlobalKey<ScaffoldState> scaffoldkey) async {
   } on Exception catch (exception) {
     callSnackBar("Check your Internet Connection", scaffoldkey);
   } catch (error) {
-    callSnackBar(error.toString(), scaffoldkey);
+    callSnackBar("error ${error.toString()}", scaffoldkey);
   }
 }
 

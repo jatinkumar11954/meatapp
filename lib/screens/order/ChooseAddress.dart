@@ -8,16 +8,10 @@ import 'package:meatapp/adjust/short.dart';
 import 'package:meatapp/adjust/widget.dart';
 import 'package:meatapp/details/userDetails.dart';
 import 'package:meatapp/model/address.dart';
+import 'package:meatapp/screens/address/EditAddress.dart';
 import '../../main.dart';
-import 'EditAddress.dart';
 import 'package:http/http.dart' as hp;
-
-class ManageAddress extends StatefulWidget {
-  @override
-  _ManageAddressState createState() => _ManageAddressState();
-}
-
-class _ManageAddressState extends State<ManageAddress> {
+class ChooseAddress extends StatelessWidget {
   final GlobalKey<ScaffoldState> _scaffoldkey = new GlobalKey<ScaffoldState>();
   // @override
   // void initState() {
@@ -80,7 +74,7 @@ class _ManageAddressState extends State<ManageAddress> {
       title: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text("Manage Address"),
+          Text("Choose Delivery Address"),
         ],
       ),
     );
@@ -94,107 +88,7 @@ class _ManageAddressState extends State<ManageAddress> {
       bottomNavigationBar: bottomBar(context, 2),
       drawer: Draw(context),
       body:
-          // SingleChildScrollView(
-          //   child: Center(
-          //     child: Padding(
-          //       padding: const EdgeInsets.only(top: 22.0),
-          //       child: Column(
-          //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //         children: <Widget>[
-          //           Text("Addresses",
-          //               style: TextStyle(
-          //                   fontSize: 23,
-          //                   fontWeight: FontWeight.bold,
-          //                   color: Theme.of(context).primaryColor)),
-          //           Column(
-          //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //             children: <Widget>[
-          //               Container(
-          //                   width: w * 0.9,
-          //                   child: Card(
-          //                     child: Column(
-          //                         crossAxisAlignment: CrossAxisAlignment.start,
-          //                         children: <Widget>[
-          //                           Padding(
-          //                             padding: const EdgeInsets.all(18.0),
-          //                             child: Text("${user.address}",
-          //                                 style: TextStyle(
-          //                                     fontSize: 22,
-          //                                     fontWeight: FontWeight.bold,
-          //                                     color: Colors.grey)),
-          //                           ),
-          //                           Row(
-          //                               mainAxisAlignment:
-          //                                   MainAxisAlignment.spaceBetween,
-          //                               children: <Widget>[
-          //                                 Padding(
-          //                                   padding:
-          //                                       const EdgeInsets.only(left: 18.0),
-          //                                   child: FlatButton(
-          //                                     child: Text("Edit",
-          //                                         style: TextStyle(
-          //                                             fontSize: 18,
-          //                                             fontWeight: FontWeight.bold,
-          //                                             color: Theme.of(context)
-          //                                                 .primaryColor)),
-          //                                     onPressed: () {
-          //                                       Navigator.push(
-          //                                           context,
-          //                                           CustomRoute(
-          //                                               builder: (context) =>
-          //                                                   EditAddress(),
-          //                                               settings: RouteSettings(
-          //                                                   arguments: user)));
-          //                                     },
-          //                                   ),
-          //                                 ),
-          //                                 Padding(
-          //                                   padding:
-          //                                       const EdgeInsets.only(right: 18.0),
-          //                                   child: FlatButton(
-          //                                     child: Text("Delete",
-          //                                         style: TextStyle(
-          //                                             fontSize: 18,
-          //                                             fontWeight: FontWeight.bold,
-          //                                             color: Theme.of(context)
-          //                                                 .primaryColor)),
-          //                                     onPressed: () {
-          //                                       print("delete");
-          //                                       // Navigator.push(
-          //                                       //     context,
-          //                                       //     CustomRoute(
-          //                                       //         builder: (context) => EditAddress()
-          //                                       // ,settings:RouteSettings(arguments:user)
-          //                                     },
-          //                                   ),
-          //                                 ),
-          //                               ])
-          //                         ]),
-          //                   )),
-          //             ],
-          //           ),
-          //           Padding(
-          //             padding: EdgeInsets.only(top: h * 0.5),6
-          //             child: Container(
-          //               width: w * 0.82,
-          //               child: RaisedButton(
-          //                 color: Theme.of(context).primaryColor,
-          //                 onPressed: () {},
-          //                 child: Center(
-          //                     child: ListTile(
-          //                   title: Text("ADD NEW ADDRESS",
-          //                       style: TextStyle(color: Colors.white)),
-          //                   leading: Icon(Icons.add_circle, color: Colors.white),
-          //                 )),
-          //               ),
-          //             ),
-          //           )
-          //         ],
-          //       ),
-          //     ),
-          //   ),
-          // ),
-
+        
           Center(
             child: Padding(
               padding: const EdgeInsets.only(top: 22.0,bottom:50),
@@ -202,11 +96,11 @@ class _ManageAddressState extends State<ManageAddress> {
                 // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   Center(
-                    child: Text("Addresses",
+                    child: Text("Saved Addresses",
                         style: TextStyle(
                             fontSize: 23,
                             fontWeight: FontWeight.bold,
-                            color: Theme.of(context).primaryColor)),
+                            color: Colors.black)),
                   ),
                   FutureBuilder<List<Address>>(
                       future: getAllAddress(),
@@ -366,6 +260,6 @@ class _ManageAddressState extends State<ManageAddress> {
                         ),
                       )),)
     );
+
   }
 }
-

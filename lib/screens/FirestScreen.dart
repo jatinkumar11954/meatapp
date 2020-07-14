@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:meatapp/adjust/badge.dart';
@@ -9,12 +11,14 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:meatapp/adjust/short.dart';
 import 'package:meatapp/adjust/custom_route.dart';
 import 'package:meatapp/Api/categoryApi.dart';
+import 'package:meatapp/details/userDetails.dart';
 import 'package:meatapp/model/bottom.dart';
 import 'package:meatapp/model/cart.dart';
 import 'package:meatapp/model/search.dart';
 import 'package:meatapp/screens/cart_screen.dart';
 import 'package:meatapp/screens/tabScreen.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../main.dart';
@@ -34,6 +38,26 @@ void callSnackBar(String msg, GlobalKey<ScaffoldState> _scaffoldkey) {
 }
 
 class _FirstScreenState extends State<FirstScreen> {
+  @override
+  void initState() {
+    super.initState();
+    print("is user login ");
+    print(isLogin);
+    // getUser();
+  }
+
+  void getUser() async {
+    SharedPreferences store = await SharedPreferences.getInstance();
+
+    print("getting jwt from the device");
+    String token = store.getString('jwt');
+    if (token != null) {
+      Map jwt =
+          json.decode(ascii.decode(base64.decode(base64.normalize(token))));
+      UserDetails user = UserDetails.fromJson(jwt["data"]);
+    }
+  }
+
   final GlobalKey<ScaffoldState> firstscreen = new GlobalKey<ScaffoldState>();
 
   bool searchProduct = false;
@@ -79,38 +103,38 @@ class _FirstScreenState extends State<FirstScreen> {
       drawer: Draw(context),
       body: WillPopScope(
         onWillPop: () {
-              showDialog(
-                    context: context,
-                    builder: (context) => AlertDialog(
-                      // insetPadding:  EdgeInsets.all(20),
-                      titlePadding: EdgeInsets.fromLTRB(40, 30, 40, 10),
-                      contentPadding: EdgeInsets.fromLTRB(40, 5, 40, 0),
-                      backgroundColor: Color.fromRGBO(46, 54, 67, 1),
-                      title: Text('Exit from FreshMeat?',
-                          style: TextStyle(color: Colors.white)),
-                      content: Text('This will close the App!',
-                          style: TextStyle(color: Colors.white)),
-                      actions: <Widget>[
-                        FlatButton(
-                          onPressed: () => Navigator.of(context).pop(false),
-                          child: Text('No'),
-                        ),
-                        FlatButton(
-                          onPressed: () =>
-                              SystemChannels.platform.invokeMethod<void>(
-                            'SystemNavigator.pop',
-                          ),
-                          /*Navigator.of(context).pop(true)*/
-                          child: Text('Exit'),
-                        ),
-                      ],
+          showDialog(
+                context: context,
+                builder: (context) => AlertDialog(
+                  // insetPadding:  EdgeInsets.all(20),
+                  titlePadding: EdgeInsets.fromLTRB(40, 30, 40, 10),
+                  contentPadding: EdgeInsets.fromLTRB(40, 5, 40, 0),
+                  backgroundColor: Color.fromRGBO(46, 54, 67, 1),
+                  title: Text('Exit from FreshMeat?',
+                      style: TextStyle(color: Colors.white)),
+                  content: Text('This will close the App!',
+                      style: TextStyle(color: Colors.white)),
+                  actions: <Widget>[
+                    FlatButton(
+                      onPressed: () => Navigator.of(context).pop(false),
+                      child: Text('No'),
                     ),
-                  ) ??
-                  false;
+                    FlatButton(
+                      onPressed: () =>
+                          SystemChannels.platform.invokeMethod<void>(
+                        'SystemNavigator.pop',
+                      ),
+                      /*Navigator.of(context).pop(true)*/
+                      child: Text('Exit'),
+                    ),
+                  ],
+                ),
+              ) ??
+              false;
 
-              // Navigator.pushReplacementNamed(context, "Login");
-            },
-              child: CustomScrollView(
+          // Navigator.pushReplacementNamed(context, "Login");
+        },
+        child: CustomScrollView(
           scrollDirection: Axis.vertical,
           slivers: <Widget>[
             SliverList(
@@ -167,8 +191,8 @@ class _FirstScreenState extends State<FirstScreen> {
                   child: RaisedButton(
                       color: Colors.grey[500],
                       child: Text("Shop by Category",
-                          style:
-                              TextStyle(color: Colors.white, fontSize: h * 0.03)),
+                          style: TextStyle(
+                              color: Colors.white, fontSize: h * 0.03)),
                       onPressed: () {
                         print("shop by category");
                       }),
@@ -196,7 +220,8 @@ class _FirstScreenState extends State<FirstScreen> {
                                       context,
                                       CustomRoute(
                                           builder: (context) => TabScreen(),
-                                          settings: RouteSettings(arguments: i)));
+                                          settings:
+                                              RouteSettings(arguments: i)));
                                   // Navigator.pushNamed(context, "tab", arguments: i);
                                 },
                                 child: Column(
@@ -206,24 +231,27 @@ class _FirstScreenState extends State<FirstScreen> {
                                       width: w * 0.45,
                                       child: Card(
                                         shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(10),
+                                          borderRadius:
+                                              BorderRadius.circular(10),
                                         ),
                                         elevation: 4.0,
                                         child: ClipRRect(
-                                          borderRadius: BorderRadius.circular(10),
+                                          borderRadius:
+                                              BorderRadius.circular(10),
                                           child: GridTile(
                                             // child:
                                             //  Hero(
                                             //   tag: i,
                                             child: CachedNetworkImage(
                                               imageUrl:
-                                                  "http://via.placeholder.com/350x200",
+                                                  "http://via.placeholder.com/350x200", //testing
                                               //  category.data[i].img,
                                               fit: BoxFit.fill,
                                               placeholder: (context, url) =>
                                                   Shimmer.fromColors(
                                                       loop: 2,
-                                                      baseColor: Colors.grey[400],
+                                                      baseColor:
+                                                          Colors.grey[400],
                                                       highlightColor:
                                                           Colors.white12,
                                                       child: Container(
@@ -250,8 +278,8 @@ class _FirstScreenState extends State<FirstScreen> {
                                         child: Text(
                                             category.data[i].categoryName
                                                 .replaceFirst(
-                                                    category
-                                                        .data[i].categoryName[0],
+                                                    category.data[i]
+                                                        .categoryName[0],
                                                     category
                                                         .data[i].categoryName[0]
                                                         .toUpperCase()),
@@ -265,7 +293,7 @@ class _FirstScreenState extends State<FirstScreen> {
                             ),
                           );
                         },
-                        childCount: category.data.length,
+                        childCount: category.data.length ?? 0,
                       ),
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
@@ -333,35 +361,59 @@ class _FirstScreenState extends State<FirstScreen> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        elevation: 4.0,
-        onPressed: () {
-          // Add your onPressed code here!
-        },
-        child: Consumer<Cart>(
-          builder: (_, cart, ch) => GestureDetector(
-            onTap: () => Navigator.push(
-                context, CustomRoute(builder: (c) => CartScreen())),
-            child: Badge(
-              child: ch,
-              value: cart?.itemCount.toString(),
-              color: Colors.black,
-            ),
-          ),
-          child: IconButton(
-            icon: Icon(
-              Icons.shopping_cart,
-              color: Colors.white,
-            ),
-            onPressed: () {
-              print("cartscreen");
-              Navigator.push(
-                  context, CustomRoute(builder: (c) => CartScreen()));
-            },
-          ),
-        ),
-        backgroundColor: Theme.of(context).primaryColor,
-      ),
+      floatingActionButton: isLogin
+          ? FloatingActionButton(
+              elevation: 4.0,
+              onPressed: () {
+                  Provider.of<Bottom>(context, listen: false)
+                                      .updateINdex(1);
+                Navigator.push(
+                    context, CustomRoute(builder: (c) => CartScreen()));
+              },
+              child: Consumer<Cart>(
+                builder: (_, cart, ch) => Badge(
+                  child: ch,
+                  value: cart?.itemCount.toString(),
+                  color: Colors.black,
+                ),
+                child: IconButton(
+                  icon: Icon(
+                    Icons.shopping_cart,
+                    color: Colors.white,
+                  ),
+                  onPressed: () {
+                    print("cartscreen");
+                     Provider.of<Bottom>(context, listen: false)
+                                      .updateINdex(1);
+                    Navigator.push(
+                        context, CustomRoute(builder: (c) => CartScreen()));
+                  },
+                ),
+              ),
+              backgroundColor: Theme.of(context).primaryColor,
+            )
+          : Container(
+              width: w * 0.91,
+              height: 45.0,
+              color: Theme.of(context).primaryColor,
+              child: new RawMaterialButton(
+                  shape: new CircleBorder(),
+                  elevation: 0.0,
+                  // child: Theme.of(context).primaryColor,
+                  onPressed: () =>
+                      Navigator.pushReplacementNamed(context, "Login"),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      Icon(Icons.arrow_forward, color: Colors.white),
+                      Text(" LOGIN/SIGN UP TO CHECKOUT",
+                          softWrap: true,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                          )),
+                    ],
+                  ))),
     );
   }
 }

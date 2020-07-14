@@ -79,9 +79,9 @@ class ProductSearch extends SearchDelegate<String> {
                           child: CachedNetworkImage(
                             fit: BoxFit.fill,
                             imageUrl:
-                                // "http://via.placeholder.com/350x200", //testing
+                                "http://via.placeholder.com/350x200", //testing
 
-                                res.toList()[i].img,
+                                // res.toList()[i].img,
                             width: 350,
                             placeholder: (c, s) => Shimmer.fromColors(
                                 baseColor: Colors.grey[400],
@@ -333,9 +333,9 @@ class ProductSearch extends SearchDelegate<String> {
                           child: CachedNetworkImage(
                             fit: BoxFit.fill,
                             imageUrl:
-                                // "http://via.placeholder.com/350x200", //testing
+                                "http://via.placeholder.com/350x200", //testing
 
-                                res.toList()[i].img,
+                                // res.toList()[i].img,
                             width: 350,
                             placeholder: (c, s) => Shimmer.fromColors(
                                 baseColor: Colors.grey[400],
