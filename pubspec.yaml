@@ -96,6 +96,9 @@ flutter:
     - family:  icons
       fonts:
         - asset: fonts/icons.ttf
+    - family:  emptyCircle
+      fonts:
+        - asset: fonts/emptyCircle.ttf
         
   #         style: italic
   #   - family: Trajan Pro

@@ -11,6 +11,7 @@ import 'package:meatapp/details/userDetails.dart';
 import 'package:meatapp/model/bottom.dart';
 import 'package:meatapp/model/subCategory.dart';
 import 'package:meatapp/screens/FirestScreen.dart';
+import 'package:meatapp/screens/order/ChooseAddress.dart';
 import 'package:meatapp/screens/tabScreen.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -343,62 +344,67 @@ class CartScreen extends StatelessWidget {
                         cart.items.forEach((element) {
                           a.add(element.toOrder());
                         });
-                        SharedPreferences store =
-                            await SharedPreferences.getInstance();
+                        // SharedPreferences store =
+                        //     await SharedPreferences.getInstance();
 
-                        String token = store.getString('jwt');
-                        if (token != null) {
-                          Map jwt = json.decode(ascii
-                              .decode(base64.decode(base64.normalize(token))));
-                          UserDetails user = UserDetails.fromJson(jwt["data"]);
-                          Map<dynamic, dynamic> order = Map<dynamic, dynamic>();
+                        // String token = store.getString('jwt');
+                        // if (token != null) {
+                        //   Map jwt = json.decode(ascii
+                        //       .decode(base64.decode(base64.normalize(token))));
+                        //   UserDetails user = UserDetails.fromJson(jwt["data"]);
+                        //   Map<dynamic, dynamic> order = Map<dynamic, dynamic>();
 
-                          order = {
-                            "cust_id": user.custId,
-                            "order": a,
-                            "totalPrice": cart.totalAmount.toStringAsFixed(2)
-                          };
-                          try {
-                            callSnackBar("Placing Order");
-                            await Future.delayed(Duration(milliseconds: 1000));
-                            response = await hp.post('${Short.baseUrl}/orders',
-                                headers: headers, body: json.encode(order));
+                        //   order = {
+                        //     "cust_id": user.custId,
+                        //     "order": a,
+                        //     "totalPrice": cart.totalAmount.toStringAsFixed(2)
+                        //   };
+                        // try {
+                        //   callSnackBar("Placing Order");
+                        //   await Future.delayed(Duration(milliseconds: 1000));
+                        //   response = await hp.post('${Short.baseUrl}/orders',
+                        //       headers: headers, body: json.encode(order));
 
-                            if (response != null) {
-                              Map res = json.decode(response.body);
-                              if (response.statusCode == 200) {
-                                print("inside response status");
-                                await callSnackBar(
-                                    "Order Placed Successfully 🎉🎉🎉");
-                                await Future.delayed(
-                                    Duration(milliseconds: 2000));
+                        //   if (response != null) {
+                        //     Map res = json.decode(response.body);
+                        //     if (response.statusCode == 200) {
+                        //       print("inside response status");
+                        //       await callSnackBar(
+                        //           "Order Placed Successfully 🎉🎉🎉");
+                        //       await Future.delayed(
+                        //           Duration(milliseconds: 2000));
 
-                                cart.endLoading();
-                                productProvider.removeAll();
-                                cart.clear();
-                                cart.removeAll();
+                        //       cart.endLoading();
+                        //       productProvider.removeAll();
+                        //       cart.clear();
+                        //       cart.removeAll();
 
-                                Navigator.pushReplacementNamed(context, "Main");
-                              }
-                              if (response.statusCode == 400) {
-                                callSnackBar("${res["msg"]}");
-                                cart.endLoading()();
+                        //       Navigator.pushReplacementNamed(context, "Main");
+                        //     }
+                        //     if (response.statusCode == 400) {
+                        //       callSnackBar("${res["msg"]}");
+                        //       cart.endLoading()();
 
-                                print("error with phone number");
-                              }
-                            } //response is not null
-                          } on Exception catch (e) {
-                            print("exception from   $e");
-                            cart.endLoading();
+                        //       print("error with phone number");
+                        //     }
+                        //   } //response is not null
+                        // } on Exception catch (e) {
+                        //   print("exception from   $e");
+                        //   cart.endLoading();
 
-                            callSnackBar("Check your Internet Connection");
-                          } catch (error) {
-                            print("error from api");
-                            cart.endLoading();
+                        //   callSnackBar("Check your Internet Connection");
+                        // } catch (error) {
+                        //   print("error from api");
+                        //   cart.endLoading();
 
-                            callSnackBar(error.toString());
-                          }
-                        }
+                        //   callSnackBar(error.toString());
+                        // }
+                        // }
+                        Navigator.push(
+                            context,
+                            CustomRoute(
+                              builder: (context) => ChooseAddress(),
+                            ));
                       })));
   }
 }
