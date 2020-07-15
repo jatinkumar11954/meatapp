@@ -39,12 +39,10 @@ class UserProfileState extends State<UserProfile> {
 
     SharedPreferences store = await SharedPreferences.getInstance();
 
-    print("getting jwt from the device");
     token = store.getString('jwt');
     if (token != null) {
       Map jwt =
           json.decode(ascii.decode(base64.decode(base64.normalize(token))));
-      print(jwt["data"].toString());
       user = UserDetails.fromJson(jwt["data"]);
       // print(user.fullName);
 

@@ -2,7 +2,37 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter/foundation.dart';
 import 'package:meatapp/Api/categoryApi.dart';
 
-class SubCategory with ChangeNotifier {
+abstract class MapConvertible {
+  Map<dynamic, dynamic> toMap();
+
+  MapConvertible fromMap(Map<dynamic, dynamic> map);
+}
+
+class Fav extends MapConvertible {
+  int id, col, row;
+
+  Fav({this.col, this.id, this.row});
+
+  @override
+  Fav fromMap(Map<dynamic, dynamic> map) {
+    return Fav(
+      id: map["id"],
+      row: map["row"],
+      col: map["col"],
+    );
+  }
+
+  @override
+  Map<String, int> toMap() {
+    return {
+      "id": id,
+      "col": col,
+      "row": row,
+    };
+  }
+}
+
+class SubCategory extends ChangeNotifier {
   String catname;
   int id, pieces;
   int price, weight;
@@ -96,7 +126,12 @@ class Products with ChangeNotifier {
       return ele.categoryName == r;
     });
     _items[ro][c].fav = !_items[ro][c].fav;
-
+    if (_items[ro][c].fav) {
+      repo.addToFav(Fav(col: c, row: ro, id: _items[ro][c].id));
+    } else {
+      print("made false");
+      repo.deleteFromFav( _items[ro][c].id);
+    }
     notifyListeners();
   }
   // SubCategory findById(int id) {

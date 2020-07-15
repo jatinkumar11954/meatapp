@@ -275,7 +275,7 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
                       ),
                       controller: signUppwd,
                       keyboardType: TextInputType.visiblePassword,
-                      // validator: Short().validatePwd,
+                      validator: Short().validatePwd,
                     ),
                   ),
                 ),
@@ -347,14 +347,7 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
                           print("User with these details already exists");
                         }
                       } //response is not null
-                      // else {
-                      //   //response is null
-                      //   callSnackBar(
-                      //       "Check your Internet Connection");
-                      //   print(
-                      //       "response is null");
-                      // }
-
+                      
                     } //try
                     on Exception catch (exception) {
                       print("exception from  $exception");

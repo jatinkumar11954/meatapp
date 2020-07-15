@@ -49,7 +49,6 @@ class _FirstScreenState extends State<FirstScreen> {
   void getUser() async {
     SharedPreferences store = await SharedPreferences.getInstance();
 
-    print("getting jwt from the device");
     String token = store.getString('jwt');
     if (token != null) {
       Map jwt =

@@ -343,11 +343,9 @@ class CartScreen extends StatelessWidget {
                         cart.items.forEach((element) {
                           a.add(element.toOrder());
                         });
-                        print(a.toString());
                         SharedPreferences store =
                             await SharedPreferences.getInstance();
 
-                        print("getting jwt from the device");
                         String token = store.getString('jwt');
                         if (token != null) {
                           Map jwt = json.decode(ascii

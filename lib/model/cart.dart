@@ -19,6 +19,7 @@ class CartItem extends MapConvertible {
   int quantity;
   final int price;
   final int weight;
+  
 
   CartItem({
     this.id,
@@ -164,24 +165,11 @@ class Cart with ChangeNotifier {
           return e.title == item.title;
         })]);
       } else {
-        print("else if item is not prest in else");
-        bool _checkAdd = false;
-
-        _items.forEach((e) {
-          if (e.title == item.title) {
-            _checkAdd = true;
-          }
-        });
-        if (_checkAdd) {
-          print("updating the db and quant incng");
-          _items[indexOF(item)].quantity = item.quantity + 1;
-          repo.updateCart(item);
-        } else {
+     
           _items.add(item);
           repo.addToCart(_items[_items.indexWhere((e) {
             return e.title == item.title;
           })]);
-        }
       }
     } else {
       print("into add cart if null");

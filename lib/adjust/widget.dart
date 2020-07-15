@@ -17,20 +17,16 @@ Widget Draw(BuildContext context) {
 
   void getUser() async {
     SharedPreferences store = await SharedPreferences.getInstance();
-    print("getting jwt from the device");
     String token = store.getString('jwt');
     if (token != null) {
       Map jwt =
           json.decode(ascii.decode(base64.decode(base64.normalize(token))));
       user = UserDetails.fromJson(jwt["data"]);
-      print(jwt["data"].toString());
-
-
     }
   }
 
   isLogin ? getUser() : null;
-  // print(user.address);      
+  // print(user.address);
 
   return Drawer(
     child: SafeArea(
@@ -57,7 +53,8 @@ Widget Draw(BuildContext context) {
                 color: Colors.white,
                 onPressed: () => Navigator.pop(context),
               ),
-              title: Text(isLogin ? "${userdetails.fullName??"Profile"}" : 'Login',
+              title: Text(
+                  isLogin ? "${userdetails.fullName ?? "Profile"}" : 'Login',
                   style: TextStyle(color: Colors.white)),
               onTap: () {
                 // Update the state of the app.
@@ -116,37 +113,40 @@ Widget Draw(BuildContext context) {
                     color: Theme.of(context).primaryColor,
                   ),
                   title: Text('Logout', style: TextStyle(color: Colors.grey)),
-                  onTap: ()  {
-                   
-                     showDialog(
-                context: context,
-                builder: (context) => AlertDialog(
-                  // insetPadding:  EdgeInsets.all(20),
-                  titlePadding: EdgeInsets.fromLTRB(40, 30, 40, 10),
-                  contentPadding: EdgeInsets.fromLTRB(40, 5, 40, 0),
-                  backgroundColor: Color.fromRGBO(46, 54, 67, 1),
-                  title: Text('Logout from FreshMeat?',
-                      style: TextStyle(color: Colors.white)),
-                  content: Text('Your Credentials will be vanished!',
-                      style: TextStyle(color: Colors.white)),
-                  actions: <Widget>[
-                    FlatButton(
-                      onPressed: () => Navigator.of(context).pop(false),
-                      child: Text('No'),
-                    ),
-                    FlatButton(
-                      onPressed: () async{ SharedPreferences ap =
-                        await SharedPreferences.getInstance();
-                    ap.clear();
-                                             Navigator.pushReplacementNamed(context, "LoginCard");},
+                  onTap: () {
+                    showDialog(
+                          context: context,
+                          builder: (context) => AlertDialog(
+                            // insetPadding:  EdgeInsets.all(20),
+                            titlePadding: EdgeInsets.fromLTRB(40, 30, 40, 10),
+                            contentPadding: EdgeInsets.fromLTRB(40, 5, 40, 0),
+                            backgroundColor: Color.fromRGBO(46, 54, 67, 1),
+                            title: Text('Logout from FreshMeat?',
+                                style: TextStyle(color: Colors.white)),
+                            content: Text('Your Credentials will be vanished!',
+                                style: TextStyle(color: Colors.white)),
+                            actions: <Widget>[
+                              FlatButton(
+                                onPressed: () =>
+                                    Navigator.of(context).pop(false),
+                                child: Text('No'),
+                              ),
+                              FlatButton(
+                                onPressed: () async {
+                                  SharedPreferences ap =
+                                      await SharedPreferences.getInstance();
+                                  ap.clear();
+                                  repo.logout();
 
-                      child: Text('Logout'),
-                    ),
-                  ],
-                ),
-              ) ??
-              false;
-
+                                  Navigator.pushReplacementNamed(
+                                      context, "LoginCard");
+                                },
+                                child: Text('Logout'),
+                              ),
+                            ],
+                          ),
+                        ) ??
+                        false;
                   },
                 )
               : SizedBox(),

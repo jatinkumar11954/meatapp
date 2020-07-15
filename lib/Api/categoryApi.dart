@@ -15,6 +15,7 @@ List<Category> catList;
 List<SubCategory> subCatList;
 List<Scroll> scrollList;
 List<CartItem> _it;
+List<Fav> _fav;
 
 Storage _repo;
 Storage get repo => _repo;
@@ -27,6 +28,10 @@ Future<List<Category>> getCategories(
   );
   print("after create form" + _repo.toString());
   _it = await _repo.retriveCart();
+  _fav = await _repo.retrieveFav();
+  print("this is fav id");
+  print(_fav[1].id.toString());
+
   cart.setData(_it);
 
   try {
@@ -133,11 +138,15 @@ getSubCategory() {
       }
     }
   }
+  _fav!=null? _fav.forEach((favEle) {
+            tab[favEle.row][favEle.col].fav = true;
+          }):print("fav is empty");
   _it != null
       ? _it.forEach((element) {
           int ro = catList.indexWhere((ele) {
             return ele.categoryName == element.catName;
           });
+         
           tab[ro][element.column].quantity = element.quantity;
         })
       : print("after tab has added");
