@@ -30,7 +30,7 @@ Future<List<Category>> getCategories(
   _it = await _repo.retriveCart();
   _fav = await _repo.retrieveFav();
   print("this is fav id");
-  print(_fav[1].id.toString());
+  // print(_fav[1].id.toString());
 
   cart.setData(_it);
 

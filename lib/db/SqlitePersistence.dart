@@ -58,6 +58,12 @@ class SqlitePersistence {
 
   Future<void> clearTable() async {
     await db.delete(TableName);
+    //     await db.delete(FavTable);
+
+    //  await db.close();
+  }
+  Future<void> logout() async {
+    await db.delete(TableName);
         await db.delete(FavTable);
 
      await db.close();

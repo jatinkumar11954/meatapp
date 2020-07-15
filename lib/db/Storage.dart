@@ -16,7 +16,7 @@ class Storage {
 
   Storage(this._repository);
   void logout() {
-    _repository.clearTable();
+    _repository.logout();
   }
 
   void addToCart(CartItem Item) async {
@@ -38,11 +38,9 @@ class Storage {
     await _repository.deletefrmTable(Item.id);
   }
 
-
   void removeAllfromTable() async {
     await _repository.clearTable();
   }
-
 
   void addToFav(Fav Item) async {
     print(_repository.toString());

@@ -7,6 +7,7 @@ import 'package:meatapp/adjust/short.dart';
 import 'package:meatapp/main.dart';
 import 'package:meatapp/model/address.dart';
 import 'package:meatapp/model/cart.dart';
+import 'package:meatapp/model/subCategory.dart';
 import 'package:meatapp/screens/order/ChooseAddress.dart';
 import 'package:provider/provider.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
@@ -15,7 +16,7 @@ import 'package:flutter/material.dart' as snack;
 
 class DeliveryOptions extends StatelessWidget {
   static const headers = {'Content-Type': 'application/json'};
-  hp.Response response;
+  hp.Response res;
   final GlobalKey<ScaffoldState> _scaffoldkey = new GlobalKey<ScaffoldState>();
   List<Map<dynamic, dynamic>> a = List<Map<dynamic, dynamic>>();
 
@@ -32,6 +33,7 @@ class DeliveryOptions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cart = Provider.of<Cart>(context);
+    final productProvider = Provider.of<Products>(context);
 
     Address def = ModalRoute.of(context).settings.arguments;
     var w = Short.w;
@@ -46,6 +48,7 @@ class DeliveryOptions extends StatelessWidget {
     print(Short.h.toString());
     print(Short.w.toString());
     return Scaffold(
+    key:_scaffoldkey,
       appBar: appbar,
       body: Column(
         children: <Widget>[
@@ -219,12 +222,11 @@ class DeliveryOptions extends StatelessWidget {
                 try {
                   callSnackBar("Placing Order");
                   await Future.delayed(Duration(milliseconds: 1000));
-                  response = await hp.post('${Short.baseUrl}/orders',
-                      headers: headers, body: json.encode(order));
+                  res = await hp.post("${Short.baseUrl}/orders",headers: headers,body:json.encode(order));
 
                   if (response != null) {
-                    Map res = json.decode(response.body);
-                    if (response.statusCode == 200) {
+                    Map resp = json.decode(res.body);
+                    if (res.statusCode == 200) {
                       print("inside response status");
                       await callSnackBar("Order Placed Successfully 🎉🎉🎉");
                       await Future.delayed(Duration(milliseconds: 2000));
@@ -236,8 +238,8 @@ class DeliveryOptions extends StatelessWidget {
 
                       Navigator.pushReplacementNamed(context, "Main");
                     }
-                    if (response.statusCode == 400) {
-                      callSnackBar("${res["msg"]}");
+                    if (res.statusCode == 400) {
+                      callSnackBar("${resp["msg"]}");
                       cart.endLoading()();
 
                       print("error with phone number");
@@ -274,9 +276,9 @@ class DeliveryOptions extends StatelessWidget {
                 print(response.walletName);
               }
 
-              print("Just came to opencheckout function");
+              print("opencheckout function");
 
-              var json = {
+              var jsonReq = {
                 'key': 'rzp_test_GlkT86sBpHZqRH',
                 'currency': "INR",
                 'amount': 110, //in the smallest currency sub-unit.
@@ -291,7 +293,7 @@ class DeliveryOptions extends StatelessWidget {
 
               try {
                 print("Trying to go to razorpay");
-                r.open(json);
+                r.open(jsonReq);
                 r.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
 
                 r.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
