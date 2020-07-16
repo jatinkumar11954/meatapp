@@ -30,11 +30,13 @@ class _DescriptionState extends State<Description> {
     final bottom = Provider.of<Bottom>(context, listen: false);
 
     final product = Provider.of<Products>(context, listen: false).items;
+        final categoryList = Provider.of<Category>(context, listen: false).categoryList;
+
 
     final GlobalKey<ScaffoldState> _scaffoldKey =
         new GlobalKey<ScaffoldState>();
     final i = ModalRoute.of(context).settings.arguments;
-    int ro = catList.indexWhere((ele) {
+    int ro = categoryList.indexWhere((ele) {
       return ele.categoryName == widget.catName;
     });
     Short().init(context);

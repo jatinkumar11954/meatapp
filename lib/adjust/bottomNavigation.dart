@@ -155,8 +155,8 @@ Widget bottomBar(BuildContext context, int i) {
                     case 0:
                       {
                         print("index 0");
-                        Navigator.pushReplacement(context,
-                            CustomRoute(builder: (context) => FirstScreen()));
+                        Navigator.pushAndRemoveUntil(context,
+                          CustomRoute(builder: (context) => FirstScreen()),(Route<dynamic> FirstScreen)=>false);
                         break;
                       }
                     case 1:

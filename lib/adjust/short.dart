@@ -11,60 +11,7 @@ class Short {
     2: "http://carigarifurniture.com/product_images/w/cbb92cd2_d785_4288_a51a_88766576d6aa_1___10086_thumb.jpg",
     3: "http://carigarifurniture.com/product_images/h/img_6539__14221_thumb.jpg",
   };
-  static var cat = {
-    0: chicken,
-    1: mutton,
-    2: sea,
-    3: egg,
-    4: deal,
-  };
-  static var icon = {
-    0: Icons.home,
-    1: Icons.rss_feed,
-    2: Icons.perm_identity,
-    3: Icons.settings,
-    // 4: Icons.linear_scale
-  };
 
-  static var catgry = {
-    0: "CHICKEN",
-    1: "MUTTON",
-    2: "SEA FOOD",
-    3: "EGGS",
-    4: "DEALS",
-  };
-  static var chicken = {
-    0: "ChickenCurryLeg",
-    1: "ChickenCurry",
-    2: "ChickenLeg",
-    3: "Chicken65",
-  };
-  static var mutton = {
-    0: " MuttonCurryLeg",
-    1: " MuttonCurry",
-    2: " MuttonLeg",
-    3: " Mutton65",
-  };
-  static var egg = {
-    0: " EggCurryLeg",
-    1: " EggCurry",
-    2: " EggLeg",
-    3: " Egg65",
-  };
-  static var sea = {
-    0: " SeaCurryLeg",
-    1: " SeaCurry",
-    2: " SeaLeg",
-    3: " Sea65",
-  };
-  static var deal = {
-    0: " SeaCurryLeg",
-    1: " SeaCurry",
-    2: " SeaLeg",
-    3: " Sea65",
-  };
-
-  get s => catgry;
   void init(BuildContext context) {
     h = (MediaQuery.of(context).size.height);
     w = (MediaQuery.of(context).size.width);

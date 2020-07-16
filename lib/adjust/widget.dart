@@ -9,6 +9,7 @@ import 'package:meatapp/adjust/shimmer.dart';
 import 'package:meatapp/adjust/short.dart';
 import 'package:meatapp/details/userDetails.dart';
 import 'package:meatapp/main.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -156,61 +157,70 @@ Widget Draw(BuildContext context) {
   );
 }
 
-Widget Carousel(BuildContext context, GlobalKey<ScaffoldState> scaffoldkey) {
-  return FutureBuilder<List<Scroll>>(
-      future: getCarousel(scaffoldkey),
-      builder: (context, carousel) {
-        if (carousel.hasData) {
-          return CarouselSlider(
-            enlargeCenterPage: true,
-            autoPlay: true,
-            pauseAutoPlayOnTouch: Duration(seconds: 5),
-            height: MediaQuery.of(context).size.height / 4,
-            items: carousel.data.map((i) {
-              return Builder(
-                builder: (BuildContext context) {
-                  return Container(
-                      width: MediaQuery.of(context).size.width,
-                      margin: EdgeInsets.symmetric(horizontal: 10.0),
-                      decoration: BoxDecoration(color: Colors.grey[300]),
-                      child: GestureDetector(
-                          child: CachedNetworkImage(
-                            imageUrl:
-                                "http://via.placeholder.com/350x200", //testing
-                            // i.img,
-                            fit: BoxFit.fill,
-                            placeholder: (context, url) => Shimmer.fromColors(
-                                baseColor: Colors.grey[400],
-                                highlightColor: Colors.white,
-                                child: Container(
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.7,
-                                  height:
-                                      MediaQuery.of(context).size.width * 0.7,
-                                  color: Colors.grey,
-                                )),
-                          ),
-                          onTap: () {
-                            // callSnackBar("clicked"+ i+"image",2);
-                          }));
-                },
-              );
-            }).toList(),
-          );
-        } else if (carousel.hasError) {
-          return Text("${carousel.error}");
-        }
-        return Shimmer.fromColors(
-            baseColor: Colors.grey[300],
-            highlightColor: Colors.white24,
-            child: Center(
-              child: Container(
-                width: MediaQuery.of(context).size.width * 0.75,
-                height: MediaQuery.of(context).size.width * 0.5,
-                color: Colors.grey,
-              ),
-            ));
-      });
+Widget Toastmsg(BuildContext context, String msg) {
+  return Container(
+    padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.circular(25.0),
+      color: Colors.grey[300],
+    ),
+    child:
+        // Icon(Icons.check),
+        // SizedBox(
+        //   width: 12.0,
+        // ),
+        Text(msg),
+  );
+}
+
+Widget Carousel(BuildContext context) {
+  final scroll = Provider.of<Scroll>(context);
+  if (!scroll.isScrollLoad) {
+    return CarouselSlider(
+      enlargeCenterPage: true,
+      autoPlay: true,
+      pauseAutoPlayOnTouch: Duration(seconds: 5),
+      height: MediaQuery.of(context).size.height / 4,
+      items: scroll.scrollList.map((i) {
+        return Builder(
+          builder: (BuildContext context) {
+            return Container(
+                width: MediaQuery.of(context).size.width,
+                margin: EdgeInsets.symmetric(horizontal: 10.0),
+                decoration: BoxDecoration(color: Colors.grey[300]),
+                child: GestureDetector(
+                    child: CachedNetworkImage(
+                      imageUrl: "http://via.placeholder.com/350x200", //testing
+                      // i.img,
+                      fit: BoxFit.fill,
+                      placeholder: (context, url) => Shimmer.fromColors(
+                          baseColor: Colors.grey[400],
+                          highlightColor: Colors.white,
+                          child: Container(
+                            width: MediaQuery.of(context).size.width * 0.7,
+                            height: MediaQuery.of(context).size.width * 0.7,
+                            color: Colors.grey,
+                          )),
+                    ),
+                    onTap: () {
+                      // callSnackBar("clicked"+ i+"image",2);
+                    }));
+          },
+        );
+      }).toList(),
+    );
+  } else {
+  return  Shimmer.fromColors(
+        baseColor: Colors.grey[300],
+        highlightColor: Colors.white24,
+        child: Center(
+          child: Container(
+            width: MediaQuery.of(context).size.width * 0.75,
+            height: MediaQuery.of(context).size.width * 0.5,
+            color: Colors.grey,
+          ),
+        ));
+  }
 }
 
 Widget LoginBftrAnim(BuildContext context) {
@@ -237,7 +247,7 @@ Widget LoginBftrAnim(BuildContext context) {
                 child: Center(
                     child: FlatButton(
                   onPressed: () {
-                    Navigator.pushReplacementNamed(context, "Login");
+                    Navigator.popAndPushNamed(context, "Login");
                   },
                   child: Text(
                     "Login via Email / Phone",

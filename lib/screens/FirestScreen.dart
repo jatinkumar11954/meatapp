@@ -28,44 +28,13 @@ class FirstScreen extends StatefulWidget {
   _FirstScreenState createState() => _FirstScreenState();
 }
 
-void callSnackBar(String msg, GlobalKey<ScaffoldState> _scaffoldkey) {
-  print(msg + "snack msg");
-  final Snack = new snack.SnackBar(
-    content: new Text(msg),
-    duration: new Duration(seconds: 3),
-  );
-  _scaffoldkey.currentState.showSnackBar(Snack);
-}
-
 class _FirstScreenState extends State<FirstScreen> {
-  @override
-  void initState() {
-    super.initState();
-    print("is user login ");
-    print(isLogin);
-    // getUser();
-  }
-
-  void getUser() async {
-    SharedPreferences store = await SharedPreferences.getInstance();
-
-    String token = store.getString('jwt');
-    if (token != null) {
-      Map jwt =
-          json.decode(ascii.decode(base64.decode(base64.normalize(token))));
-      UserDetails user = UserDetails.fromJson(jwt["data"]);
-    }
-  }
-
-  final GlobalKey<ScaffoldState> firstscreen = new GlobalKey<ScaffoldState>();
-
-  bool searchProduct = false;
-
   @override
   Widget build(BuildContext context) {
     final cart = Provider.of<Cart>(context, listen: false);
-//         var i = ModalRoute.of(context).settings.arguments;
-// print(i.toString());
+    // final category = Provider.of<Category>(context, listen: false);
+    final load = Provider.of<Category>(context);
+
     Short().init(context);
     final appbar = AppBar(
       backgroundColor: Theme.of(context).primaryColor,
@@ -95,7 +64,7 @@ class _FirstScreenState extends State<FirstScreen> {
     print(isLogin.toString());
 
     return Scaffold(
-      key: firstscreen, resizeToAvoidBottomPadding: false,
+      resizeToAvoidBottomPadding: false,
       appBar: appbar,
       bottomNavigationBar: isLogin ? bottomBar(context, 0) : SizedBox(),
       // bottomNavigationBar: bottomBar(context, 0),
@@ -130,8 +99,6 @@ class _FirstScreenState extends State<FirstScreen> {
                 ),
               ) ??
               false;
-
-          // Navigator.pushReplacementNamed(context, "Login");
         },
         child: CustomScrollView(
           scrollDirection: Axis.vertical,
@@ -181,7 +148,7 @@ class _FirstScreenState extends State<FirstScreen> {
               ),
               SizedBox(height: 20),
 
-              Carousel(context, firstscreen), //testing
+              Carousel(context), //testing
               SizedBox(height: h * 0.05),
               Center(
                 child: SizedBox(
@@ -198,113 +165,111 @@ class _FirstScreenState extends State<FirstScreen> {
                 ),
               ),
             ])),
-            FutureBuilder<List<Category>>(
-                future: getCategories(firstscreen, cart),
-                builder: (context, category) {
-                  if (category.hasData) {
-                    print("category has data");
-                    return SliverGrid(
-                      delegate: SliverChildBuilderDelegate(
-                        (BuildContext ctx, int i) {
-                          return Padding(
+            !load.isLoading
+                ? SliverGrid(
+                    delegate: SliverChildBuilderDelegate(
+                      (BuildContext ctx, int i) {
+                        return Padding(
                             padding: EdgeInsets.only(
                                 left: w * 0.015, right: w * 0.015),
-                            child: Center(
-                              child: GestureDetector(
-                                onTap: () {
-                                  print("navigating");
-                                  Provider.of<Bottom>(context, listen: false)
-                                      .updateTab(i);
-                                  Navigator.pushReplacement(
-                                      context,
-                                      CustomRoute(
-                                          builder: (context) => TabScreen(),
-                                          settings:
-                                              RouteSettings(arguments: i)));
-                                  // Navigator.pushNamed(context, "tab", arguments: i);
-                                },
-                                child: Column(
-                                  children: <Widget>[
-                                    Container(
-                                      height: h * 0.20,
-                                      width: w * 0.45,
-                                      child: Card(
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                        ),
-                                        elevation: 4.0,
-                                        child: ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          child: GridTile(
-                                            // child:
-                                            //  Hero(
-                                            //   tag: i,
-                                            child: CachedNetworkImage(
-                                              imageUrl:
-                                                  "http://via.placeholder.com/350x200", //testing
-                                              //  category.data[i].img,
-                                              fit: BoxFit.fill,
-                                              placeholder: (context, url) =>
-                                                  Shimmer.fromColors(
-                                                      loop: 2,
-                                                      baseColor:
-                                                          Colors.grey[400],
-                                                      highlightColor:
-                                                          Colors.white12,
-                                                      child: Container(
-                                                        height: h * 0.20,
-                                                        width: w * 0.45,
-                                                        color: Colors.grey,
-                                                      )),
-                                              errorWidget: (_, str, dynamic) =>
-                                                  Center(
-                                                child: Icon(Icons.error),
-                                              ),
+                            child: Consumer<Category>(
+                                builder: (context, category, ch) {
+                              return Center(
+                                child: GestureDetector(
+                                  onTap: () {
+                                    print("navigating");
+                                    Provider.of<Bottom>(context, listen: false)
+                                        .updateTab(i);
+                                    Navigator.pushReplacement(
+                                        context,
+                                        CustomRoute(
+                                            builder: (context) => TabScreen(),
+                                            settings:
+                                                RouteSettings(arguments: i)));
+                                    // Navigator.pushNamed(context, "tab", arguments: i);
+                                  },
+                                  child: Column(
+                                    children: <Widget>[
+                                      Container(
+                                        height: h * 0.20,
+                                        width: w * 0.45,
+                                        child: Card(
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                          ),
+                                          elevation: 4.0,
+                                          child: ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                            child: GridTile(
+                                              // child:
+                                              //  Hero(
+                                              //   tag: i,
+                                              child: CachedNetworkImage(
+                                                imageUrl:
+                                                    "http://via.placeholder.com/350x200", //testing
 
-                                              //               // value: loadingProgress.expectedTotalBytes != null
-                                              //               //     ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes
-                                              //               //     : null,
-                                              //
+                                                // load
+                                                //     .categoryList[i].img,
+                                                fit: BoxFit.fill,
+                                                placeholder: (context, url) =>
+                                                    Shimmer.fromColors(
+                                                        loop: 2,
+                                                        baseColor:
+                                                            Colors.grey[400],
+                                                        highlightColor:
+                                                            Colors.white12,
+                                                        child: Container(
+                                                          height: h * 0.20,
+                                                          width: w * 0.45,
+                                                          color: Colors.grey,
+                                                        )),
+                                                errorWidget:
+                                                    (_, str, dynamic) => Center(
+                                                  child: Icon(Icons.error),
+                                                ),
+
+                                                //               // value: loadingProgress.expectedTotalBytes != null
+                                                //               //     ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes
+                                                //               //     : null,
+                                                //
+                                              ),
+                                              // ),
                                             ),
-                                            // ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                    Center(
-                                        child: Text(
-                                            category.data[i].categoryName
-                                                .replaceFirst(
-                                                    category.data[i]
-                                                        .categoryName[0],
-                                                    category
-                                                        .data[i].categoryName[0]
-                                                        .toUpperCase()),
-                                            style: TextStyle(
-                                                color: Colors.black,
-                                                fontSize: h * 0.025,
-                                                fontWeight: FontWeight.bold)))
-                                  ],
+                                      Center(
+                                          child: Text(
+                                              category
+                                                  .categoryList[i].categoryName
+                                                  .replaceFirst(
+                                                      category.categoryList[i]
+                                                          .categoryName[0],
+                                                      category.categoryList[i]
+                                                          .categoryName[0]
+                                                          .toUpperCase()),
+                                              style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: h * 0.025,
+                                                  fontWeight: FontWeight.bold)))
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            ),
-                          );
-                        },
-                        childCount: category.data.length ?? 0,
-                      ),
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        childAspectRatio: 98 / 90,
-                        crossAxisSpacing: 0,
-                        mainAxisSpacing: 0,
-                      ),
-                    );
-                  } else if (category.hasError) {
-                    return Text("${category.error}");
-                  }
-                  return SliverGrid(
+                              );
+                            }));
+                      },
+                      childCount: load.categoryList.length ?? 0,
+                    ),
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      childAspectRatio: 98 / 90,
+                      crossAxisSpacing: 0,
+                      mainAxisSpacing: 0,
+                    ),
+                  )
+                : SliverGrid(
                     delegate: SliverChildBuilderDelegate(
                       (BuildContext ctx, int i) {
                         return Shimmer.fromColors(
@@ -320,8 +285,7 @@ class _FirstScreenState extends State<FirstScreen> {
                       crossAxisSpacing: 0,
                       mainAxisSpacing: 0,
                     ),
-                  );
-                }),
+                  ),
             SliverList(
               delegate: SliverChildListDelegate(
                 [
@@ -364,8 +328,7 @@ class _FirstScreenState extends State<FirstScreen> {
           ? FloatingActionButton(
               elevation: 4.0,
               onPressed: () {
-                  Provider.of<Bottom>(context, listen: false)
-                                      .updateINdex(1);
+                Provider.of<Bottom>(context, listen: false).updateINdex(1);
                 Navigator.push(
                     context, CustomRoute(builder: (c) => CartScreen()));
               },
@@ -382,8 +345,7 @@ class _FirstScreenState extends State<FirstScreen> {
                   ),
                   onPressed: () {
                     print("cartscreen");
-                     Provider.of<Bottom>(context, listen: false)
-                                      .updateINdex(1);
+                    Provider.of<Bottom>(context, listen: false).updateINdex(1);
                     Navigator.push(
                         context, CustomRoute(builder: (c) => CartScreen()));
                   },

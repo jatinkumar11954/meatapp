@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:meatapp/adjust/widget.dart';
 import 'package:meatapp/db/SqlitePersistence.dart';
 import 'package:meatapp/db/Storage.dart';
 import 'package:meatapp/model/cart.dart';
@@ -8,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:meatapp/adjust/short.dart';
 import 'package:meatapp/screens/FirestScreen.dart';
 import 'package:http/http.dart' as hp;
+import 'package:provider/provider.dart';
 
 hp.Response response, subResponse, scrollResponse;
 const headers = {'Content-Type': 'application/json'};
@@ -21,20 +24,21 @@ Storage _repo;
 Storage get repo => _repo;
 
 List<List<SubCategory>> tab = List<List<SubCategory>>();
-Future<List<Category>> getCategories(
-    GlobalKey<ScaffoldState> scaffoldkey, dynamic cart) async {
-  _repo = await Storage.createFrom(
-    future: SqlitePersistence.create(),
-  );
-  print("after create form" + _repo.toString());
-  _it = await _repo.retriveCart();
-  _fav = await _repo.retrieveFav();
-  print("this is fav id");
-  // print(_fav[1].id.toString());
-
-  cart.setData(_it);
-
+Future<List<Category>> getCategory(
+    BuildContext context, dynamic category, dynamic cart) async {
   try {
+    category.startLoading();
+    _repo = await Storage.createFrom(
+      future: SqlitePersistence.create(),
+    );
+    print("after create form" + _repo.toString());
+    _it = await _repo.retriveCart();
+    _fav = await _repo.retrieveFav();
+    print("this is fav id");
+    // print(_fav[1].id.toString());
+
+    cart.setData(_it);
+
     response = await hp.get("${Short.baseUrl}/getcategory", headers: headers);
     subResponse =
         await hp.get("${Short.baseUrl}/getsubcategory", headers: headers);
@@ -58,19 +62,45 @@ Future<List<Category>> getCategories(
         getSubCategory();
         print("get cat");
 
+        print("catlist ");
+        print(catList.toString());
+        category.setData(catList);
+
+        category.endLoading();
+        print("loading has end");
         return catList;
       }
       if (response.statusCode == 400) {
-        callSnackBar("${catJson["msg"]}", scaffoldkey);
+        category.endLoading();
 
+        FlutterToast toast = FlutterToast(context);
+        toast.showToast(
+          child: Toastmsg(context, catJson["msg"].toString()),
+          gravity: ToastGravity.BOTTOM,
+          toastDuration: Duration(seconds: 2),
+        );
         print("invalid username or password");
       }
     } //response is not null
 
   } on Exception catch (exception) {
-    callSnackBar("Check your Internet Connection", scaffoldkey);
+    category.endLoading();
+
+    FlutterToast toast = FlutterToast(context);
+    toast.showToast(
+      child: Toastmsg(context, "check your internet connnection $exception"),
+      gravity: ToastGravity.BOTTOM,
+      toastDuration: Duration(seconds: 2),
+    );
   } catch (error) {
-    callSnackBar(error.toString(), scaffoldkey);
+    category.endLoading();
+
+    FlutterToast toast = FlutterToast(context);
+    toast.showToast(
+      child: Toastmsg(context, error.toString()),
+      gravity: ToastGravity.BOTTOM,
+      toastDuration: Duration(seconds: 2),
+    );
   }
 }
 
@@ -138,15 +168,17 @@ getSubCategory() {
       }
     }
   }
-  _fav!=null? _fav.forEach((favEle) {
-            tab[favEle.row][favEle.col].fav = true;
-          }):print("fav is empty");
+  _fav != null
+      ? _fav.forEach((favEle) {
+          tab[favEle.row][favEle.col].fav = true;
+        })
+      : print("fav is empty");
   _it != null
       ? _it.forEach((element) {
           int ro = catList.indexWhere((ele) {
             return ele.categoryName == element.catName;
           });
-         
+
           tab[ro][element.column].quantity = element.quantity;
         })
       : print("after tab has added");
@@ -171,16 +203,38 @@ class Category with ChangeNotifier {
     this.img,
     this.desc,
   });
+  bool _isLoading = false;
+  bool get isLoading => _isLoading;
+
+  startLoading() {
+    _isLoading = true;
+    // notifyListeners();
+  }
+
+  endLoading() {
+    _isLoading = false;
+    // notifyListeners();
+  }
+
+  List<Category> _categoryList = [];
+  List<Category> get categoryList => _categoryList;
   factory Category.fromJson(Map<dynamic, dynamic> json) {
     return Category(
         categoryName: json['categoryname'],
         id: json["category_id"],
         img: json["img_url"]);
   }
+
+  setData(List<Category> list) {
+    list == null ? _categoryList = [] : _categoryList = list;
+    notifyListeners();
+  }
 }
 
-Future<List<Scroll>> getCarousel(GlobalKey<ScaffoldState> scaffoldkey) async {
+void getCarousel(BuildContext context) async {
+  final scroll = Provider.of<Scroll>(context, listen: false);
   try {
+    scroll.startLoading();
     scrollResponse =
         await hp.get("${Short.baseUrl}/getscrollimages", headers: headers);
 
@@ -191,26 +245,63 @@ Future<List<Scroll>> getCarousel(GlobalKey<ScaffoldState> scaffoldkey) async {
         scrollList = (scrollJson['data'] as List)
             .map((item) => new Scroll.fromJson(item))
             .toList();
-
-        return scrollList;
+        scroll.setScrollData(scrollList);
+        scroll.endLoading();
       }
       if (scrollResponse.statusCode == 400) {
-        callSnackBar(" error ${scrollJson["msg"]}", scaffoldkey);
-
+        scroll.endLoading();
+        FlutterToast toast = FlutterToast(context);
+        toast.showToast(
+          child: Toastmsg(context, scrollJson["msg"]),
+          gravity: ToastGravity.BOTTOM,
+          toastDuration: Duration(seconds: 2),
+        );
         print("carousel api bad req");
       }
     } //response is not null
 
   } on Exception catch (exception) {
-    callSnackBar("Check your Internet Connection", scaffoldkey);
+    scroll.endLoading();
+    FlutterToast toast = FlutterToast(context);
+    toast.showToast(
+      child: Toastmsg(
+          context, "Check your Internet Connection" + exception.toString()),
+      gravity: ToastGravity.BOTTOM,
+      toastDuration: Duration(seconds: 2),
+    );
   } catch (error) {
-    callSnackBar("error ${error.toString()}", scaffoldkey);
+    scroll.endLoading();
+    FlutterToast toast = FlutterToast(context);
+    toast.showToast(
+      child: Toastmsg(context, "error ${error.toString()}"),
+      gravity: ToastGravity.BOTTOM,
+      toastDuration: Duration(seconds: 2),
+    );
   }
 }
 
-class Scroll {
+class Scroll extends ChangeNotifier {
   int id;
   String img;
+  List<Scroll> _scroll = [];
+  bool _isScrollLoad = false;
+  bool get isScrollLoad => _isScrollLoad;
+
+  startLoading() {
+    _isScrollLoad = true;
+    // notifyListeners();
+  }
+
+  endLoading() {
+    _isScrollLoad = false;
+    // notifyListeners();
+  }
+
+  List<Scroll> get scrollList => _scroll;
+  setScrollData(List<Scroll> scroll) {
+    scroll == null ? _scroll = [] : _scroll = scroll;
+    notifyListeners();
+  }
 
   Scroll({this.id, this.img});
   factory Scroll.fromJson(Map<dynamic, dynamic> json) {

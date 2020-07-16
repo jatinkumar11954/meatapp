@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:meatapp/Api/categoryApi.dart';
 import 'package:meatapp/screens/Description.dart';
 import 'package:meatapp/screens/FirestScreen.dart';
 import 'package:meatapp/screens/entry/LoginCard.dart';
@@ -27,6 +28,7 @@ UserDetails get userdetails => _user;
 setLogin() {
   login = true;
 }
+
 otpLogin() {
   login = false;
 }
@@ -72,6 +74,11 @@ class MyApp extends StatelessWidget {
           value: Products(),
         ),
         ChangeNotifierProvider.value(
+          value: Category(),
+        ),ChangeNotifierProvider.value(
+          value: Scroll(),
+        ),
+        ChangeNotifierProvider.value(
           value: Bottom(),
         ),
         ChangeNotifierProvider.value(
@@ -93,11 +100,22 @@ class MyApp extends StatelessWidget {
 
               // focusColor: Color.fromRGBO(229,247,243, 1.0),
               ),
-          initialRoute: jwt == null ? "LoginCard" : "Main", //testing
+          // initialRoute: jwt == null ? "LoginCard" : "Main", //testing
           //         initialRoute: !login ? "Login" : "Main",//testinh for login screen
 
           //  initialRoute: "Main",
-          // home: Login(),
+          home: jwt == null
+              ? LoginCard()
+              : Builder(builder: (context) {
+                  final category =
+                      Provider.of<Category>(context, listen: false);
+                  final cart = Provider.of<Cart>(context, listen: false);
+                      getCarousel(context);
+
+                  getCategory(context, category, cart);
+
+                  return FirstScreen();
+                }),
           routes: <String, WidgetBuilder>{
             'Login': (BuildContext context) => new Login(),
             'LoginCard': (BuildContext context) => new LoginCard(),
