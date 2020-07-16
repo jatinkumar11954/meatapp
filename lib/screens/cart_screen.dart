@@ -62,8 +62,22 @@ class CartScreen extends StatelessWidget {
     return Scaffold(
         key: _scaffoldkey,
         appBar: AppBar(
-          title: Text('Your Cart'),
-        ),
+            title: Text('Your Cart'),
+            leading: IconButton(
+                icon: Icon(Icons.arrow_back),
+                onPressed: () {
+                  bottom.updateINdex(0);
+
+                  Navigator.pushReplacement(
+                      context,
+                      CustomRoute(
+                        builder: (context) => FirstScreen(),
+                      ));
+                })
+            // actions: <Widget>[
+            //
+            // ],
+            ),
         bottomNavigationBar: bottomBar(context, 1),
         body: WillPopScope(
           onWillPop: () {

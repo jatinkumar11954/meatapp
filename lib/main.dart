@@ -70,20 +70,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider.value(
-          value: Products(),
-        ),
-        ChangeNotifierProvider.value(
-          value: Category(),
-        ),ChangeNotifierProvider.value(
-          value: Scroll(),
-        ),
-        ChangeNotifierProvider.value(
-          value: Bottom(),
-        ),
-        ChangeNotifierProvider.value(
-          value: Cart(),
-        )
+        ChangeNotifierProvider(create: (_) => Products()),
+        ChangeNotifierProvider(create: (_) => Category()),
+        ChangeNotifierProvider(create: (_) => Scroll()),
+        ChangeNotifierProvider(create: (_) => Bottom()),
+        ChangeNotifierProvider(create: (_) => Cart()),
       ],
       child: MaterialApp(
           debugShowCheckedModeBanner: false,
@@ -110,7 +101,7 @@ class MyApp extends StatelessWidget {
                   final category =
                       Provider.of<Category>(context, listen: false);
                   final cart = Provider.of<Cart>(context, listen: false);
-                      getCarousel(context);
+                  getCarousel(context);
 
                   getCategory(context, category, cart);
 

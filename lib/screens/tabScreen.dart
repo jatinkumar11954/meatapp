@@ -26,7 +26,8 @@ class TabScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final product = Provider.of<Products>(context, listen: false).items;
-        final categoryList = Provider.of<Category>(context, listen: false).categoryList;
+    final categoryList =
+        Provider.of<Category>(context, listen: false).categoryList;
 
     final productProvider = Provider.of<Products>(context);
 
@@ -107,7 +108,7 @@ class TabScreen extends StatelessWidget {
                 return SwipeGestureRecognizer(
                   onSwipeLeft: () {
                     print("left");
-                    DefaultTabController.of(context).index < categoryList.length - 1
+                    DefaultTabController.of(context).index < catList.length - 1
                         ? DefaultTabController.of(context).animateTo(
                             DefaultTabController.of(context).index + 1,
                             duration: Duration(milliseconds: 700),
@@ -514,23 +515,23 @@ class TabScreen extends StatelessWidget {
               onTap: (value) {
                 tabProvider.updateTab(DefaultTabController.of(context).index);
               },
-              tabs: categoryList.map((p) {
+              tabs: catList.map((p) {
                 // print(soty.o.value);
                 Map<String, Object> iconData = {
-                  "${categoryList[0].categoryName}": CustomIcon.Eggs,
-                  "${categoryList[1].categoryName}": CustomIcon.Chicken,
-                  "${categoryList[2].categoryName}": CustomIcon.Mutton,
-                  "${categoryList[3].categoryName}": CustomIcon.SeaFood
+                  "${catList[0].categoryName}": CustomIcon.Eggs,
+                  "${catList[1].categoryName}": CustomIcon.Chicken,
+                  "${catList[2].categoryName}": CustomIcon.Mutton,
+                  "${catList[3].categoryName}": CustomIcon.SeaFood
                 };
                 Color bgColor = Colors.white;
                 Color fgColor = Theme.of(context).primaryColor;
 
-                if (p == categoryList[tabProvider.tabIndex ?? 0]) {
+                if (p == catList[tabProvider.tabIndex ?? 0]) {
                   bgColor = Theme.of(context).primaryColor;
                 } else {
                   bgColor = Colors.white;
                 }
-                if (p == categoryList[tabProvider.tabIndex ?? 0]) {
+                if (p == catList[tabProvider.tabIndex ?? 0]) {
                   fgColor = Colors.white;
                 } else {
                   fgColor = Theme.of(context).primaryColor;
