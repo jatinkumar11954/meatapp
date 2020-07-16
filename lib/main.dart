@@ -91,19 +91,16 @@ class MyApp extends StatelessWidget {
 
               // focusColor: Color.fromRGBO(229,247,243, 1.0),
               ),
-          // initialRoute: jwt == null ? "LoginCard" : "Main", //testing
-          //         initialRoute: !login ? "Login" : "Main",//testinh for login screen
-
-          //  initialRoute: "Main",
+        
           home: jwt == null
               ? LoginCard()
-              : Builder(builder: (context) {
+              : Builder(builder: (context) {//building context so that providers get the context
                   final category =
                       Provider.of<Category>(context, listen: false);
-                  final cart = Provider.of<Cart>(context, listen: false);
-                  getCarousel(context);
+                  final cart = Provider.of<Cart>(context, listen: false);//while calling no need of listening
+                  getCarousel(context);//getting carousel screen by calling get method inside
 
-                  getCategory(context, category, cart);
+                  getCategory(context, category, cart);//passing provider for category http get and retriving from db
 
                   return FirstScreen();
                 }),

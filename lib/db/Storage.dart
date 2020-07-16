@@ -8,7 +8,6 @@ class Storage {
 
   static Future<Storage> createFrom({Future<SqlitePersistence> future}) async {
     final repository = await future;
-    print(repository.toString());
     final ret = Storage(repository);
 
     return ret;
@@ -43,9 +42,7 @@ class Storage {
   }
 
   void addToFav(Fav Item) async {
-    print(_repository.toString());
 
-    print("inside addtocart  of repo " + Item.id.toString());
     await _repository.createFav(Item.toMap());
   }
 

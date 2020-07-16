@@ -45,7 +45,6 @@ class SqlitePersistence {
   }
 
   void createUpdate(Map<String, dynamic> object) async {
-    print("inside create update" + object["title"]);
     await db.insert(TableName, object,
         conflictAlgorithm: ConflictAlgorithm.replace);
   }

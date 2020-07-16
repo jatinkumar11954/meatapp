@@ -28,14 +28,11 @@ Future<List<Category>> getCategory(
     BuildContext context, dynamic category, dynamic cart) async {
   try {
     category.startLoading();
-    _repo = await Storage.createFrom(
+    _repo = await Storage.createFrom(//referencing the database open to storage repo obj
       future: SqlitePersistence.create(),
     );
-    print("after create form" + _repo.toString());
-    _it = await _repo.retriveCart();
+    _it = await _repo.retriveCart();//retriving cart
     _fav = await _repo.retrieveFav();
-    print("this is fav id");
-    // print(_fav[1].id.toString());
 
     cart.setData(_it);
 
@@ -52,22 +49,18 @@ Future<List<Category>> getCategory(
             .map((item) => new Category.fromJson(item))
             .toList();
         // print("this is category length ${catList.length}");
-        for (int t = 0; t < catList.length; t++) print(catList[t].categoryName);
+      
         subCatList = (subCatJson['data'] as List)
             .map((item) => new SubCategory.fromJson(item))
             .toList();
         // print("this is category length ${subCatList.length}");
-        for (int t = 0; t < subCatList.length; t++) print(subCatList[t].item);
         subCatList.sort(((a, b) => a.catname.compareTo(b.catname)));
-        getSubCategory();
-        print("get cat");
-
-        print("catlist ");
-        print(catList.toString());
-        category.setData(catList);
+        getSubCategory();//logic to categorize
+     
+        category.setData(catList);//calling setdata to set category list and notify
 
         category.endLoading();
-        print("loading has end");
+        
         return catList;
       }
       if (response.statusCode == 400) {
@@ -133,19 +126,11 @@ getSubCategory() {
     }
   }
 
-  // for (int i = 0; i < tab.length; i++) {
-  //   for (int j = 0; j < tab[i].length; j++) {
-  //     print("${tab.length} $i $j");
-  //     print(tab[i][j].catname);
-  //   }
-  // }
+
   // subCatList.sort(((a, b) => a.catname.compareTo(b.catname)));
 
-  //  for (int j = 0; j < subCatList.length; j++) {
-  //    print(subCatList[j].item );
-  //  }
+ 
   int inc;
-  print(tab.length);
   for (int i = 0; i < catList.length; i++) {
     // print("inside  for i ");
 
@@ -169,12 +154,12 @@ getSubCategory() {
     }
   }
   _fav != null
-      ? _fav.forEach((favEle) {
+      ? _fav.forEach((favEle) {//adding fav after categorizing 
           tab[favEle.row][favEle.col].fav = true;
         })
       : print("fav is empty");
   _it != null
-      ? _it.forEach((element) {
+      ? _it.forEach((element) {//adding quantity after categorizing 
           int ro = catList.indexWhere((ele) {
             return ele.categoryName == element.catName;
           });
@@ -183,12 +168,7 @@ getSubCategory() {
         })
       : print("after tab has added");
 
-  // for (int i = 0; i < tab.length; i++) {
-  //   for (int j = 0; j < tab[i].length; j++) {
-  //     print("${tab.length} $i $j");
-  //     print(tab[i][j].catname);
-  //   }
-  // }
+ 
   return tab;
 }
 
